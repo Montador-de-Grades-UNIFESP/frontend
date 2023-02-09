@@ -1,0 +1,31 @@
+# Logs
+/front-end/logs
+/front-end/*.log
+/front-end/npm-debug.log*
+/front-end/yarn-debug.log*
+/front-end/yarn-error.log*
+/front-end/pnpm-debug.log*
+/front-end/lerna-debug.log*
+
+/front-end/node_modules
+/front-end/.DS_Store
+/front-end/dist
+/front-end/dist-ssr
+/front-end/coverage
+/front-end/*.local
+
+/front-end/cypress/videos/
+/front-end/cypress/screenshots/
+
+/api/controller/__pycache__/*
+/api/service/__pycache__/*
+
+# Editor directories and files
+/front-end/.vscode/*
+/front-end/!.vscode/extensions.json
+/front-end/.idea
+/front-end/*.suo
+/front-end/*.ntvs*
+/front-end/*.njsproj
+/front-end/*.sln
+/front-end/*.sw?
