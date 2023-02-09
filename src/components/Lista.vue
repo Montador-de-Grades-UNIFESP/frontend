@@ -1,12 +1,44 @@
 <template>
-  <input type="text" placeholder="Digite a disciplina desejada" v-model="pesquisa">
-  <div v-for="item in itensFiltered" :key="item.ID">
-    <div class="card" @click="emitValue(item)">
-      <div>Nome: {{ item.NOME }}</div>
-      <div>Horário: {{ item.HORARIO }} </div>
-      <div>Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}</div>
+  <div>
+    <v-card-text>
+      <v-text-field
+
+        density="compact"
+        variant="solo"
+        label="Pesquise a disciplina desejada..."
+        append-inner-icon="mdi-checkbox-marked-circle"
+        single-line
+        hide-details 
+        v-model="pesquisa"
+    
+      ></v-text-field>
+    </v-card-text>
+
+  <div style="max-height: 390px;overflow-y: scroll;">
+    <div v-for="item in itensFiltered" :key="item.ID" >
+      
+      <v-col cols="12">
+        <v-card color="#385F73" theme="dark">
+          <v-card-title class="text-h6">
+            {{ item.NOME }}
+          </v-card-title>
+
+          <v-card-subtitle>
+            Horário: {{ item.HORARIO }}
+            <br>
+            Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
+          </v-card-subtitle>
+
+          <v-card-actions>
+            <v-btn variant="text"  @click="emitValue(item)">
+              Adicionar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
     </div>
-  </div>      
+  </div>     
+</div> 
 </template>
 
 <script>
@@ -104,5 +136,8 @@ export default {
   flex-direction: column;
 }
 
+.modal-body{
+  overflow: hidden;
+}
 
 </style>

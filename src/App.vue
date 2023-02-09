@@ -1,7 +1,13 @@
 <template>
 
-  <div class="parent">
-    <div class="div1">
+<v-container class="grey lighten-5">
+    <v-row>
+      <v-col cols="12" md="8">
+        <v-card
+          class="pa-2"
+          outlined
+          tile
+        >
       <table>
         <thead>
           <tr>
@@ -24,15 +30,31 @@
         </tbody>
       </table>
       <button @click="cleanAll()">limpar</button>
-    </div>
-    <div class="div2">
-      <div class="escolhidas" v-for="(value) in ListaIdsSelecionadas">{{ value.NOME }} - {{ value.TURMA }} - {{ value.PROFESSORES }} <button @click="removeUC(value)">Excluir</button></div>
-    </div>
-    <div class="div3 teste">
-      <ListaUC :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
-    </div>
-  </div>
-
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-card
+          class="pa-2"
+          outlined
+          tile
+        >
+          <v-row>
+            <v-col>
+              <v-card class="pa-2" style="min-height: 400px;max-height: 400px;overflow-y: scroll;" >
+                <div class="escolhidas" v-for="(value) in ListaIdsSelecionadas">{{ value.NOME }} - {{ value.TURMA }} - {{ value.PROFESSORES }} <button @click="removeUC(value)">Excluir</button></div>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col style="min-height: 300px;max-height: 400px;" >
+                <ListaUC :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+  
    <Modal v-if="showModal" @close="showModal = false" :title="modalTitle">
     <ListaUC :horario="hours[this.row]" :dia="daysOfWeek[this.col]" :listaSelecionadas="ListaIdsSelecionadas" @updateValue="updateValue"></ListaUC>
   </Modal>
@@ -128,7 +150,7 @@ export default {
     padding: 8px;
     text-align: left;
     height: 100px;
-    min-width: 100px;
+    max-width: 100px;
     text-align: center;     /* alinhamento horizontal */
     vertical-align: middle;
   }
@@ -136,6 +158,7 @@ export default {
     background-color: #ddd;
     align-items: center;
     align-content: center;
+    
   }
   tr:nth-child(even) {
     background-color: #f2f2f2;
