@@ -7,7 +7,7 @@
           class="pa-2"
           outlined
           tile
-        >
+        > 
       <table>
         <thead>
           <tr>
@@ -145,15 +145,24 @@ export default {
     width: 100%;
     border-collapse: collapse;
   }
-  th, td {
+  th {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
     height: 100px;
-    max-width: 100px;
+    width: 100px;
     text-align: center;     /* alinhamento horizontal */
     vertical-align: middle;
   }
+  td {
+    max-width:100px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    height: 100px;
+    max-height: 100px;
+  }
+
   th {
     background-color: #ddd;
     align-items: center;
