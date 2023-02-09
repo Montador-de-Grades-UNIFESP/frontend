@@ -1,5 +1,6 @@
 <template>
-  <div v-for="item in items" :key="item.ID">
+  <input type="text" placeholder="Digite a disciplina desejada" v-model="pesquisa">
+  <div v-for="item in itensFiltered" :key="item.ID">
     <div class="card" @click="emitValue(item)">
       <div>Nome: {{ item.NOME }}</div>
       <div>Horário: {{ item.HORARIO }} </div>
@@ -18,6 +19,8 @@ export default {
     return {
       picked: '',
       items: [],
+      itensFiltered: [],
+      pesquisa: "",
     };
   },
   mounted() {
@@ -25,9 +28,17 @@ export default {
   }, 
   watch:{
     listaSelecionadas: {
-        handler: function () {
-            this.atualizarDados()
-        }, deep:true}
+      handler: function () {
+        this.atualizarDados()
+      }, deep:true},
+    pesquisa: {
+      handler: function () {
+        if(this.pesquisa === ""){
+          this.itensFiltered = this.items
+        }
+        this
+        this.itensFiltered = this.items.filter(item => item.NOME.normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(this.pesquisa.normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
+      }, deep:true}
   },  
   methods: {
 
@@ -46,12 +57,12 @@ export default {
         for(let i = 0; i < this.listaSelecionadas.length; i++){
           ids.push(this.listaSelecionadas[i].ID)
         }
-        console.log(ids)
         axios.post('http://127.0.0.1:5000/disciplinas', {
           items: ids
         })
         .then(response => {
           this.items = response.data.filter(this.filtraMateria)
+          this.itensFiltered = this.items
         })
         .catch(function (error) {
           console.log(error);
