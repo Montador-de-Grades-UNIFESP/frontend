@@ -17,8 +17,8 @@
 /front-end/cypress/videos/
 /front-end/cypress/screenshots/
 
-/api/controller/__pycache__/*
-/api/service/__pycache__/*
+/api/controller/__pycache__/
+/api/service/__pycache__/
 
 # Editor directories and files
 /front-end/.vscode/*
