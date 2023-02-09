@@ -1,31 +1,28 @@
 # Logs
-/front-end/logs
-/front-end/*.log
-/front-end/npm-debug.log*
-/front-end/yarn-debug.log*
-/front-end/yarn-error.log*
-/front-end/pnpm-debug.log*
-/front-end/lerna-debug.log*
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-/front-end/node_modules
-/front-end/.DS_Store
-/front-end/dist
-/front-end/dist-ssr
-/front-end/coverage
-/front-end/*.local
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
 
-/front-end/cypress/videos/
-/front-end/cypress/screenshots/
-
-/api/controller/__pycache__/
-/api/service/__pycache__/
+cypress/videos/
+cypress/screenshots/
 
 # Editor directories and files
-/front-end/.vscode/*
-/front-end/!.vscode/extensions.json
-/front-end/.idea
-/front-end/*.suo
-/front-end/*.ntvs*
-/front-end/*.njsproj
-/front-end/*.sln
-/front-end/*.sw?
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
