@@ -12,13 +12,13 @@ class Grade():
 
     @app.route("/disciplinas", methods=['GET'])
     def get():
-        return json.dumps(ucs.get_ucs())
+        return ucs.get_ucs()
 
     @app.route("/disciplinas", methods=['POST'])
     def post():
         data = request.get_json()
         data = data['items']
-        return json.dumps(ucs.uc_analizer(data))
+        return ucs.uc_analizer(data)
 
     def start(debug=False):
         return app.run(debug=debug)
