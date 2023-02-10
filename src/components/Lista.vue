@@ -72,8 +72,7 @@ export default {
         if(this.pesquisa === ""){
           this.itensFiltered = this.items
         }
-        this
-        this.itensFiltered = this.items.filter(item => item.NOME.normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(this.pesquisa.normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
+        this.itensFiltered = this.items.filter(item => deburr(item.NOME).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(deburr(this.pesquisa).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
       }, deep:true}
   },  
   methods: {
