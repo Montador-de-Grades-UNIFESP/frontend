@@ -2,11 +2,12 @@
 
 <v-container class="grey lighten-5">
     <v-row>
-      <v-col cols="12" md="8">
+      <v-col cols="12" md="8" >
         <v-card
           class="pa-2 tabela-card"
           outlined
           tile
+          style="overflow-x: scroll;"
         > 
       <table>
         <thead>

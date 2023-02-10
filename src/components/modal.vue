@@ -28,6 +28,7 @@ export default {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  ;
 }
 
 .modal-wrapper {
@@ -38,7 +39,7 @@ export default {
   background-color: white;
   padding: 1rem;
   border-radius: 0.5rem;
- 
+  max-width: 80vw
 }
 
 .modal-header {

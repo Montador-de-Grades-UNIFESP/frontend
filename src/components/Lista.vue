@@ -15,7 +15,10 @@
     </v-card-text>
 
   <div style="max-height: 390px;overflow-y: scroll;">
-    <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
+    <div style="width: 100%;display: flex; align-items: center; justify-content: center;" >
+      <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
+    </div>
+    
     <div v-for="item in itensFiltered" :key="item.ID" >
       
       <v-col cols="12">
