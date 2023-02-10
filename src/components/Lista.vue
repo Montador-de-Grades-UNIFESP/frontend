@@ -30,7 +30,7 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn variant="text"  @click="emitValue(item)">
+            <v-btn variant="outlined"  @click="emitValue(item)">
               Adicionar
             </v-btn>
           </v-card-actions>
