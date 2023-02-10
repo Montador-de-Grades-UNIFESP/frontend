@@ -1,20 +1,21 @@
-# Use a imagem base do node
-FROM node:14
+FROM node:lts-alpine
 
-# Defina o diretório de trabalho
+# install simple http server for serving static content
+RUN npm install -g http-server
+
+# make the 'app' folder the current working directory
 WORKDIR /app
 
-# Copie o package.json e o yarn.lock para o diretório de trabalho
+# copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
 
-# Instale as dependências
+# install project dependencies
 RUN npm install
 
-# Copie os arquivos da aplicação para o diretório de trabalho
+# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-# Defina a porta na qual a aplicação será executada
-EXPOSE 8080
+# build app for production with minification
 
-# Defina o comando para iniciar a aplicação
-CMD [ "npm", "run", "dev" ]
+EXPOSE 8080
+CMD [ "http-server", "dist" ]

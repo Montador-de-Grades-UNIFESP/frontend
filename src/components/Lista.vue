@@ -89,7 +89,7 @@ export default {
         for(let i = 0; i < this.listaSelecionadas.length; i++){
           ids.push(this.listaSelecionadas[i].ID)
         }
-        axios.post('http://127.0.0.1:5000/disciplinas', {
+        axios.post('https://montador-de-grades-api-xovxunskpq-rj.a.run.app/disciplinas', {
           items: ids
         })
         .then(response => {
