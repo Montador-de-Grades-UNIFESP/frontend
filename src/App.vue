@@ -18,7 +18,7 @@
         <tbody>
             <tr v-for="(row, rowIndex) in tabela">
               <td>{{ hours[rowIndex] }}</td>
-              <td v-for="(value, colIndex) in row" @click="showAlert(rowIndex, colIndex)">
+              <td v-for="(value, colIndex) in row" @click="showAlert(rowIndex, colIndex)" class = "cell" >
                 <div class="item">
                   <div>
                   {{ value.NOME }}
@@ -172,6 +172,11 @@ export default {
 </script>
 
 <style scoped>
+
+.cell:hover{
+  cursor:pointer;
+  background-color: #cdeeff;
+}
 .X{
   padding-left: 7px;
   color: #c5707f;
