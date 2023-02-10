@@ -123,7 +123,7 @@ export default {
       // Removendo matéria
       if(this.tabela[row][col] != ''){
         let materia = this.tabela[row][col]
-        quantidade = this.ListaIdsSelecionadas.filter(item => item.ID === materia.ID).HORARIO.length
+        this.quantidade -= this.ListaIdsSelecionadas.filter(item => item.ID === materia.ID)[0].HORARIO.length
         this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== materia.ID)
         for(let i = 0; i < materia.DIA.length; i++){
           let dia = this.daysOfWeek.indexOf(materia.DIA[i])

@@ -15,6 +15,7 @@
     </v-card-text>
 
   <div style="max-height: 390px;overflow-y: scroll;">
+    <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
     <div v-for="item in itensFiltered" :key="item.ID" >
       
       <v-col cols="12">
@@ -58,6 +59,7 @@ export default {
       itensFiltered: [],
       pesquisa: "",
       loading: false,
+      vazio: false
     };
   },
   mounted() {
@@ -73,8 +75,14 @@ export default {
         if(this.pesquisa === ""){
           this.itensFiltered = this.items
         }
-        
+
         this.itensFiltered = this.items.filter(item => deburr(item.NOME).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(deburr(this.pesquisa).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
+        if(this.itensFiltered.length === 0){
+            this.vazio = true
+          }
+          else{
+            this.vazio = false
+          }
       }, deep:true}
   },  
   methods: {
@@ -82,6 +90,13 @@ export default {
     filtraMateria(item){
       if(this.horario === null && this.dia === null) {
         return true
+      }
+
+      if(this.itensFiltered.length === 0){
+        this.vazio = true
+      }
+      else{
+        this.vazio = false
       }
       
       return item.HORARIO.includes(this.horario) && item.DIA.includes(this.dia)
@@ -100,6 +115,12 @@ export default {
         .then(response => {
           this.items = response.data.filter(this.filtraMateria)
           this.itensFiltered = this.items
+          if(this.itensFiltered.length === 0){
+            this.vazio = true
+          }
+          else{
+            this.vazio = false
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -109,10 +130,11 @@ export default {
     },
     emitValue(item) {
       this.loading = true;
-      
       this.$emit('updateValue', item);
       this.atualizarDados();
       setTimeout(()=>{this.loading = false;},500)
+
+      
     }
     
   }
