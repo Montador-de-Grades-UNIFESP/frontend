@@ -45,10 +45,12 @@
         >
           <v-row>
             <v-col>
+              <h3> Disciplinas escolhidas: </h3> 
+               Quantidade: {{ quantidade*2 }}
               <v-card class="pa-2 escolhidas">
-                Quantidade: {{ quantidade }}
-                <h3> Disciplinas escolhidas: </h3> 
-                <v-card class="mx-auto Escolhida" max-width="344" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
+               
+                
+                <v-card class="mx-auto Escolhida" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
                   <v-card-item>
                     <div>
                       <div class="text-overline mb-1">
@@ -122,6 +124,7 @@ export default {
       // Removendo matéria
       if(this.tabela[row][col] != ''){
         let materia = this.tabela[row][col]
+        quantidade = this.ListaIdsSelecionadas.filter(item => item.ID === materia.ID).HORARIO.length
         this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== materia.ID)
         for(let i = 0; i < materia.DIA.length; i++){
           let dia = this.daysOfWeek.indexOf(materia.DIA[i])
@@ -148,7 +151,7 @@ export default {
       this.updateTable(value, value)
       this.ListaIdsSelecionadas.push(value)
       this.showModal = false
-      this.quantidade = this.ListaIdsSelecionadas.length
+      this.quantidade += value.HORARIO.length
     },
     
     cleanAll(){
@@ -158,12 +161,12 @@ export default {
           this.tabela[i][j] = ''
         }
       }
-      this.quantidade = this.ListaIdsSelecionadas.length
+      this.quantidade = 0
     },
     removeUC(obj){
       this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== obj.ID)
       this.updateTable(obj, '')
-      this.quantidade = this.ListaIdsSelecionadas.length
+      this.quantidade -= obj.HORARIO.length
     }
   }
 }
