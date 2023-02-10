@@ -48,8 +48,6 @@
               <h3> Disciplinas escolhidas: </h3> 
                Quantidade: {{ quantidade*2 }}
               <v-card class="pa-2 escolhidas">
-               
-                
                 <v-card class="mx-auto Escolhida" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
                   <v-card-item>
                     <div>
