@@ -7,7 +7,6 @@
           class="pa-2 tabela-card"
           outlined
           tile
-          style="overflow-x: scroll;"
         > 
       <table>
         <thead>
@@ -174,6 +173,9 @@ export default {
 
 <style scoped>
 
+
+
+
 .cell:hover{
   cursor:pointer;
   background-color: #cdeeff;
@@ -214,45 +216,21 @@ export default {
     height: 100px;
     max-height: 100px;
     text-align: center;
+    border: 1px solid #302727;
   }
 
   th {
+    border: 1px solid #302727;
     background-color: #ddd;
     align-items: center;
     align-content: center;
     
   }
+
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
 
-  .parent {
-    display: grid;
-    grid-template-columns: repeat(20, 1fr);
-    grid-template-rows: repeat(15, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-  }
-
-  .parent > div {
-    background-color: rgb(32, 34, 33);
-    padding: 15px;
-  }
-
-  .div1 { 
-    grid-area: 1 / 1 / 16 / 16;
-    width: fit-content;
-    width: 900px;
-  }
-  .div2 { 
-    grid-area: 1 / 16 / 9 / 21; 
-    overflow-y: scroll;
-    max-height: 390px;
-  }
-  .div3 {
-    grid-area: 9 / 16 / 16 / 21; 
-  }
-  
   .escolhidas{
     min-height: 400px;
     max-height: 400px;
@@ -262,5 +240,42 @@ export default {
   .item{
     font-size: 1em;
   }
+
+  @media (max-width: 500px) {
+
+
+  .tabela-card{
+    overflow-x: scroll;
+   
+  }
+
+  th {
+    border: 1px solid #1b1818;
+    text-align: left;
+    text-align: center;   
+    vertical-align: middle;
+  }
+  td {
+    border: 1px solid #302727;
+    height: 50px;
+    max-width: 45px;
+    width: 40px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  th {
+    background-color: #ddd;
+    align-items: center;
+    align-content: center;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+}
 
 </style>
