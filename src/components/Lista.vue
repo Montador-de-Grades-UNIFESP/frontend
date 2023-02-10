@@ -32,7 +32,8 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn variant="outlined"  @click="emitValue(item)">
+            <v-btn variant="outlined"  @click="emitValue(item)" :disabled="loading">
+
               Adicionar
             </v-btn>
           </v-card-actions>
@@ -55,6 +56,7 @@ export default {
       items: [],
       itensFiltered: [],
       pesquisa: "",
+      loading: false,
     };
   },
   mounted() {
@@ -105,8 +107,11 @@ export default {
 
     },
     emitValue(item) {
+      this.loading = true;
+      
       this.$emit('updateValue', item);
       this.atualizarDados();
+      setTimeout(()=>{this.loading = false;},500)
     }
     
   }
