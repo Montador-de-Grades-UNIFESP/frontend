@@ -91,7 +91,7 @@ export default {
         for(let i = 0; i < this.listaSelecionadas.length; i++){
           ids.push(this.listaSelecionadas[i].ID)
         }
-        axios.post('https://montador-de-grades-api-xovxunskpq-rj.a.run.app/disciplinas', {
+        axios.post('https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas', {
           items: ids
         })
         .then(response => {
