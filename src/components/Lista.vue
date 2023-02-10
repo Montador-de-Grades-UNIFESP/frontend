@@ -24,8 +24,10 @@
           </v-card-title>
 
           <v-card-subtitle>
-            Horário: {{ item.HORARIO }}
-            <br>
+            <div style="display: flex;">Horário: <p v-for="hora in item.HORARIO"> {{ hora }}/</p><br></div>
+            <div style="display: flex;">
+            Dias: <p v-for="dia in item.DIA"> {{ dia }}/</p>
+            </div>
             Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
           </v-card-subtitle>
 
