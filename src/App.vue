@@ -4,7 +4,7 @@
     <v-row>
       <v-col cols="12" md="8">
         <v-card
-          class="pa-2"
+          class="pa-2 tabela-card"
           outlined
           tile
         > 
@@ -29,7 +29,12 @@
             </tr>
         </tbody>
       </table>
-      <button @click="cleanAll()">limpar</button>
+      <v-btn
+        variant="outlined"
+        color="error"
+
+        @click="cleanAll()"> Limpar grade<font-awesome-icon class="X" icon="fa-solid fa-x" />
+      </v-btn> 
         </v-card>
       </v-col>
       <v-col cols="12" md="4">
@@ -40,8 +45,27 @@
         >
           <v-row>
             <v-col>
-              <v-card class="pa-2" style="min-height: 400px;max-height: 400px;overflow-y: scroll;" >
-                <div class="escolhidas" v-for="(value) in ListaIdsSelecionadas">{{ value.NOME }} - {{ value.TURMA }} - {{ value.PROFESSORES }} <button @click="removeUC(value)">Excluir</button></div>
+              <v-card class="pa-2 escolhidas">
+                Quantidade: {{ quantidade }}
+                <h3> Disciplinas escolhidas: </h3> 
+                <v-card class="mx-auto Escolhida" max-width="344" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
+                  <v-card-item>
+                    <div>
+                      <div class="text-overline mb-1">
+                        Turma - {{ value.TURMA }}
+                      </div>
+                      <div class="text-h6 mb-1">
+                        {{value.NOME}}
+                      </div>
+                      <div class="text-caption">Professor(a): {{ value.PROFESSORES }}</div>
+                    </div>
+                  </v-card-item>
+                  <v-card-actions>
+                    <v-btn variant="outlined" @click="removeUC(value)">
+                      Excluir
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
               </v-card>
             </v-col>
           </v-row>
@@ -86,8 +110,9 @@ export default {
       modalTitle: 'Título do Modal',
       showModal: false, 
       tabela: tabela,
-      col: null,
+      col: 0,
       row: 0,
+      quantidade: 0,
       // O controle das disciplinas será através dos ids das disciplinas
       ListaIdsSelecionadas: []
     }
@@ -123,7 +148,9 @@ export default {
       this.updateTable(value, value)
       this.ListaIdsSelecionadas.push(value)
       this.showModal = false
+      this.quantidade = this.ListaIdsSelecionadas.length
     },
+    
     cleanAll(){
       this.ListaIdsSelecionadas = []
       for(let i = 0; i < 6; i++){
@@ -131,16 +158,33 @@ export default {
           this.tabela[i][j] = ''
         }
       }
+      this.quantidade = this.ListaIdsSelecionadas.length
     },
     removeUC(obj){
       this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== obj.ID)
       this.updateTable(obj, '')
+      this.quantidade = this.ListaIdsSelecionadas.length
     }
   }
 }
 </script>
 
 <style scoped>
+.X{
+  padding-left: 7px;
+  color: #c5707f;
+  font-size: 1rem;
+}
+.Escolhida{
+  margin-bottom: 10px;
+}
+.tabela-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 20px;
+}
  table {
     width: 100%;
     border-collapse: collapse;
@@ -161,6 +205,7 @@ export default {
     white-space: nowrap;
     height: 100px;
     max-height: 100px;
+    text-align: center;
   }
 
   th {
@@ -199,18 +244,11 @@ export default {
   .div3 {
     grid-area: 9 / 16 / 16 / 21; 
   }
-
-  .teste{
-    height: 340px;
-    width: 460px;
-    overflow-y: scroll;
-    max-height: 500px;
-  }
   
   .escolhidas{
-    background-color: rgb(15, 110, 110);
-    padding: 15px;
-    margin: 3px;
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
   }
 
   .item{
