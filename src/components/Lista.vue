@@ -46,6 +46,7 @@
 
 <script>
 import axios from 'axios';
+import deburr from 'lodash/deburr'
 
 export default {
   props: ['listaSelecionadas', 'horario', 'dia'],
@@ -72,6 +73,7 @@ export default {
         if(this.pesquisa === ""){
           this.itensFiltered = this.items
         }
+        
         this.itensFiltered = this.items.filter(item => deburr(item.NOME).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(deburr(this.pesquisa).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
       }, deep:true}
   },  
