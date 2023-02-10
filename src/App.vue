@@ -45,8 +45,8 @@
         >
           <v-row>
             <v-col>
-              <h3> Disciplinas escolhidas: </h3> 
-               Quantidade: {{ quantidade*2 }}
+              <h3> Disciplinas Escolhidas: </h3> 
+               Total de Créditos: {{ quantidade*2 }}
               <v-card class="pa-2 escolhidas">
                 <v-card class="mx-auto Escolhida" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
                   <v-card-item>
@@ -71,6 +71,7 @@
           </v-row>
           <v-row>
             <v-col style="min-height: 300px;max-height: 400px;" >
+              <h3> Disciplinas Disponíveis:</h3>
                 <ListaUC :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
             </v-col>
           </v-row>
