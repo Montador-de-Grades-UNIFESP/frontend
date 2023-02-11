@@ -58,6 +58,7 @@
                         {{value.NOME}}
                       </div>
                       <div class="text-caption">Professor(a): {{ value.PROFESSORES }}</div>
+                      <div class="text-caption">Taxa de reprovação: {{ value.taxa }}</div>
                     </div>
                   </v-card-item>
                   <v-card-actions>
@@ -90,7 +91,7 @@
 import ModalButton from './components/ModalButton.vue';
 import Modal from './components/Modal.vue';
 import ListaUC from './components/Lista.vue';
-
+import axios from 'axios';
 
 export default {
   components: {
@@ -147,7 +148,54 @@ export default {
       }
     }, 
     updateValue(value){
-      this.updateTable(value, value)
+      this.updateTable(value, value);
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "items": [
+          value.ID
+        ]
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+     
+      fetch("https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas/prof", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            let obj;
+            obj = JSON.parse(result)
+            if(obj.length !== 0){
+            let str = value.NOME.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+            let arr = obj[0]['NOME DA UC'].map(string => {
+              return string
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+            });
+            let index = JSON.stringify(arr.indexOf(str))
+            if(index != -1){
+              value.taxa = obj[0]['REPROVADOS'][index]
+            }
+            else{
+              value.taxa = 'Sem dados'
+            }
+          } else{
+            value.taxa = 'Sem dados'
+          }
+           
+          
+        })
+        .catch(error => console.log('error', error));
+
+
+
       this.ListaIdsSelecionadas.push(value)
       this.showModal = false
       this.quantidade += value.HORARIO.length
