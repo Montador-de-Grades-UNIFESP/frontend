@@ -8,7 +8,7 @@
           outlined
           tile
         > 
-      <table>
+      <table  id="target">
         <thead>
           <tr>
             <th>Horário</th>
@@ -29,12 +29,22 @@
             </tr>
         </tbody>
       </table>
-      <v-btn
-        variant="outlined"
-        color="error"
+      <div>
+        <v-btn
+          variant="outlined"
+          color="error"
+          style="margin-right: 5px;"
 
-        @click="cleanAll()"> Limpar grade<font-awesome-icon class="X" icon="fa-solid fa-x" />
-      </v-btn> 
+          @click="cleanAll()"> Limpar grade<font-awesome-icon class="X" icon="fa-solid fa-x" />
+        </v-btn>
+        
+        <v-btn
+          variant="outlined"
+          color="default"
+
+          @click="save"> Salvar
+        </v-btn> 
+      </div>
         </v-card>
       </v-col>
       <v-col cols="12" md="4">
@@ -58,7 +68,7 @@
                         {{value.NOME}}
                       </div>
                       <div class="text-caption">Professor(a): {{ value.PROFESSORES }}</div>
-                      <div class="text-caption">Taxa de reprovação: {{ value.taxa }}</div>
+                      <!-- <div class="text-caption">Taxa de reprovação: {{ value.taxa }}</div> -->
                     </div>
                   </v-card-item>
                   <v-card-actions>
@@ -91,7 +101,6 @@
 import ModalButton from './components/ModalButton.vue';
 import Modal from './components/Modal.vue';
 import ListaUC from './components/Lista.vue';
-import axios from 'axios';
 
 export default {
   components: {
@@ -118,6 +127,9 @@ export default {
       // O controle das disciplinas será através dos ids das disciplinas
       ListaIdsSelecionadas: []
     }
+  },
+  mounted(){
+    this.target = this.$refs.target;
   },
   methods: {
     showAlert(row, col) {
@@ -214,7 +226,13 @@ export default {
       this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== obj.ID)
       this.updateTable(obj, '')
       this.quantidade -= obj.HORARIO.length
+    },
+    save(){
+    
+      alert("Calma lá, tá sendo implementado!")
     }
+       
+   
   }
 }
 </script>
