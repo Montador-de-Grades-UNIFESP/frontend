@@ -19,10 +19,10 @@
       <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
     </div>
     
-    <div v-for="item in itensFiltered" :key="item.ID" >
+    <div v-for="item in itensFiltered" :key="item.ID">
       
       <v-col cols="12">
-        <v-card color="#385F73" theme="dark">
+        <v-card :color="item.COLOR" theme="dark">
           <v-card-title class="text-h6">
             {{ item.NOME }}
           </v-card-title>
@@ -36,14 +36,15 @@
           </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn variant="outlined"  @click="emitValue(item)" :disabled="loading">
+            <v-btn variant="outlined" v-if="item.COLOR != '#FF0000'" @click="emitValue(item)" :disabled="loading">
 
               Adicionar
             </v-btn>
           </v-card-actions>
+     
         </v-card>
       </v-col>
-    </div>
+    </div>    
   </div>     
 </div> 
 </template>
@@ -53,20 +54,35 @@ import axios from 'axios';
 import deburr from 'lodash/deburr'
 
 export default {
-  props: ['listaSelecionadas', 'horario', 'dia'],
+  props: ['listaSelecionadas', 'horario', 'dia', 'btn_state_change'],
   emits: ["updateValue"],
   data() {
     return {
       picked: '',
       items: [],
       itensFiltered: [],
+      allUnfilteredDisciplines: [],
       pesquisa: "",
       loading: false,
-      vazio: false
+      vazio: false,
+      btn_state:false,
+      numeroDeMateriasNaoConflitantes: 0,
     };
   },
   mounted() {
-    this.atualizarDados()
+    this.atualizarDados();
+
+    (async() => {
+      axios.post('https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas', {
+          items: []
+        }).then(response => 
+        {
+          this.allUnfilteredDisciplines = response.data;
+          this.allUnfilteredDisciplines.forEach(x => x.COLOR = "#FF0000");
+        }).catch(function (error) {
+          console.log(error);
+        });
+    })();
   }, 
   watch:{
     listaSelecionadas: {
@@ -86,7 +102,16 @@ export default {
           else{
             this.vazio = false
           }
-      }, deep:true}
+      }, deep:true},
+      
+      btn_state_change: 
+      {
+
+        handler : function() 
+        {
+            this.itensFiltered = this.items.filter(function(v){return v.COLOR != "#FF0000"});
+          }, deep:true
+      }
   },  
   methods: {
 
@@ -101,12 +126,11 @@ export default {
       else{
         this.vazio = false
       }
-      
-      return item.HORARIO.includes(this.horario) && item.DIA.includes(this.dia)
+      return item.HORARIO.includes(this.horario) && item.DIA.includes(this.dia);
     },
 
     atualizarDados(){
-
+      this.items = [];
       (async() =>{
         let ids = [];
         for(let i = 0; i < this.listaSelecionadas.length; i++){
@@ -117,14 +141,34 @@ export default {
         })
         .then(response => {
           this.items = response.data.filter(this.filtraMateria)
-          this.itensFiltered = this.items
+
+          this.items.forEach(x => {x.COLOR = "#385F73"});
+          this.allUnfilteredDisciplines.forEach(x => {x.COLOR = "#385F73"});
+          this.itensFiltered = this.items.filter(function(v){return v.COLOR != "#FF0000"});
           if(this.itensFiltered.length === 0){
             this.vazio = true
           }
           else{
             this.vazio = false
           }
+          let exists = false;
+          for(let i = 0; i < this.allUnfilteredDisciplines.length; i ++)
+          {
+            for(let j = 0; j < this.items.length; j ++)
+            {
+              if(this.allUnfilteredDisciplines[i].ID == this.items[j].ID) {exists = true; break;}
+            }
+            if(exists == false) {
+                if(this.allUnfilteredDisciplines[i].COLOR != "#FF0000")
+                {
+                  this.allUnfilteredDisciplines[i].COLOR = "#FF0000";
+                  this.itensFiltered.push(this.allUnfilteredDisciplines[i]);
+                }
+              }
+            exists = false;
+          }
         })
+
         .catch(function (error) {
           console.log(error);
         });
@@ -142,6 +186,7 @@ export default {
     
   }
 };
+
 </script>
 
 <style>
