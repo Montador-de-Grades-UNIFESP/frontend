@@ -41,8 +41,16 @@
         <v-btn
           variant="outlined"
           color="default"
+          style="margin-right: 5px;"
 
           @click="save"> Salvar
+        </v-btn> 
+
+        <v-btn
+          variant="outlined"
+          color="default"
+
+          @click="load"> Carregar
         </v-btn> 
       </div>
         </v-card>
@@ -83,10 +91,16 @@
           <v-row>
             <v-col style="min-height: 300px;max-height: 400px;" >
               <h3> Disciplinas Disponíveis:</h3>
-                <ListaUC :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
+                <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
             </v-col>
           </v-row>
         </v-card>
+        <v-btn
+          variant="outlined"
+          color="default"
+          class="btn-conflicts"
+          @click="change_btn_state_conflict()"> Remover Conflitos
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -97,6 +111,10 @@
 </template>
 
 <script>
+
+var FileData; 
+var ListId;
+var thisObjAlias;
 
 import ModalButton from './components/ModalButton.vue';
 import Modal from './components/Modal.vue';
@@ -124,6 +142,7 @@ export default {
       col: 0,
       row: 0,
       quantidade: 0,
+      btn_state:false,
       // O controle das disciplinas será através dos ids das disciplinas
       ListaIdsSelecionadas: []
     }
@@ -152,7 +171,7 @@ export default {
       this.modalTitle = 'Disciplinas diponíveis para '+ this.daysOfWeek[col] + ' ' + this.hours[row]
       this.showModal = true
     }, 
-    updateTable(obj, valor){
+      updateTable(obj, valor){
       for(let i = 0; i < obj.DIA.length; i++){
         let dia = this.daysOfWeek.indexOf(obj.DIA[i])
         let horario = this.hours.indexOf(obj.HORARIO[i])
@@ -163,7 +182,6 @@ export default {
       this.updateTable(value, value);
 
       var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
 
       var raw = JSON.stringify({
         "items": [
@@ -229,12 +247,61 @@ export default {
     },
     save(){
     
-      alert("Calma lá, tá sendo implementado!")
-    }
-       
-   
+   let UcsSelecionadasToJson = JSON.stringify(this.ListaIdsSelecionadas)
+      console.log(this.ListaIdsSelecionadas);
+    var a = document.createElement("a");
+    var file = new Blob([UcsSelecionadasToJson], {type: 'text/json'});
+    a.href = URL.createObjectURL(file);
+    let currentDateTime = new Date().toLocaleString();
+    currentDateTime = currentDateTime.split(',');
+    a.download = "SelectedUCS " + currentDateTime[0]  + currentDateTime[1] + ".json";
+    a.click();
+  
+  },
+  load()
+  {
+    var inputFileDocument = document.createElement("input");
+    inputFileDocument.setAttribute("type", "file");
+    inputFileDocument.setAttribute("id", "upload");
+    inputFileDocument.addEventListener("change",  (event) => {
+    ListId = this.ListaIdsSelecionadas;
+    thisObjAlias = this;  
+    var reader = new FileReader();
+    reader.readAsText(inputFileDocument.files[0])
+    reader.onload = function() { FileData = reader.result; loadtoTableAfterParse(); }
+    } , false);
+    inputFileDocument.click();
+  },
+  change_btn_state_conflict()
+  {
+    this.btn_state = !this.btn_state;
+  }
+  
   }
 }
+
+
+
+    
+function loadtoTableAfterParse()
+{
+  ListId = JSON.parse(FileData);
+  thisObjAlias.ListaIdsSelecionadas = [];
+  ListId.forEach(value => 
+  {
+    thisObjAlias.updateTable(value,value);
+    thisObjAlias.ListaIdsSelecionadas.push(value);
+  });
+  thisObjAlias = undefined;
+  FileData = undefined;
+  ListId = undefined;
+
+  
+}
+   
+  
+
+
 </script>
 
 <style scoped>
@@ -254,6 +321,12 @@ export default {
 .Escolhida{
   margin-bottom: 10px;
 }
+.btn-conflicts
+  {
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-top: 10px;
+  }
 .tabela-card{
   display: flex;
   flex-direction: column;
@@ -342,6 +415,8 @@ export default {
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+
+  
 }
 
 </style>
