@@ -4,7 +4,7 @@
     <v-row>
       <v-col cols="12" md="8" >
         <v-card
-          class="pa-2 tabela-card"
+          class="tabela-card"
           outlined
           tile
         > 
@@ -29,7 +29,7 @@
             </tr>
         </tbody>
       </table>
-      <div>
+      <div style="display: flex;flex-direction: row; row-gap: 10px; width: 100%; align-items: center; justify-content: center;">
         <v-btn
           variant="outlined"
           color="error"
@@ -89,18 +89,21 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col style="min-height: 300px;max-height: 400px;" >
-              <h3> Disciplinas Disponíveis:</h3>
-                <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
+            <v-col style="display: flex;flex-direction: column; row-gap: 5px; justify-content: center;">
+               <h3> Disciplinas Disponíveis:</h3>
+                <div>
+                  <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
+                </div>
+                <v-btn
+                variant="outlined"
+                color="default"
+                class="btn-conflicts"
+                @click="change_btn_state_conflict()"> Remover Conflitos
+              </v-btn>
             </v-col>
           </v-row>
         </v-card>
-        <v-btn
-          variant="outlined"
-          color="default"
-          class="btn-conflicts"
-          @click="change_btn_state_conflict()"> Remover Conflitos
-        </v-btn>
+        
       </v-col>
     </v-row>
   </v-container>
@@ -196,33 +199,33 @@ export default {
         redirect: 'follow'
       };
      
-      fetch("https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas/prof", requestOptions)
-        .then(response => response.text())
-        .then(result => {
-            let obj;
-            obj = JSON.parse(result)
-            if(obj.length !== 0){
-            let str = value.NOME.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-            let arr = obj[0]['NOME DA UC'].map(string => {
-              return string
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase();
-            });
-            let index = JSON.stringify(arr.indexOf(str))
-            if(index != -1){
-              value.taxa = obj[0]['REPROVADOS'][index]
-            }
-            else{
-              value.taxa = 'Sem dados'
-            }
-          } else{
-            value.taxa = 'Sem dados'
-          }
+      // fetch("https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas/prof", requestOptions)
+      //   .then(response => response.text())
+      //   .then(result => {
+      //       let obj;
+      //       obj = JSON.parse(result)
+      //       if(obj.length !== 0){
+      //       let str = value.NOME.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+      //       let arr = obj[0]['NOME DA UC'].map(string => {
+      //         return string
+      //           .normalize("NFD")
+      //           .replace(/[\u0300-\u036f]/g, "")
+      //           .toLowerCase();
+      //       });
+      //       let index = JSON.stringify(arr.indexOf(str))
+      //       if(index != -1){
+      //         value.taxa = obj[0]['REPROVADOS'][index]
+      //       }
+      //       else{
+      //         value.taxa = 'Sem dados'
+      //       }
+      //     } else{
+      //       value.taxa = 'Sem dados'
+      //     }
            
           
-        })
-        .catch(error => console.log('error', error));
+      //   })
+      //   .catch(error => console.log('error', error));
 
 
 
@@ -281,8 +284,6 @@ export default {
 }
 
 
-
-    
 function loadtoTableAfterParse()
 {
   ListId = JSON.parse(FileData);
@@ -291,12 +292,12 @@ function loadtoTableAfterParse()
   {
     thisObjAlias.updateTable(value,value);
     thisObjAlias.ListaIdsSelecionadas.push(value);
+    thisObjAlias.quantidade +=  value.HORARIO.length
   });
+  
   thisObjAlias = undefined;
   FileData = undefined;
   ListId = undefined;
-
-  
 }
    
   
@@ -328,11 +329,10 @@ function loadtoTableAfterParse()
     margin-top: 10px;
   }
 .tabela-card{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  row-gap: 20px;
+  display: grid;
+  grid-template-rows: 1fr;
+  row-gap: 10px ;
+  width: auto;
 }
  table {
     width: 100%;
@@ -371,8 +371,8 @@ function loadtoTableAfterParse()
   }
 
   .escolhidas{
-    min-height: 400px;
-    max-height: 400px;
+    min-height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
   }
 
@@ -385,7 +385,7 @@ function loadtoTableAfterParse()
 
   .tabela-card{
     overflow-x: scroll;
-   
+  
   }
 
   th {

@@ -14,7 +14,7 @@
       ></v-text-field>
     </v-card-text>
 
-  <div style="max-height: 390px;overflow-y: scroll;">
+  <div style="max-height: 300px; overflow-y: scroll; ">
     <div style="width: 100%;display: flex; align-items: center; justify-content: center;" >
       <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
     </div>
@@ -32,13 +32,21 @@
             <div style="display: flex;">
             Dias: <p v-for="dia in item.DIA"> {{ dia }}/</p>
             </div>
+           
             Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
+            <div style="display: flex;">
+          
+            </div>
           </v-card-subtitle>
 
           <v-card-actions>
             <v-btn variant="outlined" v-if="item.COLOR != '#FF0000'" @click="emitValue(item)" :disabled="loading">
 
               Adicionar
+            </v-btn>
+            <v-btn variant="outlined" v-if="item.COLOR != '#FF0000'" @click="descricao(item)" :disabled="loading">
+
+              Descrição
             </v-btn>
           </v-card-actions>
      
@@ -67,6 +75,7 @@ export default {
       vazio: false,
       btn_state:false,
       numeroDeMateriasNaoConflitantes: 0,
+      base_address: "https://www.unifesp.br/campus/sjc/images/sjc/Secretaria_de_Gradua%C3%A7%C3%A3o/UCs_Vigentes/"
     };
   },
   mounted() {
@@ -114,6 +123,15 @@ export default {
       }
   },  
   methods: {
+
+    descricao(obj){
+      let nome = obj.NOME;
+      nome = nome.split('(')[0];
+      nome = nome.trimRight()
+      nome = nome.replace(/ /g, "_");
+      
+      window.open(this.base_address + nome[0] + "/" + nome, "_blank");
+    },
 
     filtraMateria(item){
       if(this.horario === null && this.dia === null) {
