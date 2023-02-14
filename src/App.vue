@@ -113,11 +113,24 @@
         
       </v-col>
     </v-row>
+    <v-row style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <v-alert
+      v-model="alert"
+      border="start"
+      variant="tonal"
+      closable
+      close-label="Close Alert"
+      color="deep-purple-accent-4"
+      >
+      Algum problema? Faça um pull request em <img src='../public/github-mark.png' style="max-width: 25px; margin-left: 5px;margin-right: 5px; ">ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+      </v-alert>
+    </v-row>
+   
   </v-container>
-  
-   <Modal v-if="showModal" @close="showModal = false" :title="modalTitle">
+
+<Modal v-if="showModal" @close="showModal = false" :title="modalTitle">
     <ListaUC :horario="hours[this.row]" :dia="daysOfWeek[this.col]" :listaSelecionadas="ListaIdsSelecionadas" @updateValue="updateValue"></ListaUC>
-  </Modal>
+</Modal>
 </template>
 
 <script>
@@ -415,6 +428,14 @@ function loadtoTableAfterParse()
   .tabela-card{
     overflow-x: scroll;
   
+  }
+
+  .teste{
+    position: -webkit-sticky;  /* <----- required (for WebKit) */
+      position: sticky;  /* <------------- required              */
+      bottom: 10px;  /* <----------------- required              */
+  border: 1px solid red;
+      background: silver;
   }
 
   th {
