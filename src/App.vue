@@ -49,14 +49,14 @@
           color="default"
           style="margin-right: 5px;"
 
-          @click="save"> Importar
+          @click="save"> Exportar
         </v-btn> 
 
         <v-btn
           variant="outlined"
           color="default"
           style="margin-right: 5px;"
-          @click="load"> Exportar
+          @click="load"> Importar
         </v-btn> 
         
       </div>

@@ -27,17 +27,17 @@
             {{ item.NOME }}
           </v-card-title>
 
-          <v-card-subtitle>
-            <div style="display: flex;">Horário: <p v-for="hora in item.HORARIO"> {{ hora }}/</p><br></div>
+          <v-card-text>
             <div style="display: flex;">
-            Dias: <p v-for="dia in item.DIA"> {{ dia }}/</p>
+             <pre style="font-size: 1.2em; color: white;">{{ formata_horario(item) }}</pre>
             </div>
+          
            
             Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
             <div style="display: flex;">
           
             </div>
-          </v-card-subtitle>
+          </v-card-text>
 
           <v-card-actions>
             <v-btn variant="outlined" v-if="item.COLOR != '#FF0000'" @click="emitValue(item)" :disabled="loading">
@@ -200,6 +200,13 @@ export default {
       setTimeout(()=>{this.loading = false;},500)
 
       
+    },
+    formata_horario(item){
+      let string = "";
+      for(let i = 0; i < item.DIA.length; i++){
+        string += item.DIA[i] + " - " + item.HORARIO[i] + "\r\n";
+      }
+      return string
     }
     
   }
