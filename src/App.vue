@@ -122,7 +122,7 @@
       close-label="Close Alert"
       color="deep-purple-accent-4"
       >
-      Algum problema? Faça um pull request em <img src='../public/github-mark.png' style="max-width: 25px; margin-left: 5px;margin-right: 5px; ">ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+      Algum problema? Faça um pull request em <a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; margin-left: 5px;margin-right: 5px; "></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
       </v-alert>
     </v-row>
    
