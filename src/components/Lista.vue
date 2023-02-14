@@ -82,7 +82,7 @@ export default {
     this.atualizarDados();
 
     (async() => {
-      axios.post('https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas', {
+      axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
           items: []
         }).then(response => 
         {
