@@ -8,7 +8,7 @@
           outlined
           tile
         > 
-      <table  id="target">
+      <table  id="canvas">
         <thead>
           <tr>
             <th>Horário</th>
@@ -30,12 +30,18 @@
         </tbody>
       </table>
       <div style="display: flex;flex-direction: row; row-gap: 10px; width: 100%; align-items: center; justify-content: center;">
+
         <v-btn
           variant="outlined"
           color="error"
           style="margin-right: 5px;"
-
           @click="cleanAll()"> Limpar grade<font-awesome-icon class="X" icon="fa-solid fa-x" />
+        </v-btn>
+        <v-btn
+          variant="outlined"
+          color="success"
+          style="margin-right: 5px;"
+          @click="screenShot()"> Salvar como png
         </v-btn>
         
         <v-btn
@@ -43,15 +49,16 @@
           color="default"
           style="margin-right: 5px;"
 
-          @click="save"> Salvar
+          @click="save"> Importar
         </v-btn> 
 
         <v-btn
           variant="outlined"
           color="default"
-
-          @click="load"> Carregar
+          style="margin-right: 5px;"
+          @click="load"> Exportar
         </v-btn> 
+        
       </div>
         </v-card>
       </v-col>
@@ -98,7 +105,7 @@
                 variant="outlined"
                 color="default"
                 class="btn-conflicts"
-                @click="change_btn_state_conflict()"> Remover Conflitos
+                @click="change_btn_state_conflict()"> Remover Disciplinas Indisponíveis
               </v-btn>
             </v-col>
           </v-row>
@@ -151,7 +158,9 @@ export default {
     }
   },
   mounted(){
-    this.target = this.$refs.target;
+    let canvasScript = document.createElement('script')
+    canvasScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js')
+    document.head.appendChild(canvasScript);
   },
   methods: {
     showAlert(row, col) {
@@ -274,6 +283,26 @@ export default {
     reader.onload = function() { FileData = reader.result; loadtoTableAfterParse(); }
     } , false);
     inputFileDocument.click();
+  },
+  screenShot()
+  {
+    let div = document.getElementById('canvas');
+
+            // Use the html2canvas
+            // function to take a screenshot
+            // and append it
+            // to the output div
+            html2canvas(div).then(
+                function (canvas) {
+                  const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+                  const a = document.createElement('a')
+                  let currentDateTime = new Date().toLocaleString();
+                  currentDateTime = currentDateTime.split(',');
+                  a.setAttribute('download', 'UCS-ScreenShot ' + currentDateTime[0]  + currentDateTime[1] + '.png')
+                  a.setAttribute('href', image)
+                  a.click()
+            canvas.remove()
+                })
   },
   change_btn_state_conflict()
   {
