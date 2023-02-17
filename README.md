@@ -1,34 +1,30 @@
-# montador
+# Montador de grades
 
-This template should help get you started developing with Vue 3 in Vite.
+Este é um projeto que consiste em um site que ajuda a montar a grade curricular de alunos de uma universidade. Com este site, os alunos poderão escolher as disciplinas que desejam cursar e o sistema irá verificar se há conflito de horários entre elas. Caso haja algum conflito, o sistema não permitirá que as disciplinas sejam selecionadas.
 
-## API
+## Como usar 
 
-[montador-de-grades-api](https://github.com/cgmoraes/montador-de-grades-api)
+* Acesse o site do Montador de grades.
+* Escolha as disciplinas que deseja cursar.
+* Verifique se há conflito de horários entre as disciplinas selecionadas.
+* Caso haja conflito, remova alguma disciplina e tente novamente.
+*Após selecionar as disciplinas sem conflitos, finalize a montagem da sua grade.
 
-## Recommended IDE Setup
+# Tecnologias utilizadas
+Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+* HTML
+* CSS
+* JavaScript
+* Vue.js
+* Vuetify
 
-## Customize configuration
+# Como contribuir
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+* Faça um fork deste repositório.
+* Crie uma branch com a sua feature: git checkout -b minha-feature.
+* Faça commit das suas alterações: git commit -m 'feat: Minha nova feature'.
+* Envie a sua branch: git push origin minha-feature.
+* Abra um Pull Request explicando as suas alterações.
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-"# montador-de-grades" 
+Para o back-end o repositório está hospedado em: https://github.com/cgmoraes/montador-de-grades-api, consulte para mais informações de como utilizá-la.
