@@ -194,6 +194,7 @@ export default {
 
     },
     emitValue(item) {
+      console.log(item)
       this.loading = true;
       this.$emit('updateValue', item);
       this.atualizarDados();

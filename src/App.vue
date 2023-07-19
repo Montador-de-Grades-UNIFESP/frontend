@@ -68,7 +68,8 @@
           outlined
           tile
         >
-          <v-row>
+        <v-container class="ordem">
+          <v-row class="flex-item" style="order: 2;" >
             <v-col>
               <h3> Disciplinas Escolhidas: </h3> 
                Total de Créditos: {{ quantidade*2 }}
@@ -95,8 +96,8 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col style="display: flex;flex-direction: column; row-gap: 5px; justify-content: center;">
+          <v-row  class="flex-item">
+            <v-col  style="display: flex;flex-direction: column; row-gap: 5px; justify-content: center;">
                <h3> Disciplinas Disponíveis:</h3>
                 <div>
                   <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
@@ -109,6 +110,7 @@
               </v-btn>
             </v-col>
           </v-row>
+        </v-container>
         </v-card>
         
       </v-col>
@@ -140,7 +142,7 @@ var ListId;
 var thisObjAlias;
 
 import ModalButton from './components/ModalButton.vue';
-import Modal from './components/Modal.vue';
+import Modal from './components/modal.vue';
 import ListaUC from './components/Lista.vue';
 
 export default {
@@ -197,6 +199,7 @@ export default {
       this.showModal = true
     }, 
       updateTable(obj, valor){
+      
       for(let i = 0; i < obj.DIA.length; i++){
         let dia = this.daysOfWeek.indexOf(obj.DIA[i])
         let horario = this.hours.indexOf(obj.HORARIO[i])
@@ -204,6 +207,7 @@ export default {
       }
     }, 
     updateValue(value){
+      
       this.updateTable(value, value);
 
       var myHeaders = new Headers();
@@ -356,6 +360,22 @@ function loadtoTableAfterParse()
   cursor:pointer;
   background-color: #cdeeff;
 }
+
+.item{
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.item div{
+  word-wrap: break-word;
+  font-size: 100%;
+  white-space: pre-wrap;
+ 
+}
+
 .X{
   padding-left: 7px;
   color: #c5707f;
@@ -418,9 +438,6 @@ function loadtoTableAfterParse()
     overflow-y: scroll;
   }
 
-  .item{
-    font-size: 1em;
-  }
 
   @media (max-width: 500px) {
 
@@ -465,7 +482,15 @@ function loadtoTableAfterParse()
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+  .ordem{
+    display: flex;
+    flex-direction: column;
+  }
 
+  .flex-item {
+    background-color: #f5f5f5;
+    margin-bottom: 40px;
+  }
   
 }
 
