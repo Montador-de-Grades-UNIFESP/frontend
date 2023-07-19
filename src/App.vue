@@ -176,6 +176,14 @@ export default {
     let canvasScript = document.createElement('script')
     canvasScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js')
     document.head.appendChild(canvasScript);
+    if (localStorage.ListaIdsSelecionadas) { 
+      this.ListaIdsSelecionadas = JSON.parse(localStorage.ListaIdsSelecionadas)
+      this.ListaIdsSelecionadas.forEach(value => {
+        this.updateTable(value,value);
+      })
+
+    }
+  
   },
   methods: {
     showAlert(row, col) {
@@ -184,6 +192,8 @@ export default {
         let materia = this.tabela[row][col]
         this.quantidade -= this.ListaIdsSelecionadas.filter(item => item.ID === materia.ID)[0].HORARIO.length
         this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== materia.ID)
+        console.log(this.ListaIdsSelecionadas)
+        localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
         for(let i = 0; i < materia.DIA.length; i++){
           let dia = this.daysOfWeek.indexOf(materia.DIA[i])
           let horario = this.hours.indexOf(materia.HORARIO[i])
@@ -209,7 +219,7 @@ export default {
     updateValue(value){
       
       this.updateTable(value, value);
-
+    
       var myHeaders = new Headers();
 
       var raw = JSON.stringify({
@@ -256,12 +266,15 @@ export default {
 
 
       this.ListaIdsSelecionadas.push(value)
+      localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
+  
       this.showModal = false
       this.quantidade += value.HORARIO.length
     },
     
     cleanAll(){
       this.ListaIdsSelecionadas = []
+      localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
       for(let i = 0; i < 6; i++){
         for(let j = 0; j < 6; j++){
           this.tabela[i][j] = ''
@@ -271,13 +284,13 @@ export default {
     },
     removeUC(obj){
       this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== obj.ID)
+      localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
       this.updateTable(obj, '')
       this.quantidade -= obj.HORARIO.length
     },
     save(){
     
    let UcsSelecionadasToJson = JSON.stringify(this.ListaIdsSelecionadas)
-      console.log(this.ListaIdsSelecionadas);
     var a = document.createElement("a");
     var file = new Blob([UcsSelecionadasToJson], {type: 'text/json'});
     a.href = URL.createObjectURL(file);
@@ -293,11 +306,11 @@ export default {
     inputFileDocument.setAttribute("type", "file");
     inputFileDocument.setAttribute("id", "upload");
     inputFileDocument.addEventListener("change",  (event) => {
-    ListId = this.ListaIdsSelecionadas;
-    thisObjAlias = this;  
-    var reader = new FileReader();
-    reader.readAsText(inputFileDocument.files[0])
-    reader.onload = function() { FileData = reader.result; loadtoTableAfterParse(); }
+      ListId = this.ListaIdsSelecionadas;
+      thisObjAlias = this;  
+      var reader = new FileReader();
+      reader.readAsText(inputFileDocument.files[0])
+      reader.onload = function() { FileData = reader.result; loadtoTableAfterParse(); }
     } , false);
     inputFileDocument.click();
   },
@@ -334,10 +347,12 @@ function loadtoTableAfterParse()
 {
   ListId = JSON.parse(FileData);
   thisObjAlias.ListaIdsSelecionadas = [];
+  localStorage.ListaIdsSelecionadas = thisObjAlias.ListaIdsSelecionadas
   ListId.forEach(value => 
   {
     thisObjAlias.updateTable(value,value);
     thisObjAlias.ListaIdsSelecionadas.push(value);
+    localStorage.ListaIdsSelecionadas = thisObjAlias.ListaIdsSelecionadas
     thisObjAlias.quantidade +=  value.HORARIO.length
   });
   

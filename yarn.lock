@@ -1311,6 +1311,11 @@ vite@^4.0.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-cookies@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.npmjs.org/vue-cookies/-/vue-cookies-1.8.3.tgz"
+  integrity sha512-VBRsyRMVdahBgFfh389TMHPmDdr4URDJNMk4FKSCfuNITs7+jitBDhwyL4RJd3WUsfOYNNjPAkfbehyH9AFuoA==
+
 vue@^3.0.0, vue@^3.2.0, vue@^3.2.25, vue@^3.2.45, "vue@>= 3.0.0 < 4", vue@3.2.47:
   version "3.2.47"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.47.tgz"
