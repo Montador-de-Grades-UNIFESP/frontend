@@ -176,10 +176,12 @@ export default {
     let canvasScript = document.createElement('script')
     canvasScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js')
     document.head.appendChild(canvasScript);
+    this.quantidade = 0
     if (localStorage.ListaIdsSelecionadas) { 
       this.ListaIdsSelecionadas = JSON.parse(localStorage.ListaIdsSelecionadas)
       this.ListaIdsSelecionadas.forEach(value => {
         this.updateTable(value,value);
+        this.quantidade += value.HORARIO.length
       })
 
     }
