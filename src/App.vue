@@ -116,14 +116,14 @@
     </v-row>
     <v-row class="d-flex flex-column align-center justify-center">
       <v-alert
-      v-model="alert"
-      border="start"
-      variant="tonal"
-      closable
-      close-label="Close Alert"
-      color="deep-purple-accent-4"
+        v-model="alert"
+        border="start"
+        variant="tonal"
+        title="Problemas?"
+        close-label="Close Alert"
+        color="deep-purple-accent-4"
       >
-      Algum problema? Faça um pull request em <a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; vertical-align: middle;" class="mx-1"></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; vertical-align: middle;" class="mx-1"></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
       </v-alert>
     </v-row>
    
@@ -150,6 +150,7 @@ export default {
     Modal,
     ListaUC
   },
+  name: 'App',
   data() {
     var tabela = [];
 
@@ -158,6 +159,7 @@ export default {
     }
 
     return {
+      alert: true,
       daysOfWeek: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
       hours: ['08h00-10h00', '10h00-12h00', '13h30-15h30', '15h30-17h30', '19h00-21h00', '21h00-23h00'],
       modalTitle: 'Título do Modal',
@@ -209,7 +211,7 @@ export default {
       this.modalTitle = 'Disciplinas diponíveis para '+ this.daysOfWeek[col] + ' ' + this.hours[row]
       this.showModal = true
     }, 
-      updateTable(obj, valor){
+    updateTable(obj, valor){
       
       for(let i = 0; i < obj.DIA.length; i++){
         let dia = this.daysOfWeek.indexOf(obj.DIA[i])
@@ -365,118 +367,6 @@ function loadtoTableAfterParse()
 
 <style scoped>
 
-.cell:hover{
-  cursor:pointer;
-  background-color: #cdeeff;
-}
-
-.item{
-  display: flex;
-  flex-direction: column;
-  row-gap: 4px;
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.item div{
-  word-wrap: break-word;
-  font-size: 100%;
-  white-space: pre-wrap;
-}
-
-.btn-conflicts {
-  padding-left: 50px;
-  padding-right: 50px;
-  margin-top: 10px;
-}
-
-.tabela-card{
-  display: grid;
-  grid-template-rows: 1fr;
-  row-gap: 10px ;
-  width: auto;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  text-align: center;
-  height: 100px;
-  width: 100px;
-  vertical-align: middle;
-}
-
-td {
-  border: 1px solid #302727;
-  max-width:100px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
-  height: 100px;
-  max-height: 100px;
-}
-
-th {
-  border: 1px solid #1b1818;
-  background-color: #ddd;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.escolhidas{
-  min-height: 300px;
-  max-height: 300px;
-  overflow-y: scroll;
-}
-
-@media (max-width: 500px) {
-
-  .tabela-card{
-    overflow-x: scroll;
-  }
-
-  .teste{
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 10px;
-    border: 1px solid red;
-    background: silver;
-  }
-
-  th {
-    text-align: center;   
-  }
-
-  td {
-    height: 50px;
-    max-width: 45px;
-    width: 40px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    text-align: center;
-    font-size: 10px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .ordem{
-    display: flex;
-    flex-direction: column;
-  }
-
-  .flex-item {
-    background-color: #f5f5f5;
-    margin-bottom: 40px;
-  }
-  
-}
+@import url('./style.css');
 
 </style>
