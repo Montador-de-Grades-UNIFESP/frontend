@@ -14,8 +14,8 @@
       ></v-text-field>
     </v-card-text>
 
-  <div style="max-height: 300px; overflow-y: scroll; ">
-    <div style="width: 100%;display: flex; align-items: center; justify-content: center;" >
+  <div style="max-height: 300px;" class="overflow-auto">
+    <div class="w-100 d-flex align-center justify-center">
       <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
     </div>
     
@@ -28,13 +28,12 @@
           </v-card-title>
 
           <v-card-text>
-            <div style="display: flex;">
+            <div class="d-flex">
              <pre style="font-size: 1.2em; color: white;">{{ formata_horario(item) }}</pre>
             </div>
           
-           
             Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
-            <div style="display: flex;">
+            <div class="d-flex">
           
             </div>
           </v-card-text>
@@ -130,7 +129,7 @@ export default {
       nome = nome.trimRight()
       nome = nome.replace(/ /g, "_");
       
-      window.open(this.base_address + nome[0] + "/" + nome, "_blank");
+      window.open(this.base_address + nome, "_blank");
     },
 
     filtraMateria(item){

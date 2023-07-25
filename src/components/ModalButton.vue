@@ -1,14 +1,14 @@
 <template>
     <div>
       <button @click="showModal = true">Abrir Modal</button>
-      <modal v-if="showModal" @close="showModal = false" :title="modalTitle">
+      <Modal v-if="showModal" @close="showModal = false" :title="modalTitle">
       {{ content }}
-      </modal>
+      </Modal>
     </div>
   </template>
   
   <script>
-  import Modal from './Modal.vue';
+import Modal from '@/components/Modal.vue';
   export default {
     components: {
         Modal
