@@ -8,7 +8,7 @@
           outlined
           tile
         > 
-      <table  id="canvas">
+      <table id="canvas" class="w-100">
         <thead>
           <tr>
             <th>Horário</th>
@@ -29,33 +29,31 @@
             </tr>
         </tbody>
       </table>
-      <div style="display: flex;flex-direction: row; row-gap: 10px; width: 100%; align-items: center; justify-content: center;">
-
+      <div class="d-flex flex-row w-100 align-content-space-around justify-center" style="row-gap: 10px;">
         <v-btn
           variant="outlined"
           color="error"
-          style="margin-right: 5px;"
-          @click="cleanAll()"> Limpar grade<font-awesome-icon class="X" icon="fa-solid fa-x" />
+          class="mr-1"
+          @click="cleanAll()"> Limpar grade<font-awesome-icon style="font-size: 1rem;" class="pl-1 text-red-darken-2" icon="fa-solid fa-x" />
         </v-btn>
         <v-btn
           variant="outlined"
           color="success"
-          style="margin-right: 5px;"
+          class="mr-1"
           @click="screenShot()"> Salvar como png
         </v-btn>
         
         <v-btn
           variant="outlined"
           color="default"
-          style="margin-right: 5px;"
-
+          class="mr-1"
           @click="save"> Exportar
         </v-btn> 
 
         <v-btn
           variant="outlined"
           color="default"
-          style="margin-right: 5px;"
+          class="mr-1"
           @click="load"> Importar
         </v-btn> 
         
@@ -74,7 +72,7 @@
               <h3> Disciplinas Escolhidas: </h3> 
                Total de Créditos: {{ quantidade*2 }}
               <v-card class="pa-2 escolhidas">
-                <v-card class="mx-auto Escolhida" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
+                <v-card class="mx-auto mb-2" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
                   <v-card-item>
                     <div>
                       <div class="text-overline mb-1">
@@ -97,16 +95,17 @@
             </v-col>
           </v-row>
           <v-row  class="flex-item">
-            <v-col  style="display: flex;flex-direction: column; row-gap: 5px; justify-content: center;">
-               <h3> Disciplinas Disponíveis:</h3>
+            <v-col class="d-flex flex-column justify-center" style="row-gap: 5px;">
+               <h3>Disciplinas Disponíveis:</h3>
                 <div>
                   <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
                 </div>
-                <v-btn
+                <v-btn 
+                height="auto"
                 variant="outlined"
                 color="default"
                 class="btn-conflicts"
-                @click="change_btn_state_conflict()"> Remover Disciplinas Indisponíveis
+                @click="change_btn_state_conflict()"><span class="text-wrap py-2">Remover Disciplinas Indisponíveis</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -115,16 +114,16 @@
         
       </v-col>
     </v-row>
-    <v-row style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <v-row class="d-flex flex-column align-center justify-center">
       <v-alert
-      v-model="alert"
-      border="start"
-      variant="tonal"
-      closable
-      close-label="Close Alert"
-      color="deep-purple-accent-4"
+        v-model="alert"
+        border="start"
+        variant="tonal"
+        title="Problemas?"
+        close-label="Close Alert"
+        color="deep-purple-accent-4"
       >
-      Algum problema? Faça um pull request em <a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; margin-left: 5px;margin-right: 5px; "></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; vertical-align: middle;" class="mx-1"></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
       </v-alert>
     </v-row>
    
@@ -142,7 +141,7 @@ var ListId;
 var thisObjAlias;
 
 import ModalButton from './components/ModalButton.vue';
-import Modal from './components/modal.vue';
+import Modal from '@/components/Modal.vue';
 import ListaUC from './components/Lista.vue';
 
 export default {
@@ -151,6 +150,7 @@ export default {
     Modal,
     ListaUC
   },
+  name: 'App',
   data() {
     var tabela = [];
 
@@ -159,6 +159,7 @@ export default {
     }
 
     return {
+      alert: true,
       daysOfWeek: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
       hours: ['08h00-10h00', '10h00-12h00', '13h30-15h30', '15h30-17h30', '19h00-21h00', '21h00-23h00'],
       modalTitle: 'Título do Modal',
@@ -210,7 +211,7 @@ export default {
       this.modalTitle = 'Disciplinas diponíveis para '+ this.daysOfWeek[col] + ' ' + this.hours[row]
       this.showModal = true
     }, 
-      updateTable(obj, valor){
+    updateTable(obj, valor){
       
       for(let i = 0; i < obj.DIA.length; i++){
         let dia = this.daysOfWeek.indexOf(obj.DIA[i])
@@ -243,8 +244,8 @@ export default {
       //       let obj;
       //       obj = JSON.parse(result)
       //       if(obj.length !== 0){
-      //       let str = value.NOME.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-      //       let arr = obj[0]['NOME DA UC'].map(string => {
+      //         let str = value.NOME.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+      //         let arr = obj[0]['NOME DA UC'].map(string => {
       //         return string
       //           .normalize("NFD")
       //           .replace(/[\u0300-\u036f]/g, "")
@@ -264,8 +265,6 @@ export default {
           
       //   })
       //   .catch(error => console.log('error', error));
-
-
 
       this.ListaIdsSelecionadas.push(value)
       localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
@@ -362,153 +361,12 @@ function loadtoTableAfterParse()
   FileData = undefined;
   ListId = undefined;
 }
-   
-  
-
 
 </script>
 
+
 <style scoped>
 
-
-
-
-.cell:hover{
-  cursor:pointer;
-  background-color: #cdeeff;
-}
-
-.item{
-  display: flex;
-  flex-direction: column;
-  row-gap: 4px;
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.item div{
-  word-wrap: break-word;
-  font-size: 100%;
-  white-space: pre-wrap;
- 
-}
-
-.X{
-  padding-left: 7px;
-  color: #c5707f;
-  font-size: 1rem;
-}
-.Escolhida{
-  margin-bottom: 10px;
-}
-.btn-conflicts
-  {
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-top: 10px;
-  }
-.tabela-card{
-  display: grid;
-  grid-template-rows: 1fr;
-  row-gap: 10px ;
-  width: auto;
-}
- table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    height: 100px;
-    width: 100px;
-    text-align: center;     /* alinhamento horizontal */
-    vertical-align: middle;
-  }
-  td {
-    max-width:100px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    height: 100px;
-    max-height: 100px;
-    text-align: center;
-    border: 1px solid #302727;
-  }
-
-  th {
-    border: 1px solid #302727;
-    background-color: #ddd;
-    align-items: center;
-    align-content: center;
-    
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .escolhidas{
-    min-height: 300px;
-    max-height: 300px;
-    overflow-y: scroll;
-  }
-
-
-  @media (max-width: 500px) {
-
-
-  .tabela-card{
-    overflow-x: scroll;
-  
-  }
-
-  .teste{
-    position: -webkit-sticky;  /* <----- required (for WebKit) */
-      position: sticky;  /* <------------- required              */
-      bottom: 10px;  /* <----------------- required              */
-  border: 1px solid red;
-      background: silver;
-  }
-
-  th {
-    border: 1px solid #1b1818;
-    text-align: left;
-    text-align: center;   
-    vertical-align: middle;
-  }
-  td {
-    border: 1px solid #302727;
-    height: 50px;
-    max-width: 45px;
-    width: 40px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    text-align: center;
-    font-size: 10px;
-  }
-
-  th {
-    background-color: #ddd;
-    align-items: center;
-    align-content: center;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  .ordem{
-    display: flex;
-    flex-direction: column;
-  }
-
-  .flex-item {
-    background-color: #f5f5f5;
-    margin-bottom: 40px;
-  }
-  
-}
+@import url('./style.css');
 
 </style>

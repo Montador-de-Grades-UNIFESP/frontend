@@ -8,7 +8,11 @@
         <slot></slot>
       </div>
       <div class="modal-footer">
-        <button @click="$emit('close')">Fechar</button>
+        <v-btn
+          variant="outlined"
+          class="mr-1"
+          @click="$emit('close')"> Fechar
+        </v-btn>
       </div>
     </div>
   </div>
@@ -28,7 +32,6 @@ export default {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  ;
 }
 
 .modal-wrapper {
