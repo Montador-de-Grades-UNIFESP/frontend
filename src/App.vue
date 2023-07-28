@@ -34,7 +34,7 @@
           variant="outlined"
           color="error"
           class="mr-1"
-          @click="cleanAll()"> Limpar grade<font-awesome-icon style="font-size: 1rem;" class="pl-1 text-red-darken-2" icon="fa-solid fa-x" />
+          @click="cleanAll()"> Limpar grade<font-awesome-icon class="pl-1 text-base text-red-darken-2" icon="fa-solid fa-x" />
         </v-btn>
         <v-btn
           variant="outlined"
@@ -82,7 +82,6 @@
                         {{value.NOME}}
                       </div>
                       <div class="text-caption">Professor(a): {{ value.PROFESSORES }}</div>
-                      <!-- <div class="text-caption">Taxa de reprovação: {{ value.taxa }}</div> -->
                     </div>
                   </v-card-item>
                   <v-card-actions>
@@ -123,7 +122,7 @@
         close-label="Close Alert"
         color="deep-purple-accent-4"
       >
-      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; vertical-align: middle;" class="mx-1"></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><font-awesome-icon class="mx-1 alert-icon text-grey-darken-4" icon="fa-brands fa-github"/></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
       </v-alert>
     </v-row>
    

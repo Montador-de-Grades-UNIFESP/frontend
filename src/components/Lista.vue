@@ -2,7 +2,6 @@
   <div>
     <v-card-text>
       <v-text-field
-
         density="compact"
         variant="solo"
         label="Pesquise a disciplina desejada..."
@@ -10,7 +9,6 @@
         single-line
         hide-details 
         v-model="pesquisa"
-    
       ></v-text-field>
     </v-card-text>
 
@@ -29,7 +27,7 @@
 
           <v-card-text>
             <div class="d-flex">
-             <pre style="font-size: 1.2em; color: white;">{{ formata_horario(item) }}</pre>
+             <pre class="text-xl text-white">{{ formata_horario(item) }}</pre>
             </div>
           
             Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
