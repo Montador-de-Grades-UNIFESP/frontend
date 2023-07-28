@@ -27,7 +27,7 @@
 
           <v-card-text>
             <div class="d-flex">
-             <pre class="text-xl text-white">{{ formata_horario(item) }}</pre>
+              <span class="text-white lista-horario">{{ formata_horario(item) }}</span>
             </div>
           
             Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
@@ -76,57 +76,60 @@ export default {
     };
   },
   mounted() {
-    this.atualizarDados();
-
-    (async() => {
-      axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
+    const fetchDisciplinas = async () => {
+      try {
+        const { data } = await axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
           items: []
-        }).then(response => 
-        {
-          this.allUnfilteredDisciplines = response.data;
-          this.allUnfilteredDisciplines.forEach(x => x.COLOR = "#FF0000");
-        }).catch(function (error) {
-          console.log(error);
         });
-    })();
+        this.allUnfilteredDisciplines = data;
+        this.allUnfilteredDisciplines.forEach(x => x.COLOR = "#FF0000");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchDisciplinas();
+
+    this.atualizarDados();
   }, 
   watch:{
     listaSelecionadas: {
       handler: function () {
         this.atualizarDados()
-      }, deep:true},
+      }, 
+      deep: true
+    },
     pesquisa: {
       handler: function () {
         if(this.pesquisa === ""){
           this.itensFiltered = this.items
         }
 
-        this.itensFiltered = this.items.filter(item => deburr(item.NOME).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(deburr(this.pesquisa).normalize('NFC').replace(/[\u0300-\u036f]/g, "").toLowerCase()))
-        if(this.itensFiltered.length === 0){
-            this.vazio = true
-          }
-          else{
-            this.vazio = false
-          }
-      }, deep:true},
-      
-      btn_state_change: 
-      {
+        const query = this.pesquisa.toLowerCase();
+        const regex = /[\u0300-\u036f]/g;
+        const normalizedQuery = query.normalize('NFD').replace(regex, '');
 
-        handler : function() 
-        {
-            this.itensFiltered = this.items.filter(function(v){return v.COLOR != "#FF0000"});
-          }, deep:true
-      }
+        this.itensFiltered = this.items.filter(item => {
+          const normalizedItemName = item.NOME.normalize('NFD').replace(regex, '');
+          return deburr(normalizedItemName).toLowerCase().includes(deburr(normalizedQuery));
+        });
+
+        this.vazio = this.itensFiltered.length === 0;
+      }, 
+      deep:true
+    },
+    btn_state_change: {
+      handler : function () {
+        this.itensFiltered = this.items.filter(v => v.COLOR !== "#FF0000");
+      }, 
+      deep:true
+    }
   },  
   methods: {
 
     descricao(obj){
-      let nome = obj.NOME;
-      nome = nome.split('(')[0];
-      nome = nome.trimRight()
-      nome = nome.replace(/ /g, "_");
-      
+      // retira todos os textos entre parênteses ou colchetes e substitui os espaços por underline
+      const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
       window.open(this.base_address + nome, "_blank");
     },
 
@@ -135,76 +138,54 @@ export default {
         return true
       }
 
-      if(this.itensFiltered.length === 0){
-        this.vazio = true
-      }
-      else{
-        this.vazio = false
-      }
-      return item.HORARIO.includes(this.horario) && item.DIA.includes(this.dia);
+      this.vazio = this.itensFiltered.length === 0;
+
+      const hasHorario = this.horario ? item.HORARIO.includes(this.horario) : true;
+      const hasDia = this.dia ? item.DIA.includes(this.dia) : true;
+
+      return hasHorario && hasDia;
     },
 
-    atualizarDados(){
-      this.items = [];
-      (async() =>{
-        let ids = [];
-        for(let i = 0; i < this.listaSelecionadas.length; i++){
-          ids.push(this.listaSelecionadas[i].ID)
-        }
-        axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
+    async atualizarDados(){
+      const ids = this.listaSelecionadas.map(item => item.ID);
+
+      try {
+        const response = await axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
           items: ids
-        })
-        .then(response => {
-          this.items = response.data.filter(this.filtraMateria)
-
-          this.items.forEach(x => {x.COLOR = "#385F73"});
-          this.allUnfilteredDisciplines.forEach(x => {x.COLOR = "#385F73"});
-          this.itensFiltered = this.items.filter(function(v){return v.COLOR != "#FF0000"});
-          if(this.itensFiltered.length === 0){
-            this.vazio = true
-          }
-          else{
-            this.vazio = false
-          }
-          let exists = false;
-          for(let i = 0; i < this.allUnfilteredDisciplines.length; i ++)
-          {
-            for(let j = 0; j < this.items.length; j ++)
-            {
-              if(this.allUnfilteredDisciplines[i].ID == this.items[j].ID) {exists = true; break;}
-            }
-            if(exists == false) {
-                if(this.allUnfilteredDisciplines[i].COLOR != "#FF0000")
-                {
-                  this.allUnfilteredDisciplines[i].COLOR = "#FF0000";
-                  this.itensFiltered.push(this.allUnfilteredDisciplines[i]);
-                }
-              }
-            exists = false;
-          }
-        })
-
-        .catch(function (error) {
-          console.log(error);
         });
-      })();
+        const items = response.data.filter(this.filtraMateria);
+        items.forEach(item_2 => item_2.COLOR = '#385F73');
+        this.allUnfilteredDisciplines.forEach(item_3 => item_3.COLOR = '#385F73');
 
+        const itensFiltered = items.filter(item_4 => item_4.COLOR !== '#FF0000');
+        this.itensFiltered = itensFiltered;
+        this.vazio = itensFiltered.length === 0;
+
+        this.allUnfilteredDisciplines.forEach(item_5 => {
+          // test if at least one of the items is in the list and the color is not red
+          if (!items.some(item_6 => item_6.ID === item_6.ID) && item_5.COLOR !== '#FF0000') {
+            item_5.COLOR = '#FF0000';
+            this.itensFiltered.push(item_5);
+          }
+        });
+        this.items = items;
+        return response;
+
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     },
     emitValue(item) {
-      console.log(item)
       this.loading = true;
       this.$emit('updateValue', item);
-      this.atualizarDados();
-      setTimeout(()=>{this.loading = false;},500)
-
-      
+      this.atualizarDados()
+        .finally(() => {
+          this.loading = false;
+        });
     },
-    formata_horario(item){
-      let string = "";
-      for(let i = 0; i < item.DIA.length; i++){
-        string += item.DIA[i] + " - " + item.HORARIO[i] + "\r\n";
-      }
-      return string
+    formata_horario(item) {
+      return item.DIA.map((dia, index) => `${dia} - ${item.HORARIO[index]}`).join('\r\n');
     }
     
   }
@@ -213,32 +194,10 @@ export default {
 </script>
 
 <style>
-
-.card {
-  display: flex;
-  flex-direction: column;
-  padding-top: 10px;
-  border: 1px solid black;
-}
-
-.card:hover{
-  cursor: pointer;
-}
-
-.itens{
-    display: flex;
-    flex-direction: column;
-    max-height: 500px;
-    overflow-y: scroll;
-}
-
-.menu{
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-body{
-  overflow: hidden;
+.lista-horario {
+    font-family: monospace,monospace;
+    white-space: pre-wrap;
+    font-size: 1.2em;
 }
 
 </style>
