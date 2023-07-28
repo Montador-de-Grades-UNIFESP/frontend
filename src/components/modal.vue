@@ -1,13 +1,13 @@
 <template>
   <div class="modal-overlay">
     <div class="modal-wrapper">
-      <div class="modal-header">
+      <div class="modal-header mb-4">
         {{ title }}
       </div>
       <div class="modal-body">
         <slot></slot>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer text-right mt-4">
         <v-btn
           variant="outlined"
           class="mr-1"
@@ -42,22 +42,15 @@ export default {
   background-color: white;
   padding: 1rem;
   border-radius: 0.5rem;
-  max-width: 80vw
+  max-width: 80vw;
 }
 
 .modal-header {
   font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.modal-footer {
-  text-align: right;
-  margin-top: 1rem;
 }
 
 .modal-body{
   height: 400px;
-  overflow-y: scroll;
   max-height: 500px;
 }
 

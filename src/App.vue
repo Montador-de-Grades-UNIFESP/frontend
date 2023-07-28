@@ -34,7 +34,7 @@
           variant="outlined"
           color="error"
           class="mr-1"
-          @click="cleanAll()"> Limpar grade<font-awesome-icon style="font-size: 1rem;" class="pl-1 text-red-darken-2" icon="fa-solid fa-x" />
+          @click="cleanAll()"> Limpar grade<font-awesome-icon class="pl-1 text-base text-red-darken-2" icon="fa-solid fa-x" />
         </v-btn>
         <v-btn
           variant="outlined"
@@ -82,7 +82,6 @@
                         {{value.NOME}}
                       </div>
                       <div class="text-caption">Professor(a): {{ value.PROFESSORES }}</div>
-                      <!-- <div class="text-caption">Taxa de reprovação: {{ value.taxa }}</div> -->
                     </div>
                   </v-card-item>
                   <v-card-actions>
@@ -123,7 +122,7 @@
         close-label="Close Alert"
         color="deep-purple-accent-4"
       >
-      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><img src='../public/github-mark.png' style="max-width: 25px; vertical-align: middle;" class="mx-1"></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><font-awesome-icon class="mx-1 alert-icon text-grey-darken-4" icon="fa-brands fa-github"/></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
       </v-alert>
     </v-row>
    
@@ -143,6 +142,7 @@ var thisObjAlias;
 import ModalButton from './components/ModalButton.vue';
 import Modal from '@/components/Modal.vue';
 import ListaUC from './components/Lista.vue';
+import html2canvas from 'html2canvas';
 
 export default {
   components: {
@@ -174,9 +174,6 @@ export default {
     }
   },
   mounted(){
-    let canvasScript = document.createElement('script')
-    canvasScript.setAttribute('src', 'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js')
-    document.head.appendChild(canvasScript);
     this.quantidade = 0
     if (localStorage.ListaIdsSelecionadas) { 
       this.ListaIdsSelecionadas = JSON.parse(localStorage.ListaIdsSelecionadas)
@@ -184,35 +181,42 @@ export default {
         this.updateTable(value,value);
         this.quantidade += value.HORARIO.length
       })
-
     }
   
   },
   methods: {
-    showAlert(row, col) {
-      // Removendo matéria
-      if(this.tabela[row][col] != ''){
-        let materia = this.tabela[row][col]
-        this.quantidade -= this.ListaIdsSelecionadas.filter(item => item.ID === materia.ID)[0].HORARIO.length
-        this.ListaIdsSelecionadas = this.ListaIdsSelecionadas.filter(item => item.ID !== materia.ID)
-        console.log(this.ListaIdsSelecionadas)
-        localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
-        for(let i = 0; i < materia.DIA.length; i++){
-          let dia = this.daysOfWeek.indexOf(materia.DIA[i])
-          let horario = this.hours.indexOf(materia.HORARIO[i])
-          this.tabela[horario][dia] = ''
-        }
-        this.tabela[row][col] = ''
-        
-        return
+    showAlert(rowIndex, colIndex) {
+
+      const cellValue = this.tabela[rowIndex][colIndex];
+
+      if (cellValue === '') {
+        this.row = rowIndex;
+        this.col = colIndex;
+        this.modalTitle = `Disciplinas diponíveis para ${this.daysOfWeek[colIndex]} ${this.hours[rowIndex]}`;
+        this.showModal = true;
+        return;
       }
-      this.row = row
-      this.col = col
-      this.modalTitle = 'Disciplinas diponíveis para '+ this.daysOfWeek[col] + ' ' + this.hours[row]
-      this.showModal = true
+
+      // Removendo matéria
+      const selectedSubject = this.ListaIdsSelecionadas.find(item => item.ID === cellValue.ID);
+      const selectedSubjectIndex = this.ListaIdsSelecionadas.indexOf(selectedSubject);
+      const selectedSubjectHours = selectedSubject.HORARIO.length;
+      
+      this.quantidade -= selectedSubjectHours;
+      this.ListaIdsSelecionadas.splice(selectedSubjectIndex, 1);
+      localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas);
+      
+      for (let i = 0; i < cellValue.DIA.length; i++) {
+        const dayIndex = this.daysOfWeek.indexOf(cellValue.DIA[i]);
+        const hourIndex = this.hours.indexOf(cellValue.HORARIO[i]);
+        this.tabela[hourIndex][dayIndex] = '';
+      }
+      
+      this.tabela[rowIndex][colIndex] = '';
+
+      return;
     }, 
     updateTable(obj, valor){
-      
       for(let i = 0; i < obj.DIA.length; i++){
         let dia = this.daysOfWeek.indexOf(obj.DIA[i])
         let horario = this.hours.indexOf(obj.HORARIO[i])
@@ -222,49 +226,6 @@ export default {
     updateValue(value){
       
       this.updateTable(value, value);
-    
-      var myHeaders = new Headers();
-
-      var raw = JSON.stringify({
-        "items": [
-          value.ID
-        ]
-      });
-
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-      };
-     
-      // fetch("https://montador-de-grades-api-upfpc35ezq-uc.a.run.app/disciplinas/prof", requestOptions)
-      //   .then(response => response.text())
-      //   .then(result => {
-      //       let obj;
-      //       obj = JSON.parse(result)
-      //       if(obj.length !== 0){
-      //         let str = value.NOME.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-      //         let arr = obj[0]['NOME DA UC'].map(string => {
-      //         return string
-      //           .normalize("NFD")
-      //           .replace(/[\u0300-\u036f]/g, "")
-      //           .toLowerCase();
-      //       });
-      //       let index = JSON.stringify(arr.indexOf(str))
-      //       if(index != -1){
-      //         value.taxa = obj[0]['REPROVADOS'][index]
-      //       }
-      //       else{
-      //         value.taxa = 'Sem dados'
-      //       }
-      //     } else{
-      //       value.taxa = 'Sem dados'
-      //     }
-           
-          
-      //   })
-      //   .catch(error => console.log('error', error));
 
       this.ListaIdsSelecionadas.push(value)
       localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
@@ -289,56 +250,53 @@ export default {
       this.updateTable(obj, '')
       this.quantidade -= obj.HORARIO.length
     },
-    save(){
-    
-   let UcsSelecionadasToJson = JSON.stringify(this.ListaIdsSelecionadas)
-    var a = document.createElement("a");
-    var file = new Blob([UcsSelecionadasToJson], {type: 'text/json'});
-    a.href = URL.createObjectURL(file);
-    let currentDateTime = new Date().toLocaleString();
-    currentDateTime = currentDateTime.split(',');
-    a.download = "SelectedUCS " + currentDateTime[0]  + currentDateTime[1] + ".json";
-    a.click();
-  
-  },
-  load()
-  {
-    var inputFileDocument = document.createElement("input");
-    inputFileDocument.setAttribute("type", "file");
-    inputFileDocument.setAttribute("id", "upload");
-    inputFileDocument.addEventListener("change",  (event) => {
-      ListId = this.ListaIdsSelecionadas;
-      thisObjAlias = this;  
-      var reader = new FileReader();
-      reader.readAsText(inputFileDocument.files[0])
-      reader.onload = function() { FileData = reader.result; loadtoTableAfterParse(); }
-    } , false);
-    inputFileDocument.click();
-  },
-  screenShot()
-  {
-    let div = document.getElementById('canvas');
+    save() {
 
-            // Use the html2canvas
-            // function to take a screenshot
-            // and append it
-            // to the output div
-            html2canvas(div).then(
-                function (canvas) {
-                  const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
-                  const a = document.createElement('a')
-                  let currentDateTime = new Date().toLocaleString();
-                  currentDateTime = currentDateTime.split(',');
-                  a.setAttribute('download', 'UCS-ScreenShot ' + currentDateTime[0]  + currentDateTime[1] + '.png')
-                  a.setAttribute('href', image)
-                  a.click()
-            canvas.remove()
-                })
-  },
-  change_btn_state_conflict()
-  {
-    this.btn_state = !this.btn_state;
-  }
+      const UcsSelecionadasToJson = JSON.stringify(this.ListaIdsSelecionadas)
+      const aux = document.createElement("a");
+      const file = new Blob([UcsSelecionadasToJson], {type: 'text/json'});
+      aux.href = URL.createObjectURL(file);
+      const currentDateTime = new Date().toLocaleString().replace(',', '');
+      aux.download = `SelectedUCS ${currentDateTime}.json`;
+      aux.click();
+  
+    },
+    load() {
+      var inputFileDocument = document.createElement("input");
+      inputFileDocument.setAttribute("type", "file");
+      inputFileDocument.setAttribute("id", "upload");
+      inputFileDocument.addEventListener("change",  (event) => {
+        ListId = this.ListaIdsSelecionadas;
+        thisObjAlias = this;  
+        var reader = new FileReader();
+        reader.readAsText(inputFileDocument.files[0])
+        reader.onload = () => {
+          FileData = reader.result;
+          loadtoTableAfterParse();
+        }
+      }, false);
+      inputFileDocument.click();
+    },
+    screenShot() {
+      let div = document.getElementById('canvas');
+      console.log(div)
+      // Use the html2canvas to take a screenshot at 2x device pixel ratio
+      // and append it to the output div
+      window.devicePixelRatio = 2;
+      html2canvas(div).then((canvas) => {
+          const image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+          const aux = document.createElement('a')
+          const currentDateTime = new Date().toLocaleString().replace(',', '');
+          aux.setAttribute('download', `UCS-ScreenShot ${currentDateTime}.png`);
+          aux.setAttribute('href', image)
+          aux.click()
+          canvas.remove()
+        })
+    },
+    change_btn_state_conflict()
+    {
+      this.btn_state = !this.btn_state;
+    }
   
   }
 }
