@@ -1,42 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.cell:hover{
-    cursor:pointer;
-    background-color: #cdeeff;
-}
-  
-.item{
-    display: flex;
-    flex-direction: column;
-    row-gap: 4px;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.item div{
-    word-wrap: break-word;
-    font-size: 100%;
-    white-space: pre-wrap;
-}
-
-.btn-conflicts {
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-top: 10px;
-}
-
-.tabela-card{
-    display: grid;
-    grid-template-rows: 1fr;
-    row-gap: 10px ;
-    width: auto;
-}
-
-table {
-    border-collapse: collapse;
+* {
+    box-sizing: border-box;
 }
 
 th, td {
-    border: 1px solid #ddd;
     text-align: center;
     height: 100px;
     width: 100px;
@@ -44,13 +14,8 @@ th, td {
 }
 
 td {
-    border: 1px solid #302727;
     max-width:100px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
     height: 100px;
-    max-height: 100px;
 }
 
 th {
@@ -58,32 +23,28 @@ th {
     background-color: #ddd;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+h3 {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
-.escolhidas{
-    min-height: 300px;
-    max-height: 300px;
-    overflow-y: scroll;
+.v-card {
+  overflow-wrap: break-word;
+  position: relative;
+  text-decoration: none;
+  transition-duration: .28s;
+  transition-property: box-shadow,opacity,background;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  z-index: 0;
+  border-color: rgba(#000,0.12);
+  border-style: solid;
+  border-radius: 4px;
 }
 
-.alert-icon {
-    font-size: 1.6rem;
-    vertical-align: middle;
-}
 
 @media (max-width: 500px) {
-
-    .tabela-card{
-        overflow-x: scroll;
-    }
-
-
-    th {
-        text-align: center;   
-    }
-
     td {
         height: 50px;
         max-width: 45px;
@@ -94,13 +55,4 @@ tr:nth-child(even) {
         text-align: center;
         font-size: 10px;
     }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    .ordem{
-        display: flex;
-        flex-direction: column;
-    }
-} */
+}
