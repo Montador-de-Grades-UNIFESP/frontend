@@ -1,137 +1,129 @@
 <template>
 
-<v-container class="grey lighten-5">
-    <v-row>
-      <v-col cols="12" md="8" >
-        <v-card
-          class="tabela-card"
-          outlined
-          tile
-        > 
-      <table id="canvas" class="w-100">
-        <thead>
-          <tr>
-            <th>Horário</th>
-            <th v-for="(value) in daysOfWeek">{{ value }}</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(row, rowIndex) in tabela">
-              <td>{{ hours[rowIndex] }}</td>
-              <td v-for="(value, colIndex) in row" @click="showAlert(rowIndex, colIndex)" class = "cell" >
-                <div class="item">
-                  <div>
-                  {{ value.NOME }}
-                  </div>  
-                  <div>{{ value.TURMA }} - {{ value.PROFESSORES }} </div>
-                </div>
-              </td>
+<!-- Div mãe -->
+<div class="font-sans p-4 w-full lg:max-w-[90%] mx-auto ">
+  <!-- Container pra tabela e lateral -->
+  <div class="-m-3 flex flex-auto flex-wrap">
+    <div class="lg:flex-0666 lg:max-w-[66%] w-full p-3 flex-0100 max-w-full">
+      <div class="v-card shadow-md overflow-x-scroll grid grid-rows-1 gap-2.5 w-auto">
+      
+        <!-- Tabela -->
+        <table id="canvas" class="w-full border-collapse">
+          <thead>
+            <tr class="even:bg-gray-100">
+              <th class="border-solid border-1 border-black">Horário </th>
+              <th class="border-solid border-1 border-black" v-for="(value) in daysOfWeek">{{ value }}</th>
             </tr>
-        </tbody>
-      </table>
-      <div class="d-flex flex-row w-100 align-content-space-around justify-center" style="row-gap: 10px;">
-        <v-btn
-          variant="outlined"
-          color="error"
-          class="mr-1"
-          @click="cleanAll()"> Limpar grade<font-awesome-icon class="pl-1 text-base text-red-darken-2" icon="fa-solid fa-x" />
-        </v-btn>
-        <v-btn
-          variant="outlined"
-          color="success"
-          class="mr-1"
-          @click="screenShot()"> Salvar como png
-        </v-btn>
-        
-        <v-btn
-          variant="outlined"
-          color="default"
-          class="mr-1"
-          @click="save"> Exportar
-        </v-btn> 
-
-        <v-btn
-          variant="outlined"
-          color="default"
-          class="mr-1"
-          @click="load"> Importar
-        </v-btn> 
-        
+          </thead>
+          <tbody>
+              <tr v-for="(row, rowIndex) in tabela" class="even:bg-gray-100">
+                <td class="whitespace-nowrap border-solid border-1 border-black">{{ hours[rowIndex] }}</td>
+                <td 
+                  v-for="(value, colIndex) in row" 
+                  @click="showAlert(rowIndex, colIndex)" 
+                  class="whitespace-nowrap border-1 border-solid border-[#302727] hover:cursor-pointer hover:bg-teal-100"
+                >
+                  <div class="break-words text-[100%] flex flex-col gap-y-1 w-full whitespace-pre-wrap border-collapse">
+                    <div class="">
+                      {{ value.NOME }}
+                    </div>  
+                    <div>{{ value.TURMA }} - {{ value.PROFESSORES }} </div>
+                  </div>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <!-- Botões interação -->
+        <div class="flex flex-row w-full align-content-space-around justify-center whitespace-nowrap ">
+          <CustomButton class="border-red-700 px-4 mr-1 text-red-700"
+            @click="cleanAll()"> Limpar grade<font-awesome-icon class="pl-1 text-base text-red-darken-2" icon="fa-solid fa-x" />
+          </CustomButton>
+          <CustomButton class="border-green-600 px-4 mr-1 text-green-600"
+            @click="screenShot()"> Salvar como png
+          </CustomButton>
+          
+          <CustomButton class="border-black px-4 mr-1"
+            @click="save"> Exportar
+          </CustomButton> 
+  
+          <CustomButton class="border-black px-4 mr-1"
+            @click="load"> Importar
+          </CustomButton> 
+          
+        </div>
+        <span></span>
       </div>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="4">
-        <v-card
-          class="pa-2"
-          outlined
-          tile
-        >
-        <v-container class="ordem">
-          <v-row class="flex-item" style="order: 2;" >
-            <v-col>
-              <h3> Disciplinas Escolhidas: </h3> 
-               Total de Créditos: {{ quantidade*2 }}
-              <v-card class="pa-2 escolhidas">
-                <v-card class="mx-auto mb-2" variant="outlined" v-for="(value) in ListaIdsSelecionadas">
-                  <v-card-item>
-                    <div>
-                      <div class="text-overline mb-1">
+    </div>
+    <!-- Disciplinas escolhidas e disponíveis -->
+    <div class="lg:flex-0333 lg:max-w-[33%] p-3 flex-0100 w-full p-3 flex-0100">
+      <div class="v-card p-2 shadow-lg">
+        <div class="p-4 w-full mx-auto lg:max-w-4xl xl:max-w-7xl mx-auto flex sm:block flex-col">
+          <!-- Disciplinas Escolhidas: -->
+          <div class="-m-3 flex flex-auto flex-wrap bg-white mb-10 sm:-m-3 order-2">
+            <div class="grow basis-0 w-full p-3">
+              <h3 class="font-bold block text-xl m-0"> Disciplinas Escolhidas: </h3> 
+                Total de Créditos: {{ quantidade*2 }}
+              <div class="v-card shadow-lg p-2 bg-white overflow-y-scroll h-[300px] rounded">
+                <div class="v-card mx-auto mb-2" v-for="(value) in ListaIdsSelecionadas">
+                  <div class="border-1 border-black rounded">
+                    <div class="px-4 py-3">
+                      <div class="text-xs text-overline mb-1 tracking-widest2x uppercase">
                         Turma - {{ value.TURMA }}
                       </div>
-                      <div class="text-h6 mb-1">
+                      <div class="normal-case font-sans text-xl font-medium leading-8 mb-1">
                         {{value.NOME}}
                       </div>
-                      <div class="text-caption">Professor(a): {{ value.PROFESSORES }}</div>
+                      <div class="text-2xs font-normal leading-5 tracking-wide font-sans normal-case">Professor(a): {{ value.PROFESSORES }}</div>
                     </div>
-                  </v-card-item>
-                  <v-card-actions>
-                    <v-btn variant="outlined" @click="removeUC(value)">
-                      Excluir
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row  class="flex-item">
-            <v-col class="d-flex flex-column justify-center" style="row-gap: 5px;">
-               <h3>Disciplinas Disponíveis:</h3>
-                <div>
+                    <div class="min-h-[52px] flex flex-none items-center p-2">
+                      <CustomButton class="border-black p-2" @click="removeUC(value)">
+                        Excluir
+                      </CustomButton>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+          </div>
+          <!-- Disciplinas Disponíveis: -->
+          <div class="-mx-3 -mb-3 mt-3 flex flex-auto flex-wrap bg-white mb-10 ">
+            <div class="grow basis-0 w-full p-3 flex flex-col justify-center gap-y-1.5">
+                <h3 class="block text-xl font-bold">Disciplinas Disponíveis:</h3>
+                <div class="">
                   <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
                 </div>
-                <v-btn 
-                height="auto"
-                variant="outlined"
-                color="default"
-                class="btn-conflicts"
-                @click="change_btn_state_conflict()"><span class="text-wrap py-2">Remover Disciplinas Indisponíveis</span>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-        </v-card>
-        
-      </v-col>
-    </v-row>
-    <v-row class="d-flex flex-column align-center justify-center">
-      <v-alert
-        v-model="alert"
-        border="start"
-        variant="tonal"
-        title="Problemas?"
-        close-label="Close Alert"
-        color="deep-purple-accent-4"
-      >
-      Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><font-awesome-icon class="mx-1 alert-icon text-grey-darken-4" icon="fa-brands fa-github"/></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
-      </v-alert>
-    </v-row>
+                <CustomButton 
+                  class="mt-2 py-2 px-12 border-black uppercase w-full h-auto" 
+                  @click="change_btn_state_conflict()"
+                >
+                  <span class="text-wrap ">Remover Disciplinas Indisponíveis</span>
+              </CustomButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="mt-3 -m-3 flex flex-auto flex-wrap flex-column align-center justify-center">
+    <Alert
+      v-model="alert"
+      title="Problemas?"
+      close-label="Close Alert"
+      color="deep-purple-accent-4"
+    >
+    Faça um pull request em<a href="https://github.com/vpedrota/montador-de-grades"><font-awesome-icon class="mx-1 align-middle text-3xl text-grey-darken-4" icon="fa-brands fa-github"/></a>ou mande uma mensagem para <strong>montadordegrades@gmail.com</strong>.
+    </Alert>
+  </div>
    
-  </v-container>
+</div>
 
 <Modal v-if="showModal" @close="showModal = false" :title="modalTitle">
     <ListaUC :horario="hours[this.row]" :dia="daysOfWeek[this.col]" :listaSelecionadas="ListaIdsSelecionadas" @updateValue="updateValue"></ListaUC>
 </Modal>
 </template>
+
 
 <script>
 
@@ -143,13 +135,17 @@ import ModalButton from './components/ModalButton.vue';
 import Modal from '@/components/Modal.vue';
 import ListaUC from './components/Lista.vue';
 import html2canvas from 'html2canvas';
+import Alert from './components/Alert.vue';
+import CustomButton from './components/CustomButton.vue';
 
 export default {
   components: {
     ModalButton,
     Modal,
-    ListaUC
-  },
+    ListaUC,
+    Alert,
+    CustomButton,
+},
   name: 'App',
   data() {
     var tabela = [];
@@ -323,7 +319,7 @@ function loadtoTableAfterParse()
 </script>
 
 
-<style scoped>
+<style>
 
 @import url('./style.css');
 

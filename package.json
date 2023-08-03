@@ -21,12 +21,14 @@
     "lodash": "^4.17.21",
     "save": "^2.9.0",
     "vue": "^3.3.4",
-    "vue-cookies": "^1.8.3",
-    "vuetify": "3.3.10"
+    "vue-cookies": "^1.8.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
     "vite": "^4.4.7"
   }
 }

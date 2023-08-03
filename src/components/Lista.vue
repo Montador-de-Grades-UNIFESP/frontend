@@ -1,64 +1,76 @@
 <template>
-  <div>
-    <v-card-text>
-      <v-text-field
+  <div class="normal-case px-4 pb-4 flex-auto text-xs font-normal tracking-wide">
+    <TextInput
         density="compact"
-        variant="solo"
-        label="Pesquise a disciplina desejada..."
+        placeholder="Pesquise a disciplina desejada..."
         append-inner-icon="mdi-checkbox-marked-circle"
-        single-line
-        hide-details 
-        v-model="pesquisa"
-      ></v-text-field>
-    </v-card-text>
-
-  <div style="max-height: 300px;" class="overflow-auto">
-    <div class="w-100 d-flex align-center justify-center">
-      <h3 v-if="vazio">Nenhuma disciplina disponível</h3>
+        @search="search = $event"
+      ></TextInput>
+  </div>
+  <div class="overflow-auto max-h-[300px]">
+    <div class="w-full flex align-center justify-center">
+      <h3 v-if="vazio" class="block text-xl font-bold">Nenhuma disciplina disponível</h3>
     </div>
-    
+
     <div v-for="item in itensFiltered" :key="item.ID">
-      
-      <v-col cols="12">
-        <v-card :color="item.COLOR" theme="dark">
-          <v-card-title class="text-h6">
-            {{ item.NOME }}
-          </v-card-title>
-
-          <v-card-text>
-            <div class="d-flex">
-              <span class="text-white lista-horario">{{ formata_horario(item) }}</span>
+      <div class="grow basis-0 w-full p-3 flex-0100 max-w-full">
+        <div class="bg-cardbackground rounded text-white shadow-md">
+            <div class="v-card-title h6">
+              {{ item.NOME }}
             </div>
-          
-            Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}
-            <div class="d-flex">
-          
+            <div class="normal-case flex-auto text-xs font-normal tracking-wide px-4 pb-4 pt-0">
+              <span class="text-white font-mono whitespace-pre-wrap text-base lista-horario">{{ formata_horario(item) }}</span><br>
+              <span>Professores/Turma: {{ item.PROFESSORES }} - {{ item.TURMA }}</span>
             </div>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn variant="outlined" v-if="item.COLOR != '#FF0000'" @click="emitValue(item)" :disabled="loading">
-
-              Adicionar
-            </v-btn>
-            <v-btn variant="outlined" v-if="item.COLOR != '#FF0000'" @click="descricao(item)" :disabled="loading">
-
-              Descrição
-            </v-btn>
-          </v-card-actions>
-     
-        </v-card>
-      </v-col>
+  
+            <div class="px-2 py-2 tracking-widerx flex">
+              <CustomButton class="px-2 h-9 mr-2 border-solid border-1 border-white rounded uppercase font-medium" v-if="item.COLOR != '#FF0000'" @click="emitValue(item)" :disabled="loading">
+                Adicionar
+              </CustomButton>
+              <CustomButton class="px-2 h-9 border-1 border-white rounded uppercase" v-if="item.COLOR != '#FF0000'" @click="descricao(item)" :disabled="loading">
+                Descrição
+              </CustomButton>
+            </div>
+        </div>
+      </div>
     </div>    
   </div>     
-</div> 
+ 
 </template>
+
+<style>
+
+.v-card-title {
+  display: block;
+  flex: none;
+  font-size: 1.25rem;
+  font-weight: 500;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  letter-spacing: .0125em;
+  min-width: 0;
+  overflow-wrap: normal;
+  overflow: hidden;
+  padding: 0.5rem 1rem;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+  word-break: normal;
+  word-wrap: break-word;
+}
+</style>
 
 <script>
 import axios from 'axios';
 import deburr from 'lodash/deburr'
+import TextInput from './TextInput.vue';
+import CustomButton from './CustomButton.vue';
 
 export default {
+  components: {
+    TextInput,
+    CustomButton,
+  },
   props: ['listaSelecionadas', 'horario', 'dia', 'btn_state_change'],
   emits: ["updateValue"],
   data() {
@@ -67,7 +79,7 @@ export default {
       items: [],
       itensFiltered: [],
       allUnfilteredDisciplines: [],
-      pesquisa: "",
+      search: "",
       loading: false,
       vazio: false,
       btn_state:false,
@@ -99,13 +111,13 @@ export default {
       }, 
       deep: true
     },
-    pesquisa: {
+    search: {
       handler: function () {
-        if(this.pesquisa === ""){
+        if(this.search === ""){
           this.itensFiltered = this.items
         }
 
-        const query = this.pesquisa.toLowerCase();
+        const query = this.search.toLowerCase();
         const regex = /[\u0300-\u036f]/g;
         const normalizedQuery = query.normalize('NFD').replace(regex, '');
 
@@ -126,7 +138,6 @@ export default {
     }
   },  
   methods: {
-
     descricao(obj){
       // retira todos os textos entre parênteses ou colchetes e substitui os espaços por underline
       const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
@@ -192,12 +203,3 @@ export default {
 };
 
 </script>
-
-<style>
-.lista-horario {
-    font-family: monospace,monospace;
-    white-space: pre-wrap;
-    font-size: 1.2em;
-}
-
-</style>
