@@ -17,7 +17,7 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 * CSS
 * JavaScript
 * Vue.js
-* Vuetify
+* Tailwind
 
 # Como contribuir
 
