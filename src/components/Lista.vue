@@ -57,8 +57,14 @@
 <script>
 import axios from 'axios';
 import deburr from 'lodash/deburr'
+import TextInput from './TextInput.vue';
+import CustomButton from './CustomButton.vue';
 
 export default {
+  components: {
+    TextInput,
+    CustomButton,
+  },
   props: ['listaSelecionadas', 'horario', 'dia', 'btn_state_change'],
   emits: ["updateValue"],
   data() {
@@ -67,7 +73,7 @@ export default {
       items: [],
       itensFiltered: [],
       allUnfilteredDisciplines: [],
-      pesquisa: "",
+      search: "",
       loading: false,
       vazio: false,
       btn_state:false,
@@ -99,13 +105,13 @@ export default {
       }, 
       deep: true
     },
-    pesquisa: {
+    search: {
       handler: function () {
-        if(this.pesquisa === ""){
+        if(this.search === ""){
           this.itensFiltered = this.items
         }
 
-        const query = this.pesquisa.toLowerCase();
+        const query = this.search.toLowerCase();
         const regex = /[\u0300-\u036f]/g;
         const normalizedQuery = query.normalize('NFD').replace(regex, '');
 
@@ -126,7 +132,6 @@ export default {
     }
   },  
   methods: {
-
     descricao(obj){
       // retira todos os textos entre parênteses ou colchetes e substitui os espaços por underline
       const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
@@ -192,12 +197,3 @@ export default {
 };
 
 </script>
-
-<style>
-.lista-horario {
-    font-family: monospace,monospace;
-    white-space: pre-wrap;
-    font-size: 1.2em;
-}
-
-</style>

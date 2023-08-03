@@ -143,13 +143,17 @@ import ModalButton from './components/ModalButton.vue';
 import Modal from '@/components/Modal.vue';
 import ListaUC from './components/Lista.vue';
 import html2canvas from 'html2canvas';
+import Alert from './components/Alert.vue';
+import CustomButton from './components/CustomButton.vue';
 
 export default {
   components: {
     ModalButton,
     Modal,
-    ListaUC
-  },
+    ListaUC,
+    Alert,
+    CustomButton,
+},
   name: 'App',
   data() {
     var tabela = [];
@@ -323,7 +327,7 @@ function loadtoTableAfterParse()
 </script>
 
 
-<style scoped>
+<style>
 
 @import url('./style.css');
 
