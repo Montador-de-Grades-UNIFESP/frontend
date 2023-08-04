@@ -5,12 +5,12 @@
   <!-- Container pra tabela e lateral -->
   <div class="-m-3 flex flex-auto flex-wrap">
     <div class="lg:flex-0666 lg:max-w-[66%] w-full p-3 flex-0100 max-w-full">
-      <div class="v-card shadow-md overflow-x-scroll grid grid-rows-1 gap-2.5 w-auto">
+      <div class="v-card shadow-md overflow-x-auto grid grid-rows-1 gap-2.5 w-auto">
       
         <!-- Tabela -->
         <table id="canvas" class="w-full border-collapse">
-          <thead>
-            <tr class="even:bg-gray-100">
+          <thead class="bg-[#ddd]">
+            <tr>
               <th class="border-solid border-1 border-black">Horário </th>
               <th class="border-solid border-1 border-black" v-for="(value) in daysOfWeek">{{ value }}</th>
             </tr>
@@ -23,7 +23,7 @@
                   @click="showAlert(rowIndex, colIndex)" 
                   class="whitespace-nowrap border-1 border-solid border-[#302727] hover:cursor-pointer hover:bg-teal-100"
                 >
-                  <div class="break-words text-[100%] flex flex-col gap-y-1 w-full whitespace-pre-wrap border-collapse">
+                  <div class="text-[100%] flex flex-col gap-y-1 w-full whitespace-pre-wrap border-collapse">
                     <div class="">
                       {{ value.NOME }}
                     </div>  
@@ -90,7 +90,7 @@
             <div class="grow basis-0 w-full p-3 flex flex-col justify-center gap-y-1.5">
                 <h3 class="block text-xl font-bold">Disciplinas Disponíveis:</h3>
                 <div class="">
-                  <ListaUC :btn_state_change = "btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
+                  <ListaUC :btn_state_change="btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
                 </div>
                 <CustomButton 
                   class="mt-2 py-2 px-12 border-black uppercase w-full h-auto" 
@@ -148,36 +148,32 @@ export default {
 },
   name: 'App',
   data() {
-    var tabela = [];
-
-    for (let i = 0; i < 6; i++) {
-      tabela[i] = Array(6).fill('');
-    }
-
     return {
       alert: true,
-      daysOfWeek: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-      hours: ['08h00-10h00', '10h00-12h00', '13h30-15h30', '15h30-17h30', '19h00-21h00', '21h00-23h00'],
-      modalTitle: 'Título do Modal',
-      showModal: false, 
-      tabela: tabela,
+      showModal: false,
+      tabela: Array.from({ length: 6 }, () => Array(6).fill('')),
       col: 0,
       row: 0,
       quantidade: 0,
       btn_state:false,
       // O controle das disciplinas será através dos ids das disciplinas
-      ListaIdsSelecionadas: []
+      ListaIdsSelecionadas: JSON.parse(localStorage.ListaIdsSelecionadas || '[]'),
     }
+  },
+  computed: {
+    daysOfWeek() {
+      return ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    },
+    hours() {
+      return ['08h00-10h00', '10h00-12h00', '13h30-15h30', '15h30-17h30', '19h00-21h00', '21h00-23h00'];
+    },
   },
   mounted(){
     this.quantidade = 0
-    if (localStorage.ListaIdsSelecionadas) { 
-      this.ListaIdsSelecionadas = JSON.parse(localStorage.ListaIdsSelecionadas)
-      this.ListaIdsSelecionadas.forEach(value => {
-        this.updateTable(value,value);
-        this.quantidade += value.HORARIO.length
-      })
-    }
+    this.ListaIdsSelecionadas.forEach(value => {
+      this.updateTable(value, value);
+      this.quantidade += value.HORARIO.length;
+    });
   
   },
   methods: {
@@ -213,11 +209,13 @@ export default {
       return;
     }, 
     updateTable(obj, valor){
-      for(let i = 0; i < obj.DIA.length; i++){
-        let dia = this.daysOfWeek.indexOf(obj.DIA[i])
-        let horario = this.hours.indexOf(obj.HORARIO[i])
-        this.tabela[horario][dia] = valor
-      }
+      obj.DIA.forEach(dia => {
+        const diaIndex = this.daysOfWeek.indexOf(dia);
+        const horarioIndex = obj.DIA.indexOf(dia);
+        const horario = obj.HORARIO[horarioIndex];
+        const horarioIndex2 = this.hours.indexOf(horario);
+        this.tabela[horarioIndex2][diaIndex] = valor;
+      });
     }, 
     updateValue(value){
       
@@ -247,7 +245,6 @@ export default {
       this.quantidade -= obj.HORARIO.length
     },
     save() {
-
       const UcsSelecionadasToJson = JSON.stringify(this.ListaIdsSelecionadas)
       const aux = document.createElement("a");
       const file = new Blob([UcsSelecionadasToJson], {type: 'text/json'});
@@ -255,7 +252,6 @@ export default {
       const currentDateTime = new Date().toLocaleString().replace(',', '');
       aux.download = `SelectedUCS ${currentDateTime}.json`;
       aux.click();
-  
     },
     load() {
       var inputFileDocument = document.createElement("input");
@@ -293,18 +289,15 @@ export default {
     {
       this.btn_state = !this.btn_state;
     }
-  
   }
 }
-
 
 function loadtoTableAfterParse()
 {
   ListId = JSON.parse(FileData);
   thisObjAlias.ListaIdsSelecionadas = [];
   localStorage.ListaIdsSelecionadas = thisObjAlias.ListaIdsSelecionadas
-  ListId.forEach(value => 
-  {
+  ListId.forEach(value => {
     thisObjAlias.updateTable(value,value);
     thisObjAlias.ListaIdsSelecionadas.push(value);
     localStorage.ListaIdsSelecionadas = thisObjAlias.ListaIdsSelecionadas

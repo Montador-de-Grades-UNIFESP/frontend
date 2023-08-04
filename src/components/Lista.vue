@@ -88,80 +88,39 @@ export default {
     };
   },
   mounted() {
-    const fetchDisciplinas = async () => {
-      try {
-        const { data } = await axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
-          items: []
-        });
-        this.allUnfilteredDisciplines = data;
-        this.allUnfilteredDisciplines.forEach(x => x.COLOR = "#FF0000");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchDisciplinas();
-
+    this.fetchDisciplinas();
     this.atualizarDados();
   }, 
   watch:{
     listaSelecionadas: {
-      handler: function () {
-        this.atualizarDados()
-      }, 
-      deep: true
+      handler: 'atualizarDados',
+      deep: true,
     },
     search: {
-      handler: function () {
-        if(this.search === ""){
-          this.itensFiltered = this.items
-        }
-
-        const query = this.search.toLowerCase();
-        const regex = /[\u0300-\u036f]/g;
-        const normalizedQuery = query.normalize('NFD').replace(regex, '');
-
-        this.itensFiltered = this.items.filter(item => {
-          const normalizedItemName = item.NOME.normalize('NFD').replace(regex, '');
-          return deburr(normalizedItemName).toLowerCase().includes(deburr(normalizedQuery));
-        });
-
-        this.vazio = this.itensFiltered.length === 0;
-      }, 
-      deep:true
+      handler: 'filtrarItens',
+      deep: true,
     },
     btn_state_change: {
-      handler : function () {
-        this.itensFiltered = this.items.filter(v => v.COLOR !== "#FF0000");
-      }, 
-      deep:true
-    }
+      handler: 'filtrarItens',
+      deep: true,
+    },
   },  
   methods: {
-    descricao(obj){
-      // retira todos os textos entre parênteses ou colchetes e substitui os espaços por underline
-      const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
-      window.open(this.base_address + nome, "_blank");
-    },
-
-    filtraMateria(item){
-      if(this.horario === null && this.dia === null) {
-        return true
+    async fetchDisciplinas() {
+      try {
+        const { data } = await axios.get('src/data/disciplinas.json', {
+          items: []
+        });
+        this.allUnfilteredDisciplines = data.map(item => ({ ...item, COLOR: '#FF0000' }));
+      } catch (error) {
+        console.log(error);
       }
-
-      this.vazio = this.itensFiltered.length === 0;
-
-      const hasHorario = this.horario ? item.HORARIO.includes(this.horario) : true;
-      const hasDia = this.dia ? item.DIA.includes(this.dia) : true;
-
-      return hasHorario && hasDia;
     },
-
     async atualizarDados(){
       const ids = this.listaSelecionadas.map(item => item.ID);
 
       try {
-        const response = await axios.post('https://montador-de-grades-api-upfpc35ezq-rj.a.run.app/disciplinas', {
+        const response = await axios.get('src/data/disciplinas.json', {
           items: ids
         });
         const items = response.data.filter(this.filtraMateria);
@@ -187,19 +146,55 @@ export default {
         throw error;
       }
     },
+    filtrarItens() {
+      if (this.search === '') {
+        this.itensFiltered = this.items;
+      }
+
+      const query = this.search.toLowerCase();
+      const regex = /[\u0300-\u036f]/g;
+      const normalizedQuery = query.normalize('NFD').replace(regex, '');
+
+      this.itensFiltered = this.items.filter(item => {
+        const normalizedItemName = item.NOME.normalize('NFD').replace(regex, '');
+        return deburr(normalizedItemName).toLowerCase().includes(deburr(normalizedQuery));
+      });
+
+      this.vazio = this.itensFiltered.length === 0;
+    },
+    descricao(obj){
+      // retira todos os textos entre parênteses ou colchetes e substitui os espaços por underline
+      const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
+      window.open(this.base_address + nome, "_blank");
+    },
+    filtraMateria(item){
+      if(this.horario === null && this.dia === null) {
+        return true
+      }
+
+      this.vazio = this.itensFiltered.length === 0;
+
+      const hasHorario = this.horario ? item.HORARIO.includes(this.horario) : true;
+      const hasDia = this.dia ? item.DIA.includes(this.dia) : true;
+
+      return hasHorario && hasDia;
+    },
     emitValue(item) {
       this.loading = true;
       this.$emit('updateValue', item);
-      this.atualizarDados()
-        .finally(() => {
-          this.loading = false;
-        });
+      this.atualizarDados().finally(() => {
+        this.loading = false;
+      });
     },
     formata_horario(item) {
       return item.DIA.map((dia, index) => `${dia} - ${item.HORARIO[index]}`).join('\r\n');
     }
-    
-  }
+  },
+  computed: {
+    listaSelecionadasIds() {
+      return this.listaSelecionadas.map(item => item.ID);
+    },
+  },
 };
 
 </script>

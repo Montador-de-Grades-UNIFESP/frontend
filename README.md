@@ -1,10 +1,11 @@
 # Montador de grades
+![Captura de tela 2023-08-03 190328](https://github.com/FelipeEstevanatto/montador-de-grades/assets/69355764/e8b94924-ab13-4ac2-8ba9-7b3e10f88db7)
 
 Este é um projeto que consiste em um site que ajuda a montar a grade curricular de alunos de uma universidade. Com este site, os alunos poderão escolher as disciplinas que desejam cursar e o sistema irá verificar se há conflito de horários entre elas. Caso haja algum conflito, o sistema não permitirá que as disciplinas sejam selecionadas.
 
 ## Como usar 
 
-* Acesse o site do Montador de grades.
+* Acesse o site do [Montador de grades](https://montadordegrades.online/).
 * Escolha as disciplinas que deseja cursar.
 * Verifique se há conflito de horários entre as disciplinas selecionadas.
 * Caso haja conflito, remova alguma disciplina e tente novamente.
@@ -16,8 +17,8 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 * HTML
 * CSS
 * JavaScript
-* Vue.js
-* Tailwind
+* Vue.js 3
+* Tailwind 3
 
 # Como contribuir
 
@@ -26,5 +27,3 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 * Faça commit das suas alterações: git commit -m 'feat: Minha nova feature'.
 * Envie a sua branch: git push origin minha-feature.
 * Abra um Pull Request explicando as suas alterações.
-
-Para o back-end o repositório está hospedado em: https://github.com/cgmoraes/montador-de-grades-api, consulte para mais informações de como utilizá-la.
