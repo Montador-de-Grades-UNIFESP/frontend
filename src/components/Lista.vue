@@ -165,7 +165,7 @@ export default {
     descricao(obj){
       // retira todos os textos entre parênteses ou colchetes e substitui os espaços por underline
       const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
-      window.open(this.base_address + nome[0] + "/" + nome, "_blank");
+      window.open(this.base_address + nome[0] + "/" + nome + ".pdf", "_blank");
     },
     filtraMateria(item){
       if(this.horario === null && this.dia === null) {
