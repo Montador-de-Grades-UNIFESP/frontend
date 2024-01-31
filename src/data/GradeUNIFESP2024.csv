@@ -1,0 +1,311 @@
+﻿Dia da Semana;Horário;Disciplina;Professor;Turma;Termo
+SEGUNDA;8h00 - 10h00;Álgebra Linear Computacional;Luis Felipe;I;5
+QUARTA;8h00 - 10h00;Álgebra Linear Computacional;Luis Felipe;I;5
+SEGUNDA;15h30-17h30;Álgebra Linear II;Robson;I;5
+QUARTA;15h30-17h30;Álgebra Linear II;Robson;I;5
+TERÇA;13h30-15h30;Álgebra Linear;Renato;IA;3
+QUINTA;13h30-15h30;Álgebra Linear;Renato;IA;3
+TERÇA;15h30-17h30;Álgebra Linear;Renato;IB;3
+QUINTA;15h30-17h30;Álgebra Linear;Renato;IB;3
+TERÇA;13h30-15h30;Álgebra Linear;Thiago Macedo;IC;3
+QUINTA;13h30-15h30;Álgebra Linear;Thiago Macedo;IC;3
+TERÇA;15h30-17h30;Álgebra Linear;Thiago Macedo;ID;3
+QUINTA;15h30-17h30;Álgebra Linear;Thiago Macedo;ID;3
+TERÇA;19h00 - 21h00;Álgebra Linear;Horácio;N;3
+QUINTA;19h00 - 21h00;Álgebra Linear;Horácio;N;3
+TERÇA;13h30-15h30;Algoritmos e Estruturas de Dados I;Regina;I;3
+QUINTA;13h30-15h30;Algoritmos e Estruturas de Dados I;Regina;I;3
+SEGUNDA;13h30-15h30;Algoritmos e Estruturas de Dados II;Alvaro;IA;3
+QUARTA;13h30-15h30;Algoritmos e Estruturas de Dados II;Alvaro;IA;3
+SEGUNDA;15h30-17h30;Algoritmos e Estruturas de Dados II;Reginaldo;IB;3
+QUARTA;15h30-17h30;Algoritmos e Estruturas de Dados II;Reginaldo;IB;3
+SEGUNDA;19h00 - 21h00;Algoritmos e Estruturas de Dados II;Alvaro;N;3
+QUARTA;19h00 - 21h00;Algoritmos e Estruturas de Dados II;Alvaro;N;3
+SEGUNDA;19h00 - 21h00;Algoritmos e Estruturas de Dados I;Arlindo;N;3
+QUARTA;19h00 - 21h00;Algoritmos e Estruturas de Dados I;Arlindo;N;3
+SEGUNDA;13h30-15h30;Algoritmos em Bioinformatica;Martini;IA;3
+QUARTA;13h30-15h30;Algoritmos em Bioinformatica;Martini;IA;3
+SEGUNDA;15h30-17h30;Algoritmos em Bioinformatica;Martini;IB;3
+QUARTA;15h30-17h30;Algoritmos em Bioinformatica;Martini;IB;3
+SEGUNDA;19h00 - 21h00;Algoritmos em Bioinformatica;Shida;NA;3
+QUARTA;19h00 - 21h00;Algoritmos em Bioinformatica;Shida;NA;3
+SEGUNDA;21h00-23h00;Algoritmos em Bioinformatica;Shida;NB;3
+QUARTA;21h00-23h00;Algoritmos em Bioinformatica;Shida;NB;3
+SEGUNDA;15h30-17h30;Análise de Sinais;Adenauer;IA;5
+QUARTA;15h30-17h30;Análise de Sinais;Adenauer;IA;5
+SEGUNDA;10h00 - 12h00;Análise de Sinais;Paiva;IB;5
+SEXTA;10h00 - 12h00;Análise de Sinais;Paiva;IB;5
+SEGUNDA;19h00 - 21h00;Análise de Sinais;Aoki;N;5
+QUARTA;19h00 - 21h00;Análise de Sinais;Aoki;N;5
+TERÇA;10h00 - 12h00;Análise Real I;Leandro;I;5
+QUINTA;10h00 - 12h00;Análise Real I;Leandro;I;5
+QUARTA;15h30-17h30;Aspectos de Implementação de Banco de Dados;Daniela;I;5
+SEXTA;15h30-17h30;Aspectos de Implementação de Banco de Dados;Daniela;I;5
+TERÇA;10h00 - 12h00;Bioética e Biosseguranca;Luciane;I;5
+TERÇA;8h00 - 10h00;Bioética e Biosseguranca;Luciane;I;5
+QUARTA;10h00 - 12h00;Biologia Molecular da Célula;Cláudia;I;3
+SEXTA;10h00 - 12h00;Biologia Molecular da Célula;Cláudia;I;3
+TERÇA;13h30-15h30;Bioquimica Analítica;Conceição;I;5
+TERÇA;15h30-17h30;Bioquimica Analítica;Conceição;I;5
+SEXTA;8h00 - 10h00;Biotecnologia Ambiental II;Danielle;I;7
+SEXTA;10h00 - 12h00;Biotecnologia Ambiental II;Danielle;I;7
+TERÇA;19h00 - 21h00;Biotecnologia de Energias Renováveis I;Danielle;N;7
+TERÇA;21h00-23h00;Biotecnologia de Energias Renováveis I;Danielle;N;7
+QUARTA;13h30-15h30;Biotecnologia Vegetal;Michael;I;7
+QUARTA;15h30-17h30;Biotecnologia Vegetal;Michael;I;7
+SEGUNDA;10h00 - 12h00;Cálculo em uma Variável;Karen;IA;1
+TERÇA;10h00 - 12h00;Cálculo em uma Variável;Karen;IA;1
+QUINTA;10h00 - 12h00;Cálculo em uma Variável;Karen;IA;1
+SEGUNDA;10h00 - 12h00;Cálculo em uma Variável;Thiago Castilho/Thadeu;IB;1
+TERÇA;10h00 - 12h00;Cálculo em uma Variável;Thiago Castilho/Thadeu;IB;1
+QUINTA;10h00 - 12h00;Cálculo em uma Variável;Thiago Castilho/Thadeu;IB;1
+SEGUNDA;8h00 - 10h00;Cálculo em uma Variável;Vanessa Paschoa;IC;1
+TERÇA;8h00 - 10h00;Cálculo em uma Variável;Vanessa Paschoa;IC;1
+QUINTA;8h00 - 10h00;Cálculo em uma Variável;Vanessa Paschoa;IC;1
+SEGUNDA;8h00 - 10h00;Cálculo em uma Variável;Claudia Aline/Thadeu;ID;1
+TERÇA;8h00 - 10h00;Cálculo em uma Variável;Claudia Aline/Thadeu;ID;1
+QUINTA;8h00 - 10h00;Cálculo em uma Variável;Claudia Aline/Thadeu;ID;1
+SEGUNDA;10h00 - 12h00;Cálculo em uma Variável;Claudia Aline/Erwin;IE;1
+TERÇA;10h00 - 12h00;Cálculo em uma Variável; Claudia Aline/Erwin;IE;1
+QUINTA;10h00 - 12h00;Cálculo em uma Variável;Claudia Aline/Erwin;IE;1
+SEGUNDA;13h30-15h30;Cálculo em uma Variável;Erwin/Thiago Castilho;IF;1
+TERÇA;13h30-15h30;Cálculo em uma Variável;Erwin/Thiago Castilho;IF;1
+QUINTA;13h30-15h30;Cálculo em uma Variável;Erwin/Thiago Castilho;IF;1
+SEGUNDA;21h00-23h00;Cálculo em uma Variável;Daniela/Grasiele;NA;1
+TERÇA;21h00-23h00;Cálculo em uma Variável;Daniela/Grasiele;NA;1
+QUINTA;21h00-23h00;Cálculo em uma Variável;Daniela/Grasiele;NA;1
+SEGUNDA;19h00 - 21h00;Cálculo em uma Variável;Daniela/Grasiele;NB;1
+TERÇA;19h00 - 21h00;Cálculo em uma Variável;Daniela/Grasiele;NB;1
+QUINTA;19h00 - 21h00;Cálculo em uma Variável;Daniela/Grasiele;NB;1
+SEGUNDA;10h00 - 12h00;Cálculo em várias variáveis;Robson;IA;3
+QUARTA;10h00 - 12h00;Cálculo em várias variáveis;Robson;IA;3
+SEGUNDA;13h30-15h30;Cálculo em várias variáveis;Gama;IB;3
+QUARTA;13h30-15h30;Cálculo em várias variáveis;Gama;IB;3
+SEGUNDA;15h30-17h30;Cálculo em várias variáveis;Gama;IC;3
+QUARTA;15h30-17h30;Cálculo em várias variáveis;Gama;IC;3
+SEGUNDA;19h00 - 21h00;Cálculo em várias variáveis;Ana Cláudia;NA;3
+QUARTA;19h00 - 21h00;Cálculo em várias variáveis;Ana Cláudia;NA;3
+SEGUNDA;21h00-23h00;Cálculo em várias variáveis;Ana Cláudia;NB;3
+QUARTA;21h00-23h00;Cálculo em várias variáveis;Ana Cláudia;NB;3
+TERÇA;13h30-15h30;Ciência e Engenharia de Biomateriais;Eliandra;I;5
+QUINTA;13h30-15h30;Ciência e Engenharia de Biomateriais;Eliandra;I;5
+SEGUNDA;15h30-17h30;Ciência, Tecnologia e Sociedade;Walter;IA;1
+QUARTA;15h30-17h30;Ciência, Tecnologia e Sociedade;Pereira;IB;1
+SEGUNDA;13h30-15h30;Ciência, Tecnologia e Sociedade;Pereira;IC;1
+QUARTA;13h30-15h30;Ciência, Tecnologia e Sociedade;Pereira;ID;1
+SEGUNDA;19h00 - 21h00;Ciência, Tecnologia e Sociedade;Walter;NA;1
+SEGUNDA;21h00-23h00;Ciência, Tecnologia e Sociedade;Walter;NB;1
+TERÇA;13h30-15h30;Circuitos Digitais;Fernanda;IA;3
+QUINTA;13h30-15h30;Circuitos Digitais;Fernanda;IA;3
+TERÇA;15h30-17h30;Circuitos Digitais;Thaina;IB;3
+QUINTA;15h30-17h30;Circuitos Digitais;Thaina;IB;3
+SEXTA;8h00 - 10h00;Circuitos Digitais;Cappabianco;IC;3
+SEXTA;10h00 - 12h00;Circuitos Digitais;Cappabianco;IC;3
+TERÇA;10h00 - 12h00;Circuitos Digitais;Urban;ID;3
+QUINTA;10h00 - 12h00;Circuitos Digitais;Urban;ID;3
+TERÇA;19h00 - 21h00;Circuitos Digitais;Denise;N;3
+QUINTA;19h00 - 21h00;Circuitos Digitais;Denise;N;3
+SEGUNDA;8h00 - 10h00;Circuitos Elétricos II;Paiva;I;5
+SEXTA;8h00 - 10h00;Circuitos Elétricos II;Paiva;I;5
+TERÇA;19h00 - 21h00;Circuitos Elétricos II;Henrique;N;5
+QUINTA;19h00 - 21h00;Circuitos Elétricos II;Henrique;N;5
+QUARTA;10h00 - 12h00;Cultura dos Jogos Digitais;Pereira;I;3
+QUINTA;19h00 - 21h00;Desenvolvimento de novos negócios em Engenharia;Fabiano;N;5
+SEXTA;19h00 - 21h00;Econometria;Scriptore;N;3
+SEXTA;21h00-23h00;Econometria;Scriptore;N;3
+SEGUNDA;13h30-15h30;Elementos de Álgebra;Angelo;I;5
+QUARTA;13h30-15h30;Elementos de Álgebra;Angelo;I;5
+QUINTA;13h30-15h30;Empreendedorismo em Biotecnologia;Fabiano;I;5
+QUARTA;13h30-15h30;Empreendendorismo;Iraci;I;7
+SEGUNDA;19h00 - 21h00;Empreendendorismo;Iraci;I;7
+SEGUNDA;8h00 - 10h00;Engenharia Bioquímica I;Elisabeth;I;5
+SEGUNDA;10h00 - 12h00;Engenharia Bioquímica I;Elisabeth;I;5
+QUARTA;13h30-15h30;Fenômenos de Transporte;Marina;I;5
+QUARTA;15h30-17h30;Fenômenos de Transporte;Marina;I;5
+SEGUNDA;8h00 - 10h00;Fenômenos do Contínuo;Manuel;IA;3
+QUARTA;8h00 - 10h00;Fenômenos do Contínuo;Manuel;IA;3
+SEGUNDA;10h00 - 12h00;Fenômenos do Contínuo;Manuel;IB;3
+QUARTA;10h00 - 12h00;Fenômenos do Contínuo;Manuel;IB;3
+SEGUNDA;21h00-23h00;Fenômenos do Contínuo;Antonelli;NA;3
+QUARTA;21h00-23h00;Fenômenos do Contínuo;Antonelli;NA;3
+SEGUNDA;19h00 - 21h00;Fenômenos do Contínuo;Antonelli;NB;3
+QUARTA;19h00 - 21h00;Fenômenos do Contínuo;Antonelli;NB;3
+TERÇA;8h00 - 10h00;Fenômenos Eletromagnéticos Experimental;Rossano;IA;5
+TERÇA;10h00 - 12h00;Fenômenos Eletromagnéticos Experimental;Rossano;IB;5
+QUINTA;8h00 - 10h00;Fenômenos Eletromagnéticos Experimental;Nirton;IC;5
+QUINTA;10h00 - 12h00;Fenômenos Eletromagnéticos Experimental;Nirton;ID;5
+SEXTA;19h00 - 21h00;Fenômenos Eletromagnéticos Experimental;Rossano;NA;5
+SEXTA;21h00-23h00;Fenômenos Eletromagnéticos Experimental;Rossano;NB;5
+TERÇA;8h00 - 10h00;Fenômenos Mecânicos Experimental;Thaciana;IA;3
+TERÇA;10h00 - 12h00;Fenômenos Mecânicos Experimental;Thaciana;IB;3
+QUINTA;8h00 - 10h00;Fenômenos Mecânicos Experimental;Thaciana;IC;3
+QUINTA;10h00 - 12h00;Fenômenos Mecânicos Experimental;Thaciana;ID;3
+QUARTA;15h30-17h30;Fenômenos Mecânicos Experimental;Espirito;IE;3
+TERÇA;19h00 - 21h00;Fenômenos Mecânicos Experimental;Espírito;NA;3
+TERÇA;21h00-23h00;Fenômenos Mecânicos Experimental;Espírito;NB;3
+QUARTA;19h00 - 21h00;Fenômenos Mecânicos Experimental;Espirito;NC;3
+TERÇA;15h30-17h30;Física Geral;Fabiano;I;3
+QUINTA;15h30-17h30;Física Geral;Fabiano;I;3
+TERÇA;13h30-15h30;Fisiologia Humana I;Tatiana;IA;3
+QUINTA;13h30-15h30;Fisiologia Humana I;Tatiana;IA;3
+TERÇA;15h30-17h30;Fisiologia Humana I;Eugênia Mattos;IB;3
+QUINTA;15h30-17h30;Fisiologia Humana I;Eugênia Mattos;IB;3
+QUARTA;10h00 - 12h00;Fundamentos da Administração;Iraci;IA;7
+QUARTA;15h30-17h30;Fundamentos da Administração;Iraci;IB;7
+TERÇA;13h30-15h30;Fundamentos de Biologia Moderna (Reof );Luciane;IC;1
+QUINTA;13h30-15h30;Fundamentos de Biologia Moderna (Reof );Luciane;IC;1
+QUARTA;8h00 - 10h00;Fundamentos de Biologia Moderna;Cláudia;AB;1
+SEXTA;8h00 - 10h00;Fundamentos de Biologia Moderna;Cláudia;AB;1
+QUARTA;8h00 - 10h00;Fundamentos de Biologia Moderna;Andre;CD;1
+SEXTA;8h00 - 10h00;Fundamentos de Biologia Moderna;Andre;CD;1
+QUARTA;19h00 - 21h00;Fundamentos de Biologia Moderna;Michael;NAB;1
+SEXTA;21h00-23h00;Fundamentos de Biologia Moderna;Michael;NAB;1
+QUINTA;13h30-15h30;Fundamentos de Química Medicinal;Conceição;I;7
+QUINTA;15h30-17h30;Fundamentos de Química Medicinal;Conceição;I;7
+TERÇA;19h00 - 21h00;Geometria Analítica;Luzia;N;3
+QUINTA;19h00 - 21h00;Geometria Analítica;Luzia;N;3
+SEGUNDA;13h30-15h30;Imunologia Geral;Loures;I;5
+SEGUNDA;15h30-17h30;Imunologia Geral;Loures;I;7
+SEXTA;10h00 - 12h00;Iniciação aos PEPICT I;Denise;I;3
+TERÇA;13h30-15h30;Inteligência Artificial;Faria;I;5
+QUINTA;13h30-15h30;Inteligência Artificial;Faria;I;5
+TERÇA;19h00 - 21h00;Inteligência Artificial;Faria;N;5
+QUINTA;19h00 - 21h00;Inteligência Artificial;Faria;N;5
+QUARTA;10h00 - 12h00;Introdução à Bioinformática;Andre;I;5
+SEXTA;10h00 - 12h00;Introdução à Bioinformática;Andre;I;5
+SEGUNDA;15h30-17h30;Introdução à Ecologia;Elisa;I;5
+QUARTA;15h30-17h30;Introdução à Ecologia;Elisa;I;5
+SEXTA;10h00 - 12h00;Introdução à Engenharia de Materiais (reof 2);Leonardo;I;3
+QUARTA;21h00-23h00;Introdução a Nanotecnologia;Elias;N;3
+QUARTA;15h30-17h30;Introdução a Nanotecnologia;Elias;N;3
+TERÇA;13h30-15h30;Introdução aos Materiais Elétricos;Presley;I;5
+TERÇA;21h00-23h00;Introdução aos Materiais Elétricos;Presley;N;5
+SEXTA;13h30-15h30;Laboratório de Bioquímica;Martin;I;3
+SEXTA;15h30-17h30;Laboratório de Bioquímica;Martin;I;3
+QUARTA;10h00 - 12h00;Laboratório de Matemática;Karen;IA;1
+QUARTA;10h00 - 12h00;Laboratório de Matemática;Thadeu;IB;1
+SEXTA;10h00 - 12h00;Laboratório de Matemática;Vanessa Paschoa;IC;1
+SEXTA;10h00 - 12h00;Laboratório de Matemática;Thadeu;ID;1
+QUARTA;13h30-15h30;Laboratório de Sistemas Computacionais: Arquitetura e Organização de Computadores;Sérgio;I;5
+SEXTA;13h30-15h30;Laboratório de Sistemas Computacionais: Arquitetura e Organização de Computadores;Sérgio;I;5
+QUARTA;19h00 - 21h00;Laboratório de Sistemas Computacionais: Arquitetura e Organização de Computadores;Thiago;N;5
+SEXTA;19h00 - 21h00;Laboratório de Sistemas Computacionais: Arquitetura e Organização de Computadores;Tiago;N;5
+TERÇA;15h30-17h30;Linguagens Formais e Autômatos;Chaves;I;5
+QUINTA;15h30-17h30;Linguagens Formais e Autômatos;Chaves;I;5
+SEGUNDA;21h00-23h00;Linguagens Formais e Autômatos;Luis;N;5
+QUARTA;21h00-23h00;Linguagens Formais e Autômatos;Luis;N;5
+QUARTA;13h30-15h30;Lógica de Programação;Marcio;IA;1
+SEXTA;13h30-15h30;Lógica de Programação;Marcio;IA;1
+QUARTA;13h30-15h30;Lógica de Programação;Ana Luiza;IB;1
+SEXTA;13h30-15h30;Lógica de Programação;Ana Luiza;IB;1
+QUARTA;15h30-17h30;Lógica de Programação;Quiles;IC;1
+QUARTA;15h30-17h30;Lógica de Programação;Ana Luiza;ID;1
+QUARTA;21h00-23h00;Lógica de Programação;Quiles;NA;1
+SEXTA;19h00 - 21h00;Lógica de Programação;Quiles;NA;1
+QUARTA;21h00-23h00;Lógica de Programação;Otávio;NB;1
+SEXTA;19h00 - 21h00;Lógica de Programação;Otávio;NB;1
+QUARTA;19h00 - 21h00;Lógica de Programação;Musa;NC;1
+SEXTA;19h00 - 21h00;Lógica de Programação;Musa;NC;1
+SEXTA;13h30-15h30;Macroeconomia;Scriptore;IA;3
+SEXTA;15h30-17h30;Macroeconomia;Scriptore;IB;3
+SEGUNDA;13h30-15h30;Matemática Discreta;Erwin;I;1
+QUARTA;13h30-15h30;Matemática Discreta;Erwin;I;1
+TERÇA;15h30-17h30;Materiais Cerâmicos;Eliandra;I;5
+QUINTA;15h30-17h30;Materiais Cerâmicos;Eliandra;I;5
+QUARTA;19h00 - 21h00;Materiais Cerâmicos;Leonardo;N;5
+QUARTA;21h00-23h00;Materiais Cerâmicos;Leonardo;N;5
+TERÇA;10h00 - 12h00;Materiais Metálicos;Danieli;I;5
+QUINTA;10h00 - 12h00;Materiais Metálicos;Danieli;I;5
+TERÇA;13h30-15h30;Materiais Poliméricos;Lemes;I;5
+QUINTA;13h30-15h30;Materiais Poliméricos;Lemes;I;5
+SEGUNDA;15h30-17h30;Mecânica Geral;Eudes;I;3
+QUARTA;15h30-17h30;Mecânica Geral;Eudes;I;3
+SEGUNDA;19h00 - 21h00;Mecânica Geral;Eudes;N;3
+QUARTA;19h00 - 21h00;Mecânica Geral;Eudes;N;3
+TERÇA;13h30-15h30;Metaheurísticas;Chaves;I;5
+QUINTA;13h30-15h30;Metaheurísticas;Chaves;I;5
+SEGUNDA;19h00 - 21h00;Métodos Matemáticos para Engenharia;Adenauer;N;3
+QUARTA;19h00 - 21h00;Métodos Matemáticos para Engenharia;Adenauer;N;3
+SEGUNDA;13h30-15h30;Microbiologia Aplicada e Industrial;Elisa;I;3
+QUARTA;13h30-15h30;Microbiologia Aplicada e Industrial;Elisa;I;3
+QUARTA;8h00 - 10h00;Modelagem Molecular;Martin;I;7
+QUARTA;10h00 - 12h00;Modelagem Molecular;Martin;I;7
+SEGUNDA;15h30-17h30;Mudança do Clima e Sociedade;Luciana;I;3
+SEGUNDA;19h00 - 21h00;Mudança do Clima e Sociedade;Luciana;N;3
+QUINTA;19h00 - 21h00;Neurociência aplicada ao cotidiano;Mattos;N;3
+TERÇA;15h30-17h30;Otimização Linear;Horácio;I;5
+QUINTA;15h30-17h30;Otimização Linear;Horácio;I;5
+QUARTA;8h00 - 10h00;Prática em Projetos Extensionistas I;Marli/Maraisa;I;3
+QUARTA;10h00 - 12h00;Prática em Projetos Extensionistas I;Marli/Maraisa;I;3
+SEGUNDA;8h00 - 10h00;Probabilidade e Estatística;Sâmia;IA;3
+QUARTA;8h00 - 10h00;Probabilidade e Estatística;Sâmia;IA;3
+SEGUNDA;10h00 - 12h00;Probabilidade e Estatística;Sâmia;IB;3
+QUARTA;10h00 - 12h00;Probabilidade e Estatística;Sâmia;IB;3
+TERÇA;13h30-15h30;Probabilidade e Estatística;Flávia;IC;3
+QUINTA;13h30-15h30;Probabilidade e Estatística;Flávia;IC;3
+TERÇA;21h00-23h00;Probabilidade e Estatística;Luzia;N;3
+QUINTA;21h00-23h00;Probabilidade e Estatística;Luzia;N;3
+TERÇA;15h30-17h30;Projeto e Análise de Algoritmos;Sanderson;I;5
+QUINTA;15h30-17h30;Projeto e Análise de Algoritmos;Sanderson;I;5
+SEGUNDA;13h30-15h30;Projeto Orientado a Objetos;Fábio;I;5
+QUARTA;13h30-15h30;Projeto Orientado a Objetos;Fábio;I;5
+SEGUNDA;19h00 - 21h00;Projeto Orientado a Objetos;Fábio;N;5
+QUARTA;19h00 - 21h00;Projeto Orientado a Objetos;Fábio;N;5
+SEGUNDA;8h00 - 10h00;Quimica Analitica;Sílvia;I;5
+SEGUNDA;10h00 - 12h00;Quimica Analitica;Sílvia;I;5
+TERÇA;15h30-17h30;Química Geral (Reof.);Presley;I;1
+QUINTA;15h30-17h30;Química Geral (Reof.);Presley;I;1
+TERÇA;15h30-17h30;Química Geral;Dayane;IA;1
+QUINTA;15h30-17h30;Química Geral;Dayane;IA;1
+TERÇA;15h30-17h30;Química Geral;Marli;IB;1
+QUINTA;15h30-17h30;Química Geral;Marli;IB;1
+TERÇA;13h30-15h30;Química Geral;Dayane;IC;1
+QUINTA;13h30-15h30;Química Geral;Dayane;IC;1
+TERÇA;13h30-15h30;Química Geral;Marli;ID;1
+QUINTA;13h30-15h30;Química Geral;Marli;ID;1
+TERÇA;19h00 - 21h00;Química Geral;Hugo;NA;1
+QUINTA;19h00 - 21h00;Química Geral;Hugo;NA;1
+TERÇA;21h00-23h00;Química Geral;Hugo;NB;1
+QUINTA;21h00-23h00;Química Geral;Hugo;NB;1
+TERÇA;15h30-17h30;Química Inorgânica;Raquel;I;3
+QUINTA;15h30-17h30;Química Inorgânica;Raquel;I;3
+TERÇA;19h00 - 21h00;Química Inorgânica;Raquel;N;3
+QUINTA;19h00 - 21h00;Química Inorgânica;Raquel;N;3
+SEGUNDA;15h30-17h30;Química Orgânica;João;I;3
+QUARTA;15h30-17h30;Química Orgânica;João;I;3
+SEGUNDA;19h00 - 21h00;Química Orgânica;João;N;3
+QUARTA;19h00 - 21h00;Química Orgânica;João;N;3
+TERÇA;19h00 - 21h00;Realidade Virtual e Aumentada;Ezequiel;N;5
+QUINTA;19h00 - 21h00;Realidade Virtual e Aumentada;Ezequiel;N;5
+SEGUNDA;10h00 - 12h00;Reciclagem de Materiais;Lilia;I;5
+QUARTA;13h30-15h30;Relações Étnico-Raciais e Cultura Afro-Brasileira e Indígena;Luciana;I;3
+QUARTA;19h00 - 21h00;Relações Étnico-Raciais e Cultura Afro-Brasileira e Indígena;Luciana;N;3
+QUARTA;8h00 - 10h00;Resistência dos Materiais;Kátia;I;5
+QUARTA;10h00 - 12h00;Resistência dos Materiais;Kátia;I;5
+TERÇA;21h00-23h00;Sistemas Operacionais;Thaina;N;5
+QUINTA;21h00-23h00;Sistemas Operacionais;Thaina;N;5
+TERÇA;15h30-17h30;Sistemas Operacionais;Ezequiel;I;5
+QUINTA;15h30-17h30;Sistemas Operacionais;Ezequiel;I;5
+TERÇA;19h00 - 21h00;Soft Skills baseada em neurociência;Mattos;N;5
+TERÇA;13h30-15h30;Tecnologia e Meio Ambiente;Maraisa;I;3
+TERÇA;19h00 - 21h00;Tecnologia e Meio Ambiente;Maraisa;N;3
+SEGUNDA;15h30-17h30;Teoria dos Grafos;Luis;I;5
+QUARTA;15h30-17h30;Teoria dos Grafos;Luis;I;5
+TERÇA;21h00-23h00;Teoria dos Grafos;Elbert;N;5
+QUINTA;21h00-23h00;Teoria dos Grafos;Elbert;N;5
+SEGUNDA;13h30-15h30;Tópicos em Ciência e Tecnologia II;Walter;I;3
+SEGUNDA;15h30-17h30;Tópicos em Ressonância Magnética Nuclear;Saraiva;I;5
+QUARTA;15h30-17h30;Tópicos em Ressonância Magnética Nuclear;Saraiva;I;5
+SEGUNDA;21h00-23h00;Tópicos em Tecnologia da Computação I (Blockchain);Arlindo;N;5
+QUARTA;21h00-23h00;Tópicos em Tecnologia da Computação I (Blockchain);Arlindo;N;5
+TERÇA;15h30-17h30;Tópicos em Tecnologia da Computação II (Visão Computacional);Regina;I;5
+QUINTA;15h30-17h30;Tópicos em Tecnologia da Computação II (Visão Computacional);Regina;I;5
+SEGUNDA;19h00 - 21h00;Tópicos em Tecnologia da Computação III (Bioinformatica avançada);Reginaldo;N;5
+QUARTA;19h00 - 21h00;Tópicos em Tecnologia da Computação III (Bioinformatica avançada);Reginaldo;N;5
+QUARTA;19h00 - 21h00;Tópicos em Tecnologia da Computação IV (Aprendendo stacks de tecnologia: Ruby e Golang);Otávio;N;5
+SEXTA;21h00-23h00;Tópicos em Tecnologia da Computação IV (Aprendendo stacks de tecnologia: Ruby e Golang);Otávio;N;5
+SEGUNDA;8h00 - 10h00;Tópicos Especiais em C&T IV - Economia e Negócios;Sato;IA;3
+QUARTA;8h00 - 10h00;Tópicos Especiais em C&T IV - Economia e Negócios;Sato;IB;3
+SEXTA;8h00 - 10h00;Tópicos Especiais em Ciência e Eng. de Materiais III - Engenharia Econômica;Leonardo;I;5
+SEXTA;8h00 - 10h00;Tópicos Especiais em Física;Nirton;I;7
+SEXTA;10h00 - 12h00;Tópicos Especiais em Física;Nirton;I;7
