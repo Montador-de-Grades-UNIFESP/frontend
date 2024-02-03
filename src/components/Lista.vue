@@ -108,7 +108,7 @@ export default {
   methods: {
     async fetchDisciplinas() {
       try {
-        const { data } = await axios.get('src/data/disciplinas.json', {
+        const { data } = await axios.get('/disciplinas.json', {
           items: []
         });
         this.allUnfilteredDisciplines = data.map(item => ({ ...item, COLOR: '#FF0000' }));
@@ -120,7 +120,7 @@ export default {
       const ids = this.listaSelecionadas.map(item => item.ID);
 
       try {
-        const response = await axios.get('src/data/disciplinas.json', {
+        const response = await axios.get('/disciplinas.json', {
           items: ids
         });
         const items = response.data.filter(this.filtraMateria);
