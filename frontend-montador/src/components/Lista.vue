@@ -132,6 +132,7 @@ export default {
     async atualizarDados(){
       const ids = this.listaSelecionadas;
       //alert(ids)
+      //alert(JSON.stringify(ids))
      
       try {
         let response = await axios.get('/disciplinas.json');

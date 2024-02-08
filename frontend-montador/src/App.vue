@@ -209,12 +209,14 @@ export default {
       return;
     }, 
     updateTable(obj, valor){
-      obj.DIA.forEach(dia => {
+      obj.DIA.forEach( (dia, index)  => {
         const diaIndex = this.daysOfWeek.indexOf(dia);
         const horarioIndex = obj.DIA.indexOf(dia);
-        const horario = obj.HORARIO[horarioIndex];
+        const horario = obj.HORARIO[index];
         const horarioIndex2 = this.hours.indexOf(horario);
         this.tabela[horarioIndex2][diaIndex] = valor;
+        // alert(dia)
+        // alert(horario)
       });
     }, 
     updateValue(value){
