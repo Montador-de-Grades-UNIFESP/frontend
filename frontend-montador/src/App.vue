@@ -92,7 +92,7 @@
                 <div class="">
                   <ListaUC :btn_state_change="btn_state" :horario="null" :dia="null" :listaSelecionadas="ListaIdsSelecionadas"  @updateValue="updateValue"></ListaUC>
                 </div>
-                <CustomButton 
+                <CustomButton v-show="false"
                   class="mt-2 py-2 px-12 border-black uppercase w-full h-auto" 
                   @click="change_btn_state_conflict()"
                 >
@@ -222,10 +222,12 @@ export default {
       this.updateTable(value, value);
 
       this.ListaIdsSelecionadas.push(value)
+      //alert(this.ListaIdsSelecionadas)
       localStorage.ListaIdsSelecionadas = JSON.stringify(this.ListaIdsSelecionadas)
   
       this.showModal = false
       this.quantidade += value.HORARIO.length
+  
     },
     
     cleanAll(){

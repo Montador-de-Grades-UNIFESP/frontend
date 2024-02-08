@@ -116,14 +116,30 @@ export default {
         console.log(error);
       }
     },
-    async atualizarDados(){
-      const ids = this.listaSelecionadas.map(item => item.ID);
 
-      try {
-        const response = await axios.get('/disciplinas.json', {
-          items: ids
+    verificaConflitos(disciplinasSelecionadas, todasDisciplinas) {
+      return todasDisciplinas.filter((disciplina) => {
+        return !disciplinasSelecionadas.some((selecionada) => {
+          return selecionada.DIA.some(dia => 
+            disciplina.DIA.includes(dia) && selecionada.HORARIO.some(horarioSel => 
+              disciplina.HORARIO.includes(horarioSel)
+            )
+          );
         });
-        const items = response.data.filter(this.filtraMateria);
+      });
+    },
+        
+    async atualizarDados(){
+      const ids = this.listaSelecionadas;
+      //alert(ids)
+     
+      try {
+        let response = await axios.get('/disciplinas.json');
+       
+        
+        
+        let items = this.verificaConflitos(ids, response.data);
+        items = items.filter(this.filtraMateria);
         items.forEach(item_2 => item_2.COLOR = '#385F73');
         this.allUnfilteredDisciplines.forEach(item_3 => item_3.COLOR = '#385F73');
 
@@ -167,12 +183,10 @@ export default {
       const nome = obj.NOME.replace(/\s*\([^)]*\)/g, '').replace(/ /g, '_');
       window.open(this.base_address + nome[0] + "/" + nome + ".pdf", "_blank");
     },
-    filtraMateria(item){
-      if(this.horario === null && this.dia === null) {
-        return true
+    filtraMateria(item) {
+      if (this.horario === null && this.dia === null) {
+        return true;
       }
-
-      this.vazio = this.itensFiltered.length === 0;
 
       const hasHorario = this.horario ? item.HORARIO.includes(this.horario) : true;
       const hasDia = this.dia ? item.DIA.includes(this.dia) : true;
