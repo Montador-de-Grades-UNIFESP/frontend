@@ -2413,9 +2413,11 @@
        "PROFESSORES":"Jo\u00e3o",
        "TURMA":"IA",
        "HORARIO":[
+          "08h00-10h00",
           "10h00-12h00"
        ],
        "DIA":[
+          "Quarta",
           "Quarta"
        ]
     },
@@ -2439,9 +2441,11 @@
        "PROFESSORES":"Raquel",
        "TURMA":"IC",
        "HORARIO":[
+          "08h00-10h00",
           "10h00-12h00"
        ],
        "DIA":[
+          "Quarta",
           "Quarta"
        ]
     },
