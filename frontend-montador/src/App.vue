@@ -50,7 +50,7 @@
               @click="load"> Importar
             </CustomButton> 
   
-            <CustomButton class="border-black px-4 mr-1"
+            <CustomButton class="border-purple-600 px-4 mr-1 text-purple-600"
               @click="showRanking = true"> Ranking
             </CustomButton> 
             
@@ -63,27 +63,23 @@
   
                 <div class="flex flex-row gap-x-4 items-center">
                   <span>RA:</span>
-                  <input v-model="ra" placeholder="Seu RA" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                  <input v-model="ra" placeholder="Seu RA" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-20" required />
                   <span class="text-red-500">*</span>
                   
                   <span>CR:</span>
-                  <input v-model="cr" placeholder="Seu CR" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+                  <input v-model="cr" placeholder="Seu CR" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-20" required />
                   <span class="text-red-500">*</span>
                 </div>
   
-                <p class="font-semibold">Selecione seu turno e o termo que está entrando:</p>
+                <p class="font-semibold">Selecione seu curso e o termo que está entrando:</p>
                 
                 <div class="flex flex-row gap-x-4 items-center -mt-1">
-                  <div class="flex items-center">
-                    <input type="radio" id="integral" value="Integral" v-model="picked" name="turno" class="mr-1" required />
-                    <label for="integral" class="cursor-pointer">Integral</label>
-                  </div>
-                  <div class="flex items-center">
-                    <input type="radio" id="noturno" value="Noturno" v-model="picked" name="turno" class="mr-1" required />
-                    <label for="noturno" class="cursor-pointer">Noturno</label>
-                  </div>
-  
-  
+                  <span>Curso:</span>
+                  <select v-model="curso" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <option disabled value="">Curso</option>
+                    <option v-for="curso in cursos" :key="curso.id" :value="curso.id">{{ curso.nome }}</option>
+                  </select>
+
                   <span>Termo:</span>
                   <select v-model="selected" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <option disabled value="">Termo</option>
@@ -92,7 +88,7 @@
                   <span class="text-red-500">*</span>
                 </div>
                 <p class="font-semibold">Matérias obrigatórias que já realizou:</p>
-                <div class="flex flex-row items-center -mt-1">
+                <div class="flex flex-row items-center -mt-1  flex-wrap">
                   <input type="checkbox" id="cuv" value="cuv" v-model="checkedNames" />
                   <label class="mr-4 ml-1" for="cuv">CUV</label>
   
@@ -116,7 +112,7 @@
                 </div>
                 <div>
                   <input type="checkbox" id="agree" value="AGREE" v-model="agree" />
-                  <label for="agree"> Concordo com o uso dos dados acima para calcular minha posição. </label>
+                  <label for="agree"> Concordo com o uso dos dados acima para calcular meu ranking. </label>
                   <span class="text-red-500">*</span>
                 </div>
                 <div>
@@ -223,7 +219,7 @@
   async function adicionarOuAtualizarAluno(raAluno, alunoData) {
     try {
       await setDoc(doc(db, "alunos", raAluno), alunoData);
-      console.log("Documento escrito com ID: ", raAluno);
+      //console.log("Documento escrito com ID: ", raAluno);
     } catch (e) {
       console.error("Erro ao adicionar ou atualizar documento: ", e);
     }
@@ -233,7 +229,7 @@
     try {
       const alunosSnapshot = await getDocs(collection(db, "alunos"));
       const alunosList = alunosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      console.log("Alunos:", alunosList);
+      //console.log("Alunos:", alunosList);
       return alunosList;
     } catch (e) {
       console.error("Erro ao ler documentos: ", e);
@@ -276,6 +272,19 @@
         // O controle das disciplinas será através dos ids das disciplinas
         ListaIdsSelecionadas: JSON.parse(localStorage.ListaIdsSelecionadas || '[]'),
         checkedNames: [],
+        curso: '',
+        cursos: [
+          { id: 'BCT-I', nome: 'BCT-I' },
+          { id: 'BCT-N', nome: 'BCT-N' },
+          { id: 'BMC-I', nome: 'BMC-I' },
+          { id: 'EB-I', nome: 'EB-I' },
+          { id: 'EB-N', nome: 'EB-N' },
+          { id: 'BCC/EC-I', nome: 'BCC/EC-I' },
+          { id: 'BCC/EC-N', nome: 'BCC/EC-N' },
+          { id: 'EM-I', nome: 'EM-I' },
+          { id: 'EM-N', nome: 'EM-N' },
+          { id: 'BBT-I', nome: 'BBT-I' },
+        ],
       }
     },
     computed: {
@@ -375,8 +384,39 @@
         aux.download = `SelectedUCS ${currentDateTime}.json`;
         aux.click();
       },
-      consultRanking() {
-        if (!this.ra || !this.cr || !this.picked || !this.selected || !this.agree) {
+      displayRank(dados, lista) {
+        let todosRankings = [];
+        dados.grade.forEach((uc) => {
+          let materia = [uc.NOME, 1, 1]; //[nome, ranking, alunos totais]
+          lista.forEach((outro_aluno) => {
+            if (outro_aluno.grade.some(e => e.NOME == uc.NOME)) { // Achou um aluno que também faz aquela matéria
+              if (outro_aluno.ra != dados.ra) { // Verifica se não é o mesmo aluno
+                materia[2]++;
+                // Verificando casos em que pode cair no ranking
+                let somar = 0;
+                if (dados.curso != outro_aluno.curso) {
+                  if (outro_aluno.curso == uc.CURSO) somar = 1;
+                }
+                else if (dados.termo != outro_aluno.TERMO)  {
+                  if (outro_aluno.termo == uc.TERMO) somar = 1;
+                }
+                else if (dados.creditos < outro_aluno.creditos) somar = 1;
+                else if (dados.cr < outro_aluno.cr) somar = 1;
+                materia[1] += somar;
+              }
+            }
+          })
+          todosRankings.push(materia); 
+        })
+        let resultado = '';
+        todosRankings.forEach((materia) => {
+          // Adicionando as informações de cada matéria à string
+          resultado += `${materia[0]}: posição ${materia[1]} de ${materia[2]}\n\n`;
+        });
+        alert(resultado);
+      },
+      async consultRanking() {
+        if (!this.ra || !this.cr || !this.curso || !this.selected || !this.agree) {
           alert('Por favor, preencha todos os campos obrigatórios.');
           return;
         }
@@ -388,7 +428,7 @@
           alert('Por favor, insira um CR válido (maior que 0 e menor que 10).');
           return;
         }
-        //alert(`RA: ${this.ra}, CR: ${this.cr}, picked: ${this.picked}, selected: ${this.selected}, checked: ${this.checkedNames}`);
+        //alert(`RA: ${this.ra}, CR: ${this.cr}, curso: ${this.curso}, selected: ${this.selected}, checked: ${this.checkedNames}`);
         
         let somaCreditos = 0;
         this.checkedNames.forEach((n) => {
@@ -399,7 +439,7 @@
         const dadosAluno = {
           ra: this.ra,
           cr: this.cr,
-          turno: this.picked,
+          curso: this.curso,
           termo: this.selected,
           creditos: somaCreditos
         }
@@ -408,20 +448,20 @@
           alert("Não há matérias selecionadas.");
           return;
         }
-        
+
         let dadosCompletos = {
           ...dadosAluno,
           grade: this.ListaIdsSelecionadas
         }
-        console.log(dadosCompletos);
+        //console.log(dadosCompletos);
 
-        adicionarOuAtualizarAluno(this.ra, dadosCompletos);
-        let lista = listarAlunos();
+        await adicionarOuAtualizarAluno(this.ra, dadosCompletos);
+        let lista = await listarAlunos();
         if (lista == 0) {
           alert("Ocorreu um erro ao buscar os dados, tente novamente mais tarde.");
           return;
         }
-
+        this.displayRank(dadosCompletos, lista);
       },
       load() {
         var inputFileDocument = document.createElement("input");
