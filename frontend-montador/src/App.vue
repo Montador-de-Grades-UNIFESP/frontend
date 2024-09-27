@@ -83,7 +83,7 @@
                   <span>Termo:</span>
                   <select v-model="selected" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     <option disabled value="">Termo</option>
-                    <option v-for="n in 5" :key="n">{{ n+1 }}</option>
+                    <option v-for="n in 11" :key="n">{{ n+1 }}</option>
                   </select>
                   <span class="text-red-500">*</span>
                 </div>
@@ -397,7 +397,7 @@
                 if (dados.curso != outro_aluno.curso) {
                   if (outro_aluno.curso == uc.CURSO) somar = 1;
                 }
-                else if (dados.termo != outro_aluno.TERMO)  {
+                else if (dados.termo != outro_aluno.termo)  {
                   if (outro_aluno.termo == uc.TERMO) somar = 1;
                 }
                 else if (dados.creditos < outro_aluno.creditos) somar = 1;
@@ -411,7 +411,7 @@
         let resultado = '';
         todosRankings.forEach((materia) => {
           // Adicionando as informações de cada matéria à string
-          resultado += `${materia[0]}: posição ${materia[1]} de ${materia[2]}\n\n`;
+          resultado += `${materia[0]}: Você está na ${materia[1]}ª posição de ${materia[2]} preenchidas.\n\n`;
         });
         alert(resultado);
       },
