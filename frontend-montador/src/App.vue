@@ -201,6 +201,47 @@
   
   
   <script>
+
+  // Firebase SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+  // Configuração do Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBTgtcUyVwdZ738_D9djtNsCZUN8E7GKbk",
+    authDomain: "montador-de-grades-5d51e.firebaseapp.com",
+    projectId: "montador-de-grades-5d51e",
+    storageBucket: "montador-de-grades-5d51e.appspot.com",
+    messagingSenderId: "806947421469",
+    appId: "1:806947421469:web:2218b0f9d3a276872a75f4"
+  };
+
+  // Inicializa o Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function adicionarOuAtualizarAluno(raAluno, alunoData) {
+    try {
+      await setDoc(doc(db, "alunos", raAluno), alunoData);
+      console.log("Documento escrito com ID: ", raAluno);
+    } catch (e) {
+      console.error("Erro ao adicionar ou atualizar documento: ", e);
+    }
+  }
+
+  async function listarAlunos() {
+    try {
+      const alunosSnapshot = await getDocs(collection(db, "alunos"));
+      const alunosList = alunosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      console.log("Alunos:", alunosList);
+      return alunosList;
+    } catch (e) {
+      console.error("Erro ao ler documentos: ", e);
+      return 0;
+    }
+  }
+
+  // Fim Firebase
   
   var FileData; 
   var ListId;
@@ -347,24 +388,40 @@
           alert('Por favor, insira um CR válido (maior que 0 e menor que 10).');
           return;
         }
-        alert(`RA: ${this.ra}, CR: ${this.cr}, picked: ${this.picked}, selected: ${this.selected}, checked: ${this.checkedNames}`);
+        //alert(`RA: ${this.ra}, CR: ${this.cr}, picked: ${this.picked}, selected: ${this.selected}, checked: ${this.checkedNames}`);
         
         let somaCreditos = 0;
         this.checkedNames.forEach((n) => {
           if (n == "cuv") somaCreditos += 6;
-          else if (n == "cts") somaCreditos += 2;
-          else if (n == "ctsa") somaCreditos += 2;
+          else if (n == "cts" || n == "ctsa") somaCreditos += 2;
           else somaCreditos += 4;
         })
-        const dados = {
+        const dadosAluno = {
           ra: this.ra,
           cr: this.cr,
           turno: this.picked,
           termo: this.selected,
           creditos: somaCreditos
         }
-        let jsonUcs = JSON.stringify(this.ListaIdsSelecionadas);
-  
+
+        if (this.ListaIdsSelecionadas.length < 1) {
+          alert("Não há matérias selecionadas.");
+          return;
+        }
+        
+        let dadosCompletos = {
+          ...dadosAluno,
+          grade: this.ListaIdsSelecionadas
+        }
+        console.log(dadosCompletos);
+
+        adicionarOuAtualizarAluno(this.ra, dadosCompletos);
+        let lista = listarAlunos();
+        if (lista == 0) {
+          alert("Ocorreu um erro ao buscar os dados, tente novamente mais tarde.");
+          return;
+        }
+
       },
       load() {
         var inputFileDocument = document.createElement("input");
