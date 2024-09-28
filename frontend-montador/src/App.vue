@@ -55,72 +55,104 @@
             </CustomButton> 
             
           </div>
+
+
+          
           <!-- Seção ranking -->
           <Modal v-if="showRanking" @close="showRanking = false">
-            <div class="ml-4">
-              <h2 class="text-lg font-bold mt-4 mb-4">Preencha para estimar sua posição nas matérias escolhidas:</h2>
-              <div class="flex flex-col w-full align-content-space-around justify-center gap-y-4">
-  
-                <div class="flex flex-row gap-x-4 items-center">
-                  <span>RA:</span>
-                  <input v-model="ra" placeholder="Seu RA" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-20" required />
-                  <span class="text-red-500">*</span>
-                  
-                  <span>CR:</span>
-                  <input v-model="cr" placeholder="Seu CR" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-20" required />
-                  <span class="text-red-500">*</span>
-                </div>
-  
-                <p class="font-semibold">Selecione seu curso e o termo que está entrando:</p>
-                
-                <div class="flex flex-row gap-x-4 items-center -mt-1">
-                  <span>Curso:</span>
-                  <select v-model="curso" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <option disabled value="">Curso</option>
-                    <option v-for="curso in cursos" :key="curso.id" :value="curso.id">{{ curso.nome }}</option>
-                  </select>
+    <div class="card w-full max-w-2xl mx-auto">
+      <div class="card-header">
+        <h2 class="text-2xl font-bold">Preencha para estimar sua posição nas matérias escolhidas</h2>
+      </div>
 
-                  <span>Termo:</span>
-                  <select v-model="selected" class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <option disabled value="">Termo</option>
-                    <option v-for="n in 11" :key="n">{{ n+1 }}</option>
-                  </select>
-                  <span class="text-red-500">*</span>
-                </div>
-                <p class="font-semibold">Matérias obrigatórias que já realizou:</p>
-                <div class="flex flex-row items-center -mt-1  flex-wrap">
-                  <input type="checkbox" id="cuv" value="cuv" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="cuv">CUV</label>
-  
-                  <input type="checkbox" id="lp" value="lp" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="lp">LP</label>
-  
-                  <input type="checkbox" id="cts" value="cts" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="cts">CTS</label>
-  
-                  <input type="checkbox" id="fbm" value="fbm" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="fbm">FBM</label>
-  
-                  <input type="checkbox" id="qg" value="qg" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="qg">QG</label>
-  
-                  <input type="checkbox" id="ctsa" value="ctsa" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="ctsa">CTSA</label>
-  
-                  <input type="checkbox" id="femec" value="femec" v-model="checkedNames" />
-                  <label class="mr-4 ml-1" for="femec">FEMEC</label>
-                </div>
-                <div>
-                  <input type="checkbox" id="agree" value="AGREE" v-model="agree" />
-                  <label for="agree"> Concordo com o uso dos dados acima para calcular meu ranking. </label>
-                  <span class="text-red-500">*</span>
-                </div>
-                <div>
-                  <CustomButton class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition duration-300" @click="consultRanking">Consultar posição</CustomButton> 
-                </div>
+      <div class="card-content">
+        <form v-if="!rankingResult" @submit.prevent="consultRanking" class="space-y-6">
+          <!-- RA and CR Fields -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label for="ra">RA: </label>
+              <input
+                v-model="ra"
+                id="ra"
+                type="text"
+                placeholder="Seu RA"
+                required
+                class="input border border-gray-300 rounded px-1"
+              />
+              <span class="text-red-500">*</span>
+            </div>
+            <div class="space-y-2">
+              <label for="cr">CR: </label>
+              <input
+                v-model="cr"
+                id="cr"
+                type="text"
+                placeholder="Seu CR"
+                required
+                class="input border border-gray-300 rounded px-1"
+              />
+              <span class="text-red-500">*</span>
+            </div>
+          </div>
+
+          <!-- Course and Term Select -->
+          <div class="space-y-2">
+            <label class="font-semibold">Selecione seu curso e o termo:</label>
+            <div class="grid grid-cols-2 gap-4">
+              <select v-model="curso" class="input border border-gray-300 rounded px-3 py-2" required>
+                <option disabled value="">Curso</option>
+                <option v-for="curso in cursos" :key="curso.id" :value="curso.id">{{ curso.nome }}</option>
+              </select>
+              <select v-model="termo" class="input border border-gray-300 rounded px-3 py-2" required>
+                <option disabled value="">Termo</option>
+                <option v-for="n in 11" :key="n">{{ n + 1 }}</option>
+              </select>
+              <span class="text-red-500">*</span>
+            </div>
+          </div>
+
+          <!-- Subjects Selection -->
+          <div class="space-y-2">
+            <label class="font-semibold">Matérias obrigatórias que já realizou:</label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              <div v-for="subject in obrigatorySubjects" :key="subject.id" class="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  :id="subject.id"
+                  v-model="checkedNames"
+                  :value="subject.label"
+                  class="checkbox"
+                />
+                <label :for="subject.id">{{ subject.label }}</label>
               </div>
             </div>
-          </Modal>
+          </div>
+
+          <!-- Agreement Checkbox -->
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" id="agree" v-model="agree" required class="checkbox" />
+            <label for="agree">
+              Concordo com o uso dos dados acima para calcular meu ranking. <span class="text-red-500">*</span>
+            </label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn w-full bg-green-600 text-white py-1 hover:bg-green-700 transition duration-300">
+            Consultar posição
+          </button>
+        </form>
+        <div v-else class="space-y-6">
+          <!-- Show the ranking results here -->
+          <p>Seu ranking é: {{ rankingResult }}</p>
+          <!-- Optionally add a button to reset or close -->
+          <button @click="resetForm" class="btn w-full bg-blue-600 text-white py-1 hover:bg-blue-700 transition duration-300">
+            Consultar novamente
+          </button>
+        </div>
+      </div>
+    </div>
+  </Modal>
+
   
           <span></span>
         </div>
@@ -236,6 +268,15 @@
       return 0;
     }
   }
+  /*async function consultRanking() {
+      const alunoData = {
+        ra: this.ra,
+        cr: this.cr,
+        curso: this.curso,
+        termo: this.termo,
+        subjects: this.checkedNames,
+      };
+  }*/
 
   // Fim Firebase
   
@@ -269,9 +310,20 @@
         row: 0,
         quantidade: 0,
         btn_state:false,
+        obrigatorySubjects: [
+        { id: 'cuv', label: 'CUV' },
+        { id: 'lp', label: 'LP' },
+        { id: 'cts', label: 'CTS' },
+        { id: 'fbm', label: 'FBM' },
+        { id: 'qg', label: 'QG' },
+        { id: 'ctsa', label: 'CTSA' },
+        { id: 'femec', label: 'FEMEC' }
+      ],
         // O controle das disciplinas será através dos ids das disciplinas
         ListaIdsSelecionadas: JSON.parse(localStorage.ListaIdsSelecionadas || '[]'),
         checkedNames: [],
+        termo: '',
+        rankingResult: null,
         curso: '',
         cursos: [
           { id: 'BCT-I', nome: 'BCT-I' },
@@ -415,7 +467,7 @@
         });
         alert(resultado);
       },
-      async consultRanking() {
+      async consultRanking1() {
         if (!this.ra || !this.cr || !this.curso || !this.selected || !this.agree) {
           alert('Por favor, preencha todos os campos obrigatórios.');
           return;
