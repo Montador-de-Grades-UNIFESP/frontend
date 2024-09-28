@@ -103,7 +103,7 @@
                 <option disabled value="">Curso</option>
                 <option v-for="curso in cursos" :key="curso.id" :value="curso.id">{{ curso.nome }}</option>
               </select>
-              <select v-model="termo" class="input border border-gray-300 rounded px-3 py-2" required>
+              <select v-model="selected" class="input border border-gray-300 rounded px-3 py-2" required>
                 <option disabled value="">Termo</option>
                 <option v-for="n in 11" :key="n">{{ n + 1 }}</option>
               </select>
@@ -130,14 +130,14 @@
 
           <!-- Agreement Checkbox -->
           <div class="flex items-center space-x-2">
-            <input type="checkbox" id="agree" v-model="agree" required class="checkbox" />
+            <input type="checkbox" id="agree" v-model="agree" value="AGREE" required class="checkbox" />
             <label for="agree">
               Concordo com o uso dos dados acima para calcular meu ranking. <span class="text-red-500">*</span>
             </label>
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" class="btn w-full bg-green-600 text-white py-1 hover:bg-green-700 transition duration-300">
+          <button @click="consultRanking1" type="submit" class="btn w-full bg-green-600 text-white py-1 hover:bg-green-700 transition duration-300">
             Consultar posição
           </button>
         </form>
