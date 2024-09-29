@@ -222,23 +222,25 @@
   <script>
 
   // Firebase SDK
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import { initializeApp } from "firebase/app";
+  import { getFirestore, collection, doc, setDoc, getDocs } from "firebase/firestore/lite";
 
   // Configuração do Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyBTgtcUyVwdZ738_D9djtNsCZUN8E7GKbk",
-    authDomain: "montador-de-grades-5d51e.firebaseapp.com",
-    projectId: "montador-de-grades-5d51e",
-    storageBucket: "montador-de-grades-5d51e.appspot.com",
-    messagingSenderId: "806947421469",
-    appId: "1:806947421469:web:2218b0f9d3a276872a75f4"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyA5zG55pTy8D_kfhxjx_TfKTgL1k1e7SNA",
+  authDomain: "montador-de-grades---unifesp.firebaseapp.com",
+  projectId: "montador-de-grades---unifesp",
+  storageBucket: "montador-de-grades---unifesp.appspot.com",
+  messagingSenderId: "51502672874",
+  appId: "1:51502672874:web:59a3ee55f38c7cd9306093",
+  measurementId: "G-N2RD5ZYNSK"
+};
+
 
   // Inicializa o Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-//usar firebase pra autenticar somente
+
   async function adicionarOuAtualizarAluno(raAluno, alunoData) {
     try {
       await setDoc(doc(db, "alunos", raAluno), alunoData);
@@ -300,7 +302,7 @@
       return {
         alert: true,
         showModal: false,
-        logged: false,
+        logged: true,
         fetchedData: [],
         showRanking: false,
         tabela: Array.from({ length: 6 }, () => Array(6).fill('')),
@@ -452,93 +454,113 @@
     this.logged = true;
     localStorage.setItem('logged', true);
   },
-      displayRank(dados, lista) {
-        let todosRankings = [];
-        dados.grade.forEach((uc) => {
-          let materia = [uc.NOME, 1, 1]; //[nome, ranking, alunos totais]
-          lista.forEach((outro_aluno) => {
-            if (outro_aluno.grade.some(e => e.NOME == uc.NOME)) { // Achou um aluno que também faz aquela matéria
-              if (outro_aluno.ra != dados.ra) { // Verifica se não é o mesmo aluno
-                materia[2]++;
-                // Verificando casos em que pode cair no ranking
-                let somar = 0;
-                if (dados.curso != outro_aluno.curso) {
-                  if (outro_aluno.curso == uc.CURSO) somar = 1;
-                }
-                else if (dados.termo != outro_aluno.termo)  {
-                  if (outro_aluno.termo == uc.TERMO) somar = 1;
-                }
-                else if (dados.creditos < outro_aluno.creditos) somar = 1;
-                else if (dados.cr < outro_aluno.cr) somar = 1;
-                materia[1] += somar;
-              }
+      // Função para verificar se o aluno atual vem antes do outro aluno
+ehPrimeiro(aluno, outro_aluno, disciplina) {
+    // Comparação dos cursos
+    if (aluno.curso.slice(-1) !== outro_aluno.curso.slice(-1)) {
+        if (aluno.curso.slice(-1) === disciplina.CURSO.slice(-1)) {
+            return 0;  // O aluno atual é antes, não soma
+        }
+        if (outro_aluno.curso.slice(-1) === disciplina.CURSO.slice(-1)) {
+            return 1;  // O outro aluno é antes, soma
+        }
+    }
+
+    // TODO: Verificar se uma delas reprovou por falta.
+
+    // Comparação do CR (Coeficiente de Rendimento)
+    if (aluno.cr > outro_aluno.cr) {
+        return 0;  // O aluno atual é antes, não soma
+    } else if (aluno.cr < outro_aluno.cr) {
+        return 1;  // O outro aluno é antes, soma
+    }
+
+    // Se empatar, vamos supor que o outro é antes
+    return 1;
+},
+
+// Função para verificar se o aluno tem a disciplina específica
+temDisciplina(aluno, disciplina) {
+    return aluno.grade.some(d => d.NOME === disciplina.NOME);
+},
+
+// Função para calcular o ranking de um aluno
+acharRanking(aluno, bd) {
+    let posicoes = [];
+    
+    aluno.grade.forEach((disciplina) => {
+        let ranking = 1;
+        let quantidade = 1;
+
+        bd.forEach((outro_aluno) => {
+            if (temDisciplina(outro_aluno, disciplina)) {
+                ranking += ehPrimeiro(aluno, outro_aluno, disciplina);
+                quantidade += 1;
             }
-          })
-          todosRankings.push(materia); 
-        })
-        let resultado = '';
-        todosRankings.forEach((materia) => {
-          // Adicionando as informações de cada matéria à string
-          resultado += `${materia[0]}: Você está na ${materia[1]}ª posição de ${materia[2]} preenchidas.<br><br>`;
         });
-        this.rankingResult = resultado;
-        console.log({materia});
-//        const names = this.ListaIdsSelecionadas.map(subject => subject.NOME); // Extracting NOME property
-//        alert(names.join(", "));
 
-        
-      }
-      ,
-      async consultRanking1() {
-        if (!this.ra || !this.cr || !this.curso || !this.selected || !this.agree) {
-          alert('Por favor, preencha todos os campos obrigatórios.');
-          return;
-        }
-        if (this.ra <= 100000 || this.ra >= 999999) {
-          alert('Por favor, insira um RA válido.');
-          return;
-        }
-        if (this.cr <= 0 || this.cr >= 10) {
-          alert('Por favor, insira um CR válido (maior que 0 e menor que 10).');
-          return;
-        }
-        //alert(`RA: ${this.ra}, CR: ${this.cr}, curso: ${this.curso}, selected: ${this.selected}, checked: ${this.checkedNames}`);
-        
-        /*let somaCreditos = 0;
-        this.checkedNames.forEach((n) => {
-          if (n == "cuv") somaCreditos += 6;
-          else if (n == "cts" || n == "ctsa") somaCreditos += 2;
-          else somaCreditos += 4;
-        })*/
-        const dadosAluno = {
-          ra: this.ra,
-          cr: this.cr,
-          curso: this.curso,
-          termo: this.selected,
-        }
+        posicoes.push([disciplina.NOME, ranking, quantidade]);
+    });
 
-        if (this.ListaIdsSelecionadas.length < 1) {
-          alert("Não há matérias selecionadas.");
-          return;
-        }
+    return posicoes;
+},
 
-        let dadosCompletos = {
-          ...dadosAluno,
-          grade: this.ListaIdsSelecionadas
-        }
-        console.log(dadosCompletos);
+// Atualizando a função displayRank para utilizar a nova lógica
+displayRank(dados, lista) {
+    let rankings = acharRanking(dados, lista);
+    let resultado = '';
 
-        await adicionarOuAtualizarAluno(this.ra, dadosCompletos);
-        let lista = await listarAlunos();
-        if (lista == 0) {
-          alert("Ocorreu um erro ao buscar os dados, tente novamente mais tarde.");
-          return;
-        }
-        this.displayRank(dadosCompletos, lista);
-      },
-      resetForm(){
-        this.rankingResult = '';
-      },
+    rankings.forEach((materia) => {
+        // Adicionando as informações de cada matéria à string
+        resultado += `${materia[0]}: Você está na ${materia[1]}ª posição de ${materia[2]} preenchidas.<br><br>`;
+    });
+
+    this.rankingResult = resultado;
+    console.log(rankings);
+},
+
+// Função consultRanking1 ajustada para utilizar o novo displayRank
+async consultRanking1() {
+    if (!this.ra || !this.cr || !this.curso || !this.selected || !this.agree) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+    if (this.ra <= 100000 || this.ra >= 999999) {
+        alert('Por favor, insira um RA válido.');
+        return;
+    }
+    if (this.cr <= 0 || this.cr >= 10) {
+        alert('Por favor, insira um CR válido (maior que 0 e menor que 10).');
+        return;
+    }
+
+    const dadosAluno = {
+        ra: this.ra,
+        cr: this.cr,
+        curso: this.curso,
+        termo: this.selected,
+    };
+
+    if (this.ListaIdsSelecionadas.length < 1) {
+        alert("Não há matérias selecionadas.");
+        return;
+    }
+
+    let dadosCompletos = {
+        ...dadosAluno,
+        grade: this.ListaIdsSelecionadas
+    };
+    console.log(dadosCompletos);
+
+    await adicionarOuAtualizarAluno(this.ra, dadosCompletos);
+    let lista = await listarAlunos();
+    if (lista == 0) {
+        alert("Ocorreu um erro ao buscar os dados, tente novamente mais tarde.");
+        return;
+    }
+
+    this.displayRank(dadosCompletos, lista);
+},
 
       load() {
         var inputFileDocument = document.createElement("input");
