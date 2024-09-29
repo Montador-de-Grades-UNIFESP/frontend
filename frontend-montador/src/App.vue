@@ -132,13 +132,15 @@
               </div>
             </div>
             
-            <div v-else>
-              <p class="font-bold text-center mb-4">BEM-VINDO!</p>
-              <p class="font-bold text-gray-500 text-center mb-4">Para continuar você precisa fazer login!</p>
-              <div @click="googleSignIn" class="flex justify-center">
-              <GoogleLoginButton class="bg-white text-black font-semibold py-2 px-4 rounded shadow-md hover:bg-blue-600 transition duration-200 ease-in-out" />
-              
+           <div v-else class="flex flex-col items-center p-8 bg-white rounded-lg shadow-lg max-w-sm mx-auto">
+            <img src="googleLogo" alt="Google Logo" class="mb-6 w-20 h-20" />
+            <h1 class="font-bold text-2xl text-gray-800 text-center mb-2">BEM-VINDO!</h1>
+            <p class="font-medium text-gray-600 text-center mb-8">Para continuar, faça login com sua conta do Google.</p>
+            <div @click="googleSignIn" class="flex justify-center w-full">
+              <GoogleLoginButton class="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out w-full" />
             </div>
+
+
           </div>
           </CardModal>
 
@@ -284,11 +286,13 @@
   import CustomButton from './components/CustomButton.vue';
   import CardModal from './components/ModalCard.vue';
   import GoogleLoginButton from './components/GoogleLoginButton.vue';
+  import googleLogo from './assets/googleLogo.png';
   
   export default {
     components: {
       ModalButton,
       Modal,
+      googleLogo,
       CardModal,
       ListaUC,
       Alert,
