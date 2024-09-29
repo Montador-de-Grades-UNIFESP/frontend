@@ -133,8 +133,13 @@
             </div>
             
             <div v-else>
-              <p>faça login meu parceiro</p>
+              <p class="font-bold text-center mb-4">BEM-VINDO!</p>
+              <p class="font-bold text-gray-500 text-center mb-4">Para continuar você precisa fazer login!</p>
+              <div @click="googleSignIn" class="flex justify-center">
+              <GoogleLoginButton class="bg-white text-black font-semibold py-2 px-4 rounded shadow-md hover:bg-blue-600 transition duration-200 ease-in-out" />
+              
             </div>
+          </div>
           </CardModal>
 
 
@@ -278,6 +283,7 @@
   import Alert from './components/Alert.vue';
   import CustomButton from './components/CustomButton.vue';
   import CardModal from './components/ModalCard.vue';
+  import GoogleLoginButton from './components/GoogleLoginButton.vue';
   
   export default {
     components: {
@@ -287,13 +293,14 @@
       ListaUC,
       Alert,
       CustomButton,
+      GoogleLoginButton,
   },
     name: 'App',
     data() {
       return {
         alert: true,
         showModal: false,
-        logged: true,
+        logged: false,
         fetchedData: [],
         showRanking: false,
         tabela: Array.from({ length: 6 }, () => Array(6).fill('')),
