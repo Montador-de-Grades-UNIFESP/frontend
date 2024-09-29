@@ -97,7 +97,7 @@
 
                     <!-- Subjects Selection -->
                     <div class="space-y-2">
-                      <label class="font-semibold">Você já reprovou em alguma dessas matérias?</label>
+                      <label class="font-semibold">Você já reprovou por frequência em alguma dessas matérias?</label>
                       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                         <div v-for="subject in ListaIdsSelecionadas" :key="subject.id" class="flex items-center space-x-2">
                           <input type="checkbox" :id="subject.id" v-model="checkedNames" :value="subject.label" class="checkbox"/>
@@ -233,7 +233,7 @@
   // Inicializa o Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
+//usar firebase pra autenticar somente
   async function adicionarOuAtualizarAluno(raAluno, alunoData) {
     try {
       await setDoc(doc(db, "alunos", raAluno), alunoData);
@@ -293,7 +293,7 @@
       return {
         alert: true,
         showModal: false,
-        logged: false,
+        logged: true,
         fetchedData: [],
         showRanking: false,
         tabela: Array.from({ length: 6 }, () => Array(6).fill('')),
