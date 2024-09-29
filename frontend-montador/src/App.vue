@@ -60,12 +60,13 @@
           
           <!-- Seção ranking -->
           <Modal v-if="showRanking" @close="showRanking = false">
-    <div class="card w-full max-w-2xl mx-auto">
+    
+
+      <div class="card-content">
+      <div class="card w-full max-w-2xl mx-auto">
       <div class="card-header">
         <h2 class="text-2xl font-bold">Preencha para estimar sua posição nas matérias escolhidas</h2>
       </div>
-
-      <div class="card-content">
         <form v-if="!rankingResult" @submit.prevent="consultRanking" class="space-y-6">
           <!-- RA and CR Fields -->
           <div class="grid grid-cols-2 gap-4">
@@ -113,9 +114,12 @@
 
           <!-- Subjects Selection -->
           <div class="space-y-2">
-            <label class="font-semibold">Matérias obrigatórias que já realizou:</label>
+            <label class="font-semibold">Você já reprovou em alguma dessas matérias?</label>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-              <div v-for="subject in obrigatorySubjects" :key="subject.id" class="flex items-center space-x-2">
+
+
+            <!--change the obrigatorySubjects variable for the selected ucs value  -->
+              <div v-for="subject in ListaIdsSelecionadas" :key="subject.id" class="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   :id="subject.id"
@@ -123,7 +127,7 @@
                   :value="subject.label"
                   class="checkbox"
                 />
-                <label :for="subject.id">{{ subject.label }}</label>
+                <label :for="subject.id">{{ subject.NOME }}</label>
               </div>
             </div>
           </div>
@@ -141,7 +145,7 @@
             Consultar posição
           </button>
         </form>
-        <div v-else class="space-y-6">
+        <div v-if="rankingResult" class="space-y-6">
           <!-- Show the ranking results here -->
           <p>Seu ranking é: {{ rankingResult }}</p>
           <!-- Optionally add a button to reset or close -->
@@ -465,8 +469,13 @@
           // Adicionando as informações de cada matéria à string
           resultado += `${materia[0]}: Você está na ${materia[1]}ª posição de ${materia[2]} preenchidas.\n\n`;
         });
-        alert(resultado);
-      },
+        this.rankingResult = resultado;
+//        const names = this.ListaIdsSelecionadas.map(subject => subject.NOME); // Extracting NOME property
+//        alert(names.join(", "));
+
+        
+      }
+      ,
       async consultRanking1() {
         if (!this.ra || !this.cr || !this.curso || !this.selected || !this.agree) {
           alert('Por favor, preencha todos os campos obrigatórios.');
@@ -482,18 +491,18 @@
         }
         //alert(`RA: ${this.ra}, CR: ${this.cr}, curso: ${this.curso}, selected: ${this.selected}, checked: ${this.checkedNames}`);
         
-        let somaCreditos = 0;
+        /*let somaCreditos = 0;
         this.checkedNames.forEach((n) => {
           if (n == "cuv") somaCreditos += 6;
           else if (n == "cts" || n == "ctsa") somaCreditos += 2;
           else somaCreditos += 4;
-        })
+        })*/
         const dadosAluno = {
           ra: this.ra,
           cr: this.cr,
           curso: this.curso,
           termo: this.selected,
-          creditos: somaCreditos
+          
         }
 
         if (this.ListaIdsSelecionadas.length < 1) {
@@ -515,6 +524,10 @@
         }
         this.displayRank(dadosCompletos, lista);
       },
+      resetForm(){
+        this.rankingResult = '';
+      },
+
       load() {
         var inputFileDocument = document.createElement("input");
         inputFileDocument.setAttribute("type", "file");
