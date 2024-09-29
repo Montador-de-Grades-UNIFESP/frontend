@@ -59,103 +59,81 @@
 
           
           <!-- Seção ranking -->
-          <Modal v-if="showRanking" @close="showRanking = false">
+          <CardModal v-if="showRanking" @close="showRanking = false">
     
 
-      <div class="card-content">
-      <div class="card w-full max-w-2xl mx-auto">
-      <div class="card-header">
-        <h2 class="text-2xl font-bold">Preencha para estimar sua posição nas matérias escolhidas</h2>
-      </div>
-        <form v-if="!rankingResult" @submit.prevent="consultRanking" class="space-y-6">
-          <!-- RA and CR Fields -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="space-y-2">
-              <label for="ra">RA: </label>
-              <input
-                v-model="ra"
-                id="ra"
-                type="text"
-                placeholder="Seu RA"
-                required
-                class="input border border-gray-300 rounded px-1"
-              />
-              <span class="text-red-500">*</span>
-            </div>
-            <div class="space-y-2">
-              <label for="cr">CR: </label>
-              <input
-                v-model="cr"
-                id="cr"
-                type="text"
-                placeholder="Seu CR"
-                required
-                class="input border border-gray-300 rounded px-1"
-              />
-              <span class="text-red-500">*</span>
-            </div>
-          </div>
-
-          <!-- Course and Term Select -->
-          <div class="space-y-2">
-            <label class="font-semibold">Selecione seu curso e o termo:</label>
-            <div class="grid grid-cols-2 gap-4">
-              <select v-model="curso" class="input border border-gray-300 rounded px-3 py-2" required>
-                <option disabled value="">Curso</option>
-                <option v-for="curso in cursos" :key="curso.id" :value="curso.id">{{ curso.nome }}</option>
-              </select>
-              <select v-model="selected" class="input border border-gray-300 rounded px-3 py-2" required>
-                <option disabled value="">Termo</option>
-                <option v-for="n in 11" :key="n">{{ n + 1 }}</option>
-              </select>
-              <span class="text-red-500">*</span>
-            </div>
-          </div>
-
-          <!-- Subjects Selection -->
-          <div class="space-y-2">
-            <label class="font-semibold">Você já reprovou em alguma dessas matérias?</label>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-
-
-            <!--change the obrigatorySubjects variable for the selected ucs value  -->
-              <div v-for="subject in ListaIdsSelecionadas" :key="subject.id" class="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  :id="subject.id"
-                  v-model="checkedNames"
-                  :value="subject.label"
-                  class="checkbox"
-                />
-                <label :for="subject.id">{{ subject.NOME }}</label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Agreement Checkbox -->
-          <div class="flex items-center space-x-2">
-            <input type="checkbox" id="agree" v-model="agree" value="AGREE" required class="checkbox" />
-            <label for="agree">
-              Concordo com o uso dos dados acima para calcular meu ranking. <span class="text-red-500">*</span>
-            </label>
-          </div>
-
-          <!-- Submit Button -->
-          <button @click="consultRanking1" type="submit" class="btn w-full bg-green-600 text-white py-1 hover:bg-green-700 transition duration-300">
-            Consultar posição
-          </button>
-        </form>
-        <div v-if="rankingResult" class="space-y-6">
-          <!-- Show the ranking results here -->
-          <p>Seu ranking é: {{ rankingResult }}</p>
-          <!-- Optionally add a button to reset or close -->
-          <button @click="resetForm" class="btn w-full bg-blue-600 text-white py-1 hover:bg-blue-700 transition duration-300">
-            Consultar novamente
-          </button>
+      <div class="card-content min-h-screen flex-grow p-4 sm:p-6 md:p-8">
+  <div class="card w-full max-w-2xl mx-auto bg-white shadow-lg rounded-lg">
+    <div class="card-header mb-4">
+      <h2 class="text-2xl font-bold">Preencha para estimar sua posição nas matérias escolhidas</h2>
+    </div>
+    <form v-if="!rankingResult" @submit.prevent="consultRanking" class="space-y-6">
+      <!-- RA and CR Fields -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label for="ra">RA: </label><span class="text-red-500">*</span>
+          <input v-model="ra" id="ra" type="text" placeholder="Seu RA" required class="input w-full border border-gray-300 rounded px-2 py-1"/>
+          
+        </div>
+        <div class="space-y-2">
+          <label for="cr">CR: </label><span class="text-red-500">*</span>
+          <input v-model="cr" id="cr" type="text" placeholder="Seu CR" required class="input w-full border border-gray-300 rounded px-2 py-1"/>
+          
         </div>
       </div>
+
+      <!-- Course and Term Select -->
+      <div class="space-y-2">
+        <label class="font-semibold">Selecione seu curso e o termo:</label><span class="text-red-500">*</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <select v-model="curso" class="input w-full border border-gray-300 rounded px-3 py-2" required>
+            <option disabled value="">Curso</option>
+            <option v-for="curso in cursos" :key="curso.id" :value="curso.id">{{ curso.nome }}</option>
+          </select>
+          <select v-model="selected" class="input w-full border border-gray-300 rounded px-3 py-2" required>
+            <option disabled value="">Termo</option>
+            <option v-for="n in 11" :key="n">{{ n + 1 }}</option>
+          </select>
+        </div>
+        
+      </div>
+
+      <!-- Subjects Selection -->
+      <div class="space-y-2">
+        <label class="font-semibold">Você já reprovou em alguma dessas matérias?</label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+          <div v-for="subject in ListaIdsSelecionadas" :key="subject.id" class="flex items-center space-x-2">
+            <input type="checkbox" :id="subject.id" v-model="checkedNames" :value="subject.label" class="checkbox"/>
+            <label :for="subject.id">{{ subject.NOME }}</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agreement Checkbox -->
+      <div class="flex items-center space-x-2">
+        <input type="checkbox" id="agree" v-model="agree" value="AGREE" required class="checkbox"/>
+        <label for="agree">
+          Concordo com o uso dos dados acima para calcular meu ranking. <span class="text-red-500">*</span>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button @click="consultRanking1" type="submit" class="btn w-full bg-green-600 text-white py-2 hover:bg-green-700 transition duration-300">
+        Consultar posição
+      </button>
+    </form>
+    
+    <!-- Results Section -->
+    <div v-if="rankingResult" class="space-y-6">
+      <p>Seu ranking é: {{ rankingResult }}</p>
+      <button @click="resetForm" class="btn w-full bg-blue-600 text-white py-2 hover:bg-blue-700 transition duration-300">
+        Consultar novamente
+      </button>
     </div>
-  </Modal>
+  </div>
+</div>
+
+  </CardModal>
 
   
           <span></span>
@@ -294,11 +272,13 @@
   import html2canvas from 'html2canvas';
   import Alert from './components/Alert.vue';
   import CustomButton from './components/CustomButton.vue';
+  import CardModal from './components/ModalCard.vue';
   
   export default {
     components: {
       ModalButton,
       Modal,
+      CardModal,
       ListaUC,
       Alert,
       CustomButton,
