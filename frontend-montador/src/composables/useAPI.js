@@ -1,19 +1,19 @@
-
+import axios from 'axios';
 
 const apiURL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
+
 try {
-    fetch(apiURL + '/ping').then(console.log);
+    await axios.get(apiURL + '/ping');
 }
 catch (err) {
-    console.error('API not available');
+    alert('API não disponível no momento, você pode usar o aplicativo, mas algumas funcionalidades podem não estar disponíveis.');
 }
 
 export default function useAPI() {
     return {
         get: async (url) => {
-            const response = await fetch(apiURL + url, {
-                method: 'GET',
+            const response = await axios.get(apiURL + url, {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,14 +22,13 @@ export default function useAPI() {
             return response;
         },
         post: async (url, data) => {
-            const response = await fetch(apiURL + url, {
-                method: 'POST',
-                credentials: 'include',
+            const response = await axios.post(apiURL + url, data, {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
+                }
             });
+            console.log(response);
             return response;
         }
     }

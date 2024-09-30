@@ -22,7 +22,8 @@
     "lodash": "^4.17.21",
     "save": "^2.9.0",
     "vue": "^3.3.4",
-    "vue-cookies": "^1.8.3"
+    "vue-cookies": "^1.8.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

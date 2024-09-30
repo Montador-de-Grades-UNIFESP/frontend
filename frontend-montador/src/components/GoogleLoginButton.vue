@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import CustomButton from './CustomButton.vue';
-import useAuth from '../composables/useAuth';
+import CustomButton from './ui/CustomButton.vue';
+import useAuth from '/src/composables/useAuth';
 
 export default {
     methods: {
