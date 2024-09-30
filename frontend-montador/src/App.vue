@@ -135,7 +135,7 @@
             <div v-else>
               <p class="font-bold text-center mb-4">BEM-VINDO!</p>
               <p class="font-bold text-gray-500 text-center mb-4">Para continuar você precisa fazer login!</p>
-              <div @click="googleSignIn" class="flex justify-center">
+              <div class="flex justify-center">
               <GoogleLoginButton class="bg-white text-black font-semibold py-2 px-4 rounded shadow-md hover:bg-blue-600 transition duration-200 ease-in-out" />
               
             </div>
@@ -220,60 +220,9 @@
   
   
   <script>
+  import useFirebase from './composables/useFirebase';
+  useFirebase().init();
 
-  // Firebase SDK
-import { initializeApp } from "firebase/app";
-  import { getFirestore, collection, doc, setDoc, getDocs } from "firebase/firestore/lite";
-
-  // Configuração do Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyA5zG55pTy8D_kfhxjx_TfKTgL1k1e7SNA",
-  authDomain: "montador-de-grades---unifesp.firebaseapp.com",
-  projectId: "montador-de-grades---unifesp",
-  storageBucket: "montador-de-grades---unifesp.appspot.com",
-  messagingSenderId: "51502672874",
-  appId: "1:51502672874:web:59a3ee55f38c7cd9306093",
-  measurementId: "G-N2RD5ZYNSK"
-};
-
-
-  // Inicializa o Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  async function adicionarOuAtualizarAluno(raAluno, alunoData) {
-    try {
-      await setDoc(doc(db, "alunos", raAluno), alunoData);
-      //console.log("Documento escrito com ID: ", raAluno);
-    } catch (e) {
-      console.error("Erro ao adicionar ou atualizar documento: ", e);
-    }
-  }
-
-  async function listarAlunos() {
-    try {
-      const alunosSnapshot = await getDocs(collection(db, "alunos"));
-      const alunosList = alunosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      //console.log("Alunos:", alunosList);
-      return alunosList;
-    } catch (e) {
-      console.error("Erro ao ler documentos: ", e);
-      return 0;
-    }
-  }
-  
-  /*async function consultRanking() {
-      const alunoData = {
-        ra: this.ra,
-        cr: this.cr,
-        curso: this.curso,
-        termo: this.termo,
-        subjects: this.checkedNames,
-      };
-  }*/
-
-  // Fim Firebase
-  
   var FileData; 
   var ListId;
   var thisObjAlias;
@@ -286,6 +235,9 @@ const firebaseConfig = {
   import CustomButton from './components/CustomButton.vue';
   import CardModal from './components/ModalCard.vue';
   import GoogleLoginButton from './components/GoogleLoginButton.vue';
+  import useAuth from './composables/useAuth';
+
+  const auth = useAuth();
   
   export default {
     components: {
@@ -302,7 +254,7 @@ const firebaseConfig = {
       return {
         alert: true,
         showModal: false,
-        logged: true,
+        logged: auth.authenticated,
         fetchedData: [],
         showRanking: false,
         tabela: Array.from({ length: 6 }, () => Array(6).fill('')),
@@ -358,16 +310,7 @@ const firebaseConfig = {
     },
     methods: {
         async fetchData() {
-        const db = getFirestore(); // Initialize Firestore
-        try {
-          const alunosSnapshot = await getDocs(collection(db, "alunos")); // Fetch documents from the "alunos" collection
-          const alunosList = alunosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          this.data = alunosList; // Set the fetched data to the component's data property
-        } catch (err) {
-          this.error = err.message; // Capture any error messages
-        } finally {
-          this.loading = false; // Loading is complete
-        }
+        
       },
     
       showAlert(rowIndex, colIndex) {
