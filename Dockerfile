@@ -1,30 +1,24 @@
-# Etapa de construção para a aplicação Vue
-FROM node:16 as build-stage
+# Build dos arquivos com Node.js
+FROM node:18 AS build-stage
 
 WORKDIR /app
 
-# Copiar os arquivos da aplicação Vue e instalar as dependências
-COPY frontend-montador/package*.json ./
+COPY ./src/package.json ./
+
 RUN npm install
 
-COPY frontend-montador/ .
+COPY ./src .
+
 RUN npm run build
 
-# Etapa final para a aplicação Express
-FROM node:16
+# Servindo os arquivos com Nginx
+FROM nginx:alpine AS production-stage
 
-WORKDIR /app
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Copiar os arquivos da aplicação Express e instalar as dependências
-COPY backend-montador/package*.json ./
-RUN npm install
+# can be used to overwrite the default nginx configuration
+# COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY backend-montador/ .
+EXPOSE 80
 
-# Copiar os arquivos construídos da aplicação Vue para a pasta pública do Express
-COPY --from=build-stage /app/dist /app/dist
-
-# Expor a porta que o Express está ouvindo
-EXPOSE 3000
-
-CMD ["npm", "start"] 
+CMD ["nginx", "-g", "daemon off;"]
