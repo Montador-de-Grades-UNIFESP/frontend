@@ -4,7 +4,7 @@ const apiURL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 
 try {
-    await axios.get(apiURL + '/ping');
+    axios.get(apiURL + '/ping');
 }
 catch (err) {
     alert('API não disponível no momento, você pode usar o aplicativo, mas algumas funcionalidades podem não estar disponíveis.');
